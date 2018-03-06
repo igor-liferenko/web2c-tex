@@ -11,3 +11,5 @@ all:
 	gcc -DHAVE_CONFIG_H -I. -I./w2c -Wimplicit -Wreturn-type -g -O2 -c -o tex-tex-pool.o tex-pool.c
 	gcc -Wimplicit -Wreturn-type -g -O2 -o tex tex-texextra.o tex-texini.o tex-tex0.o tex-tex-pool.o lib/lib.a -lkpathsea -lm
 	mv tex /usr/local/bin/
+
+# TODO: run "make" and "find . -name tex-pool.o" and if it will be not found, then change tex-tex-pool.o to tex-pool.o
