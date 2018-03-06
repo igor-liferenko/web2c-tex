@@ -1,0 +1,10 @@
+tex-final.ch
+tex-pool.c
+tex-tex-pool.o
+tex-tex0.o
+tex-texextra.o
+tex-texini.o
+tex.p
+tex.pool
+texcoerce.h
+texd.h
