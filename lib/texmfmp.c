@@ -2175,7 +2175,6 @@ close_file_or_pipe (FILE *f)
   }
   close_file(f);
 }
-
 #endif /* ENABLE_PIPES */
 
 /* All our interrupt handler has to do is set TeX's or Metafont's global
