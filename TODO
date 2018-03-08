@@ -1,0 +1,39 @@
+make so that terminal output from test.tex will not be broken
+
+---------------------
+
+this is known "bug" of encTeX. TeX calculates the number of characters of terminal output (for line-breaking) as number of bytes. This processor knows nothing about encTeX. And encTeX is working at different level. The cooperation of these processors is impossible. TeX is unable to know the real multi-byte characters of output on the terminal output. So, it is (unfortunately) possible, that one multibyte character is broken to two parts when line-break of terminal is decided.
+
+----------------------
+
+TeX must know if \mubytelog is activated when it is breaking lines for
+terminal output,
+because TeX must disable ^^-notation if \xprncode is active for given
+byte and \mubytelog is
+active.
+
+So, if TeX knows this, it should be possible to create a compatible
+version of TeX,
+which will not break line in the middle of multibyte sequence.
+
+The algorithm is the following:
+1) if TeX is about to break a line, it must verify that next byte does
+not begin with 10.
+2) if the next byte looks like 10xxxxxx, TeX must keep all the
+following bytes and break only
+before the byte which looks like 0xxxxxxx or 11xxxxxx.
+In UTF-8 sense, 0x and 11x mean the beginning of character, and 10x
+means the middle
+of character.
+
+Along the way, another improvement to encTeX can be made. We may use
+one more feature
+UTF-8 for breaking lines at exactly 80 characters wide: the fact that
+the first byte (11x)
+of UTF-8 sequence contains the length of the whole sequence. It is
+sufficient for to TeX to count
+just the quantity of 1's in the beginnig of byte before first 0 in this byte.
+For example, the following byte of UTF-8 sequence shows that its length is 2:
+110xxxxx.
+
+So, TeX need not know encTeX table to correctly format terminal output.
