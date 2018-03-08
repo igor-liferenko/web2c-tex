@@ -1,12 +1,12 @@
 tex-final.ch
-tex-pool.c
-tex-tex-pool.o
-tex-tex0.o
 tex-texextra.o
-tex-texini.o
+tex-pool.c
+tex-pool.o
 tex.p
 tex.pool
+tex0.c
+tex0.o
 texcoerce.h
 texd.h
-tex0.c
 texini.c
+texini.o
