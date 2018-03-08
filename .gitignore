@@ -8,3 +8,5 @@ tex.p
 tex.pool
 texcoerce.h
 texd.h
+tex0.c
+texini.c
