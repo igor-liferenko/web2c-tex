@@ -24,7 +24,7 @@
 #define WEB2C_C_AUTO_H
 
 /* web2c: the version string. */
-#define WEB2CVERSION " (TeX Live 2017)"
+#define WEB2CVERSION ""
 
 /* Define if building universal (internal helper macro) */
 /* #undef AC_APPLE_UNIVERSAL_BUILD */

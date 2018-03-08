@@ -78,7 +78,7 @@ a modified \TeX{} version.
 @d TeX_banner=='This is TeX, Version 3.14159265' {printed when \TeX\ starts}
 @#
 @d banner==TeX_banner
-@d banner_k==TeX_banner_k
+@d banner_k==TeX_banner
 @z
 
 @x [1.4] l.233 - program header
