@@ -41,9 +41,10 @@ So, TeX need not know encTeX table to correctly format terminal output.
 =====================================
 
 To prove that enctex and %& do not influence the output,
-convert any document to cp866 encoding, run "tex '&lhplain' input.tex"
+convert any document to cp866 encoding, compile the document with
+original TeX via "tex '&lhplain' input.tex"
 (where lhplain.fmt is compiled from modified lhplain.ini - convert
 hyphenation patterns to cp866 first and generate the format without -enc
 option),
-and do dvidiff with document obtained via "tex input.tex" (where lhplain.fmt
+and do dvidiff with document compiled with current TeX via "tex input.tex" (where lhplain.fmt
 is as now).
