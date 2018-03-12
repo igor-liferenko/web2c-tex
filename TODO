@@ -37,3 +37,13 @@ For example, the following byte of UTF-8 sequence shows that its length is 2:
 110xxxxx.
 
 So, TeX need not know encTeX table to correctly format terminal output.
+
+=====================================
+
+To prove that enctex and %& do not influence the output,
+convert any document to cp866 encoding, run "tex '&lhplain' input.tex"
+(where lhplain.fmt is compiled from modified lhplain.ini - convert
+hyphenation patterns to cp866 first and generate the format without -enc
+option),
+and do dvidiff with document obtained via "tex input.tex" (where lhplain.fmt
+is as now).
