@@ -10,3 +10,5 @@ texcoerce.h
 texd.h
 texini.c
 texini.o
+test.dvi
+test.log
