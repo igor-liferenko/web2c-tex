@@ -412,21 +412,6 @@ else if m=xprn_code_base then scanned_result(xprn[cur_val])(int_val)
 else if m=math_code_base then scanned_result(ho(math_code(cur_val)))(int_val)
 @z
 
-@x [29.534] l.10293 - enc\TeX: add enc\TeX banner after loading fmt file
-  begin wlog_cr; wlog('MLTeX v2.2 enabled');
-  end;
-@y
-  begin wlog_cr; wlog('MLTeX v2.2 enabled');
-  end;
-if enctex_enabled_p then
-  begin wlog_cr; wlog(encTeX_banner); wlog(', reencoding enabled');
-    if translate_filename then
-      begin wlog_cr;
-        wlog(' (\xordcode, \xchrcode, \xprncode overridden by TCX)');
-    end;
-  end;
-@z
-
 @x [48.1138] l.21648 - encTeX: \endmubyte primitive
 begin print_err("Extra "); print_esc("endcsname");
 @.Extra \\endcsname@>
@@ -666,20 +651,6 @@ begin print_err(""); print(s);
 @y
 @<Undump ML\TeX-specific data@>;
 @<Undump enc\TeX-specific data@>;
-@z
-
-@x [51.1337] l.24371 - enc\TeX: add. enc\TeX banner after loading fmt file
-  begin wterm_ln('MLTeX v2.2 enabled');
-  end;
-@y
-  begin wterm_ln('MLTeX v2.2 enabled');
-  end;
-if enctex_enabled_p then
-  begin wterm(encTeX_banner); wterm_ln(', reencoding enabled.');
-    if translate_filename then begin
-      wterm_ln(' (\xordcode, \xchrcode, \xprncode overridden by TCX)');
-    end;
-  end;
 @z
 
 @x [53.1341] - encTeX: keep track of mubyte value for \write
