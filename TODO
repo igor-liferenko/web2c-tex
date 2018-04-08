@@ -1,3 +1,7 @@
+purge mltex
+
+================================================================================
+
 make so that terminal output from test.tex will not be broken
 
 ---------------------
@@ -40,7 +44,8 @@ So, TeX need not know encTeX table to correctly format terminal output.
 
 =====================================
 
-To prove that enctex and %& do not influence the output,
+To prove that enctex and %& do not influence the output (to justify
+git diff 0b40e9f51892b51ba44b940b126c2b0591bbb050..a37b3f7aadca0f286794b36dc46fb08e829616b6 tex.ch enctex.ch w2c/c-auto.h),
 convert any document to cp866 encoding, compile the document with
 original TeX via "tex '&lhplain' input.tex"
 (where lhplain.fmt is compiled from modified lhplain.ini - convert
