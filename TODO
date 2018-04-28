@@ -1,4 +1,5 @@
 purge mltex (see log why and how mltex.ch was merged into tex.ch)
+see earliest tex.ch in VCS, remove mltex changes from there, checking by using tie with mltex-2.2.ch, and try removing the same from newest tex.ch
 
 ================================================================================
 
