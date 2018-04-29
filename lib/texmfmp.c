@@ -878,10 +878,6 @@ maininit (int ac, string *av)
       iniversion = true;
     } else if (FILESTRCASEEQ (kpse_program_name, "virtex")) {
       virversion = true;
-#ifndef Aleph
-    } else if (FILESTRCASEEQ (kpse_program_name, "mltex")) {
-      mltexp = true;
-#endif /* !Aleph */
 #endif /* TeX */
     }
 
@@ -896,9 +892,6 @@ maininit (int ac, string *av)
   /* Sanity check: -mltex, -enc, -etex only work in combination with -ini. */
   if (!iniversion) {
 #if !defined(Aleph)
-    if (mltexp) {
-      fprintf(stderr, "-mltex only works with -ini\n");
-    }
 #if !defined(XeTeX) && !IS_pTeX
     if (enctexp) {
       fprintf(stderr, "-enc only works with -ini\n");
@@ -1637,7 +1630,6 @@ static struct option long_options[]
       { "ipc-start",                 0, &ipcon, 2 },
 #endif /* IPC */
 #if !defined(Aleph)
-      { "mltex",                     0, &mltexp, 1 },
 #if !defined(XeTeX) && !IS_pTeX
       { "enc",                       0, &enctexp, 1 },
 #endif

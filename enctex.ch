@@ -93,20 +93,21 @@ k:=first; while k < last do begin print_buffer(k) end;
 
 % encTeX: \mubytein \mubyteout \mubytelog and \specialout
 @x [17.236] l.4954
-@d web2c_int_pars=web2c_int_base+3 {total number of web2c's integer parameters}
+@d web2c_int_pars=web2c_int_base {total number of web2c's integer parameters}
 @y
-@d mubyte_in_code=web2c_int_base+3 {if positive then reading mubytes is active}
-@d mubyte_out_code=web2c_int_base+4 {if positive then printing mubytes is active}
-@d mubyte_log_code=web2c_int_base+5 {if positive then print mubytes to log and terminal}
-@d spec_out_code=web2c_int_base+6 {if positive then print specials by mubytes}
-@d web2c_int_pars=web2c_int_base+7 {total number of web2c's integer parameters}
+@d mubyte_in_code=web2c_int_base {if positive then reading mubytes is active}
+@d mubyte_out_code=web2c_int_base+1 {if positive then printing mubytes is active}
+@d mubyte_log_code=web2c_int_base+2 {if positive then print mubytes to log and terminal}
+@d spec_out_code=web2c_int_base+3 {if positive then print specials by mubytes}
+@d web2c_int_pars=web2c_int_base+4 {total number of web2c's integer parameters}
 @z
 
 % encTeX: \mubytein \mubyteout \mubytelog and \specialout
 @x [17.236] l.5016
-@d tracing_char_sub_def==int_par(tracing_char_sub_def_code)
+@d error_context_lines==int_par(error_context_lines_code)
 @y
-@d tracing_char_sub_def==int_par(tracing_char_sub_def_code)
+@d error_context_lines==int_par(error_context_lines_code)
+@#
 @d mubyte_in==int_par(mubyte_in_code)
 @d mubyte_out==int_par(mubyte_out_code)
 @d mubyte_log==int_par(mubyte_log_code)
@@ -115,9 +116,9 @@ k:=first; while k < last do begin print_buffer(k) end;
 
 % encTeX: \mubytein \mubyteout \mubytelog and \specialout
 @x [17.237] l.5080
-tracing_char_sub_def_code:print_esc("tracingcharsubdef");
+error_context_lines_code:print_esc("errorcontextlines");
 @y
-tracing_char_sub_def_code:print_esc("tracingcharsubdef");
+error_context_lines_code:print_esc("errorcontextlines");
 mubyte_in_code:print_esc("mubytein");
 mubyte_out_code:print_esc("mubyteout");
 mubyte_log_code:print_esc("mubytelog");
@@ -126,11 +127,9 @@ spec_out_code:print_esc("specialout");
 
 % encTeX: \mubytein \mubyteout \mubytelog and \specialout
 @x [17.238] l.5200
-@!@:tracing_char_sub_def_}{\.{\\tracingcharsubdef} primitive@>
-  end;
+@!@:error_context_lines_}{\.{\\errorcontextlines} primitive@>
 @y
-@!@:tracing_char_sub_def_}{\.{\\tracingcharsubdef} primitive@>
-  end;
+@!@:error_context_lines_}{\.{\\errorcontextlines} primitive@>
 if enctex_p then
   begin enctex_enabled_p:=true;
   primitive("mubytein",assign_int,int_base+mubyte_in_code);@/
@@ -639,17 +638,17 @@ begin print_err(""); print(s);
 
 % encTeX: dump encTeX-specific data to fmt file.
 @x [50.1302] l.23694
-@<Dump ML\TeX-specific data@>;
+@<Dump constants for consistency check@>;
 @y
-@<Dump ML\TeX-specific data@>;
+@<Dump constants for consistency check@>;
 @<Dump enc\TeX-specific data@>;
 @z
 
 % encTeX: undump encTeX-specific data from fmt file.
 @x [50.1303] l.23694
-@<Undump ML\TeX-specific data@>;
+begin @<Undump constants for consistency check@>;
 @y
-@<Undump ML\TeX-specific data@>;
+begin @<Undump constants for consistency check@>;
 @<Undump enc\TeX-specific data@>;
 @z
 
