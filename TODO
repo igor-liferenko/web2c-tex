@@ -11,6 +11,10 @@ If the diff is empty, it means tex.ch with mltex changes is the same as purged t
 
 ================================================================================
 
+purge "source specials" from tex.ch
+
+================================================================================
+
 make so that terminal output from test.tex will not be broken
 
 ---------------------
