@@ -284,7 +284,7 @@
 @z
 
 @x [1] m.2 l.187 - MLTeX: change banner line
-@d banner=='This is TeX, Version 3.14159' {printed when \TeX\ starts}
+@d TeX_banner_k=='This is TeXk, Version 3.14159265' {printed when \TeX\ starts}
 @y
 
 ML\TeX{} will add new primitives changing the behaviour of \TeX.  The
@@ -345,13 +345,13 @@ substitution definitions.
 
 %---------------------------------------
 
-@x [17] m.236 l.4954 - MLTeX: \charsubdefmax and \tracingcharsubdef
-@d int_pars=55 {total number of integer parameters}
+@x
+@d web2c_int_pars=web2c_int_base {total number of web2c's integer parameters}
 @y
-@d char_sub_def_min_code=55 {smallest value in the charsubdef list}
-@d char_sub_def_max_code=56 {largest value in the charsubdef list}
-@d tracing_char_sub_def_code=57 {traces changes to a charsubdef def}
-@d int_pars=58 {total number of integer parameters}
+@d char_sub_def_min_code=web2c_int_base {smallest value in the charsubdef list}
+@d char_sub_def_max_code=web2c_int_base+1 {largest value in the charsubdef list}
+@d tracing_char_sub_def_code=web2c_int_base+2 {traces changes to a charsubdef def}
+@d web2c_int_pars=web2c_int_base+3 {total number of web2c's integer parameters}
 @z
 
 @x [17] m.236 l.5016
