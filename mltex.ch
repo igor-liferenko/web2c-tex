@@ -1008,31 +1008,31 @@ probably be changed in one of the next ML\TeX{} versions.
   base_width:=char_width(f)(ib_c);
   base_height:=char_height(f)(height_depth(ib_c));
   accent_width:=char_width(f)(ia_c);
-  accent_height:=char_height(f)(height_depth(ia_c));@/
-  {compute necessary horizontal shift (don't forget slant)}
+  accent_height:=char_height(f)(height_depth(ia_c));
+  @/{compute necessary horizontal shift (don't forget slant)}@/
   delta:=round((base_width-accent_width)/float_constant(2)+
             base_height*base_slant-base_x_height*accent_slant);
 @^real multiplication@>
 @^real addition@>
-  dvi_h:=cur_h;  {update |dvi_h|, similar to the last statement in module 620}@/
-  {1. For centering/horizontal shifting insert a kern node.}
-  cur_h:=cur_h+delta; synch_h;@/
-  {2. Then insert the accent character possibly shifted up or down.}
+  dvi_h:=cur_h;  {update |dvi_h|, similar to the last statement in module 620}
+  @/{1. For centering/horizontal shifting insert a kern node.}@/
+  cur_h:=cur_h+delta; synch_h;
+  @/{2. Then insert the accent character possibly shifted up or down.}@/
   if ((base_height<>base_x_height) and (accent_height>0)) then
     begin {the accent must be shifted up or down}
     cur_v:=base_line+(base_x_height-base_height); synch_v;
     if accent_c>=128 then dvi_out(set1);
-    dvi_out(accent_c);
+    dvi_out(accent_c);@/
     cur_v:=base_line;
     end
   else begin synch_v;
     if accent_c>=128 then dvi_out(set1);
-    dvi_out(accent_c);
+    dvi_out(accent_c);@/
     end;
-  cur_h:=cur_h+accent_width; dvi_h:=cur_h;@/
-  {3. For centering/horizontal shifting insert another kern node.}
-  cur_h:=cur_h+(-accent_width-delta);@/
-  {4. Output the base character.}
+  cur_h:=cur_h+accent_width; dvi_h:=cur_h;
+  @/{3. For centering/horizontal shifting insert another kern node.}@/
+  cur_h:=cur_h+(-accent_width-delta);
+  @/{4. Output the base character.}@/
   synch_h; synch_v;
   if base_c>=128 then dvi_out(set1);
   dvi_out(base_c);@/
