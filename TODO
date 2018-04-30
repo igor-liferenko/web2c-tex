@@ -1,9 +1,13 @@
 Use this to check if mltex was purged correctly:
 
-tie -c new.ch tex.web tex.ch mltex.ch*
+tie -c new.ch tex.web tex.ch mltex.ch
 git show 46b41d104e95e723d1f997a25e19433077380510:tex.ch >tex-orig.ch
 tie -c tex-cleaned-orig.ch tex.web tex-orig.ch
 diff -u tex-cleaned-orig.ch new.ch
+
+new.ch is the result of applying original mltex.ch v2.2 (with minor changes - see commits 2388177 and 320126e)
+to cleaned tex.ch
+If the diff is empty, it means tex.ch with mltex changes is the same as purged tex.ch without mltex changes. If the diff is not empty, it means that the changes from mltex.ch were not merged into tex.ch (for changes marked with +) and that something is not mltex.ch which was removed from tex.ch (for changes marked with -). Changes marked with - must be restored to tex.ch, and changes marked with + must be ignored.
 
 ================================================================================
 
