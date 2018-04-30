@@ -303,7 +303,7 @@ The boolean value of |mltex_p| is dumped to the \.{FMT} file and
 undumped from this file to the boolean |mltex_enabled_p|.
 
 @d mltex_p==true            {enable ML\TeX{} primitives}
-@d banner=='This is TeX, Version 3.14159' {printed when \TeX\ starts}
+@d TeX_banner_k=='This is TeXk, Version 3.14159265' {printed when \TeX\ starts}
 @z
 
 
