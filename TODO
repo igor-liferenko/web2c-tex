@@ -1,5 +1,9 @@
-purge mltex (see log why and how mltex.ch was merged into tex.ch)
-see earliest tex.ch in VCS, remove mltex changes from there, checking by using tie with mltex-2.2.ch, and try removing the same from newest tex.ch
+Use this to check if mltex was purged correctly:
+
+tie -c new.ch tex.web tex.ch mltex.ch*
+git show 46b41d104e95e723d1f997a25e19433077380510:tex.ch >tex-orig.ch
+tie -c tex-cleaned-orig.ch tex.web tex-orig.ch
+diff -u tex-cleaned-orig.ch new.ch
 
 ================================================================================
 
