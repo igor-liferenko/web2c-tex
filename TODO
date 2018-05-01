@@ -3,7 +3,7 @@ Use this to check if mltex was purged correctly:
 tie -c new.ch tex.web tex.ch mltex.ch
 git show 46b41d104e95e723d1f997a25e19433077380510:tex.ch >tex-orig.ch
 tie -c tex-cleaned-orig.ch tex.web tex-orig.ch
-diff -u tex-cleaned-orig.ch new.ch
+diff -u tex-cleaned-orig.ch new.ch|colordiff|less -SR
 
 continue to change mltex.ch until diff will be empty
 
