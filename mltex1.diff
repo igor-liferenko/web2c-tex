@@ -1,0 +1,22 @@
+--- mltex.ch
++++ mltex.ch
+@@ -284,8 +284,9 @@
+ @z
+ 
+ @x [1] m.2 l.187 - MLTeX: change banner line
+-@d banner=='This is TeX, Version 3.14159' {printed when \TeX\ starts}
++November 1984].
+ @y
++November 1984].
+ 
+ ML\TeX{} will add new primitives changing the behaviour of \TeX.  The
+ |banner| string has to be changed.  We do not change the |banner|
+@@ -302,8 +303,6 @@ the definition of |mltex_p| below and add some code to set it.
+ The boolean value of |mltex_p| is dumped to the \.{FMT} file and
+ undumped from this file to the boolean |mltex_enabled_p|.
+ 
+-@d mltex_p==true            {enable ML\TeX{} primitives}
+-@d banner=='This is TeX, Version 3.14159' {printed when \TeX\ starts}
+ @z
+ 
+ 
