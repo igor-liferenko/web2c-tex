@@ -358,6 +358,7 @@ substitution definitions.
 @d error_context_lines==int_par(error_context_lines_code)
 @y
 @d error_context_lines==int_par(error_context_lines_code)
+@#
 @d char_sub_def_min==int_par(char_sub_def_min_code)
 @d char_sub_def_max==int_par(char_sub_def_max_code)
 @d tracing_char_sub_def==int_par(tracing_char_sub_def_code)
@@ -420,6 +421,7 @@ as fast as possible under the circumstances.
 @d char_info(#)==font_info[char_base[#]+char_info_end
 @y
 as fast as possible under the circumstances.
+@^inner loop@>
 
 ML\TeX{} will assume that a character |c| exists iff either exists in
 the current font or a character substitution definition for this
@@ -455,12 +457,6 @@ original definition of |char_info| can be used using the macro
 |orig_char_info|.  Operations in which character substitutions should
 be avoided are, for example, loading a new font and checking the font
 metric information in this font, and character accesses in math mode.
-
-(Because of retrictions in \.{TANGLE}'s macro capabilities you have
-to replace \.{XLPAREN} resp.\ \.{xlparen} with an opening brace and
-\.{XRPAREN} resp.\ \.{xrparen} with a closing brace after tangling
-\TeX!)
-@^inner loop@>
 
 @d char_list_exists(#)==(char_sub_code(#)>hi(0))
 @d char_list_accent(#)==(ho(char_sub_code(#)) div 256)
