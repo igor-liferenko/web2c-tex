@@ -1,6 +1,6 @@
---- a/mltex.ch
-+++ b/mltex.ch
-@@ -1008,31 +1008,31 @@ probably be changed in one of the next ML\TeX{} versions.
+--- mltex.ch
++++ mltex.ch
+@@ -997,31 +997,31 @@ probably be changed in one of the next ML\TeX{} versions.
    base_width:=char_width(f)(ib_c);
    base_height:=char_height(f)(height_depth(ib_c));
    accent_width:=char_width(f)(ia_c);

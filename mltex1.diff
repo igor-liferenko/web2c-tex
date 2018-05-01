@@ -1,7 +1,5 @@
-diff --git a/mltex.ch b/mltex.ch
-index 7efc6ca..a96111d 100644
---- a/mltex.ch
-+++ b/mltex.ch
+--- mltex.ch
++++ mltex.ch
 @@ -284,26 +284,15 @@
  @z
  
