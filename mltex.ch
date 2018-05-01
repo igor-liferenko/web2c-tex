@@ -275,35 +275,16 @@
 %
 %============================================================
 
-@x limbo l.64 - bug fix (print only changed modules)
-\def\pct!{{\char`\%}} % percent sign in ordinary text
+@x
+November 1984].
 @y
-\def\pct!{{\char`\%}} % percent sign in ordinary text
-\def\grp{\.{\char'173...\char'175}}
-\let\maybe=\iffalse % print only changed modules
-@z
-
-@x [1] m.2 l.187 - MLTeX: change banner line
-@d TeX_banner_k=='This is TeXk, Version 3.14159265' {printed when \TeX\ starts}
-@y
+November 1984].
 
 ML\TeX{} will add new primitives changing the behaviour of \TeX.  The
 |banner| string has to be changed.  We do not change the |banner|
 string, but will output an additional line to make clear that this is
 a modified \TeX{} version.
 
-If you plan to add a command line option ``mltex'' to your \TeX{}
-implementation, use the boolean variable |mltex_p| to reflect this
-option.  The boolean |mltex_p| should be set {\it before\/} or in the
-initialisation routine |initialize| in the Ini\TeX{} run.  (You can
-not use a ``mltex'' option in Vir\TeX{}.)  To add this option, remove
-the definition of |mltex_p| below and add some code to set it.
-
-The boolean value of |mltex_p| is dumped to the \.{FMT} file and
-undumped from this file to the boolean |mltex_enabled_p|.
-
-@d mltex_p==true            {enable ML\TeX{} primitives}
-@d TeX_banner_k=='This is TeXk, Version 3.14159265' {printed when \TeX\ starts}
 @z
 
 
@@ -358,6 +339,7 @@ substitution definitions.
 @d error_context_lines==int_par(error_context_lines_code)
 @y
 @d error_context_lines==int_par(error_context_lines_code)
+@#
 @d char_sub_def_min==int_par(char_sub_def_min_code)
 @d char_sub_def_max==int_par(char_sub_def_max_code)
 @d tracing_char_sub_def==int_par(tracing_char_sub_def_code)
@@ -420,6 +402,7 @@ as fast as possible under the circumstances.
 @d char_info(#)==font_info[char_base[#]+char_info_end
 @y
 as fast as possible under the circumstances.
+@^inner loop@>
 
 ML\TeX{} will assume that a character |c| exists iff either exists in
 the current font or a character substitution definition for this
@@ -455,12 +438,6 @@ original definition of |char_info| can be used using the macro
 |orig_char_info|.  Operations in which character substitutions should
 be avoided are, for example, loading a new font and checking the font
 metric information in this font, and character accesses in math mode.
-
-(Because of retrictions in \.{TANGLE}'s macro capabilities you have
-to replace \.{XLPAREN} resp.\ \.{xlparen} with an opening brace and
-\.{XRPAREN} resp.\ \.{xrparen} with a closing brace after tangling
-\TeX!)
-@^inner loop@>
 
 @d char_list_exists(#)==(char_sub_code(#)>hi(0))
 @d char_list_accent(#)==(ho(char_sub_code(#)) div 256)
