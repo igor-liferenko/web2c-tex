@@ -1,0 +1,25 @@
+commit b1da73cfa91ce2be0dfba6f2830506a0b86a6d4f
+Author: Igor Liferenko <igor.liferenko@gmail.com>
+Date:   Tue May 1 13:31:35 2018 +0700
+
+    edit
+
+diff --git a/mltex.ch b/mltex.ch
+index b0fb104..b7aa900 100644
+--- a/mltex.ch
++++ b/mltex.ch
+@@ -275,14 +275,6 @@
+ %
+ %============================================================
+ 
+-@x limbo l.64 - bug fix (print only changed modules)
+-\def\pct!{{\char`\%}} % percent sign in ordinary text
+-@y
+-\def\pct!{{\char`\%}} % percent sign in ordinary text
+-\def\grp{\.{\char'173...\char'175}}
+-\let\maybe=\iffalse % print only changed modules
+-@z
+-
+ @x [1] m.2 l.187 - MLTeX: change banner line
+ @d TeX_banner_k=='This is TeXk, Version 3.14159265' {printed when \TeX\ starts}
+ @y
