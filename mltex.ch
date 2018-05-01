@@ -275,16 +275,16 @@
 %
 %============================================================
 
-@x
-November 1984].
+@x [1] m.2 l.187 - MLTeX: change banner line
+@d TeX_banner_k=='This is TeXk, Version 3.14159265' {printed when \TeX\ starts}
 @y
-November 1984].
 
 ML\TeX{} will add new primitives changing the behaviour of \TeX.  The
 |banner| string has to be changed.  We do not change the |banner|
 string, but will output an additional line to make clear that this is
 a modified \TeX{} version.
 
+@d TeX_banner_k=='This is TeXk, Version 3.14159265' {printed when \TeX\ starts}
 @z
 
 
