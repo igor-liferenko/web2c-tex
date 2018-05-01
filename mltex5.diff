@@ -1,6 +1,4 @@
---- mltex.ch
-+++ mltex.ch
-@@ -327,12 +327,12 @@ substitution definitions.
+@@ -327,12 +327,12 @@
  %---------------------------------------
  
  @x [17] m.236 l.4954 - MLTeX: \charsubdefmax and \tracingcharsubdef

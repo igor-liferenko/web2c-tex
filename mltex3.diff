@@ -1,6 +1,4 @@
---- mltex.ch
-+++ mltex.ch
-@@ -347,6 +347,7 @@ substitution definitions.
+@@ -347,6 +347,7 @@
  @d error_context_lines==int_par(error_context_lines_code)
  @y
  @d error_context_lines==int_par(error_context_lines_code)
@@ -8,7 +6,7 @@
  @d char_sub_def_min==int_par(char_sub_def_min_code)
  @d char_sub_def_max==int_par(char_sub_def_max_code)
  @d tracing_char_sub_def==int_par(tracing_char_sub_def_code)
-@@ -409,6 +410,7 @@ as fast as possible under the circumstances.
+@@ -409,6 +410,7 @@
  @d char_info(#)==font_info[char_base[#]+char_info_end
  @y
  as fast as possible under the circumstances.
@@ -16,7 +14,7 @@
  
  ML\TeX{} will assume that a character |c| exists iff either exists in
  the current font or a character substitution definition for this
-@@ -445,12 +447,6 @@ original definition of |char_info| can be used using the macro
+@@ -445,12 +447,6 @@
  be avoided are, for example, loading a new font and checking the font
  metric information in this font, and character accesses in math mode.
  
