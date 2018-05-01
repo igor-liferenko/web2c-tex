@@ -13,6 +13,8 @@ created before purging mltex does not work after purging mltex:
     ---! /usr/local/share/texmf/web2c/tex/lhplain.fmt made by different executable version
     (Fatal format file error; I'm stymied)
 
+HINT: add rebuilding format to Makefile when you will test this
+
 ================================================================================
 
 purge "source specials" from tex.ch
