@@ -275,16 +275,35 @@
 %
 %============================================================
 
-@x [1] m.2 l.187 - MLTeX: change banner line
-November 1984].
+@x limbo l.64 - bug fix (print only changed modules)
+\def\pct!{{\char`\%}} % percent sign in ordinary text
 @y
-November 1984].
+\def\pct!{{\char`\%}} % percent sign in ordinary text
+\def\grp{\.{\char'173...\char'175}}
+\let\maybe=\iffalse % print only changed modules
+@z
+
+@x [1] m.2 l.187 - MLTeX: change banner line
+@d banner=='This is TeX, Version 3.14159' {printed when \TeX\ starts}
+@y
 
 ML\TeX{} will add new primitives changing the behaviour of \TeX.  The
 |banner| string has to be changed.  We do not change the |banner|
 string, but will output an additional line to make clear that this is
 a modified \TeX{} version.
 
+If you plan to add a command line option ``mltex'' to your \TeX{}
+implementation, use the boolean variable |mltex_p| to reflect this
+option.  The boolean |mltex_p| should be set {\it before\/} or in the
+initialisation routine |initialize| in the Ini\TeX{} run.  (You can
+not use a ``mltex'' option in Vir\TeX{}.)  To add this option, remove
+the definition of |mltex_p| below and add some code to set it.
+
+The boolean value of |mltex_p| is dumped to the \.{FMT} file and
+undumped from this file to the boolean |mltex_enabled_p|.
+
+@d mltex_p==true            {enable ML\TeX{} primitives}
+@d banner=='This is TeX, Version 3.14159' {printed when \TeX\ starts}
 @z
 
 
@@ -326,20 +345,19 @@ substitution definitions.
 
 %---------------------------------------
 
-@x
-@d web2c_int_pars=web2c_int_base {total number of web2c's integer parameters}
+@x [17] m.236 l.4954 - MLTeX: \charsubdefmax and \tracingcharsubdef
+@d int_pars=55 {total number of integer parameters}
 @y
-@d char_sub_def_min_code=web2c_int_base {smallest value in the charsubdef list}
-@d char_sub_def_max_code=web2c_int_base+1 {largest value in the charsubdef list}
-@d tracing_char_sub_def_code=web2c_int_base+2 {traces changes to a charsubdef def}
-@d web2c_int_pars=web2c_int_base+3 {total number of web2c's integer parameters}
+@d char_sub_def_min_code=55 {smallest value in the charsubdef list}
+@d char_sub_def_max_code=56 {largest value in the charsubdef list}
+@d tracing_char_sub_def_code=57 {traces changes to a charsubdef def}
+@d int_pars=58 {total number of integer parameters}
 @z
 
 @x [17] m.236 l.5016
 @d error_context_lines==int_par(error_context_lines_code)
 @y
 @d error_context_lines==int_par(error_context_lines_code)
-@#
 @d char_sub_def_min==int_par(char_sub_def_min_code)
 @d char_sub_def_max==int_par(char_sub_def_max_code)
 @d tracing_char_sub_def==int_par(tracing_char_sub_def_code)
@@ -402,7 +420,6 @@ as fast as possible under the circumstances.
 @d char_info(#)==font_info[char_base[#]+char_info_end
 @y
 as fast as possible under the circumstances.
-@^inner loop@>
 
 ML\TeX{} will assume that a character |c| exists iff either exists in
 the current font or a character substitution definition for this
@@ -438,6 +455,12 @@ original definition of |char_info| can be used using the macro
 |orig_char_info|.  Operations in which character substitutions should
 be avoided are, for example, loading a new font and checking the font
 metric information in this font, and character accesses in math mode.
+
+(Because of retrictions in \.{TANGLE}'s macro capabilities you have
+to replace \.{XLPAREN} resp.\ \.{xlparen} with an opening brace and
+\.{XRPAREN} resp.\ \.{xrparen} with a closing brace after tangling
+\TeX!)
+@^inner loop@>
 
 @d char_list_exists(#)==(char_sub_code(#)>hi(0))
 @d char_list_accent(#)==(ho(char_sub_code(#)) div 256)
@@ -985,31 +1008,31 @@ probably be changed in one of the next ML\TeX{} versions.
   base_width:=char_width(f)(ib_c);
   base_height:=char_height(f)(height_depth(ib_c));
   accent_width:=char_width(f)(ia_c);
-  accent_height:=char_height(f)(height_depth(ia_c));
-  @/{compute necessary horizontal shift (don't forget slant)}@/
+  accent_height:=char_height(f)(height_depth(ia_c));@/
+  {compute necessary horizontal shift (don't forget slant)}
   delta:=round((base_width-accent_width)/float_constant(2)+
             base_height*base_slant-base_x_height*accent_slant);
 @^real multiplication@>
 @^real addition@>
-  dvi_h:=cur_h;  {update |dvi_h|, similar to the last statement in module 620}
-  @/{1. For centering/horizontal shifting insert a kern node.}@/
-  cur_h:=cur_h+delta; synch_h;
-  @/{2. Then insert the accent character possibly shifted up or down.}@/
+  dvi_h:=cur_h;  {update |dvi_h|, similar to the last statement in module 620}@/
+  {1. For centering/horizontal shifting insert a kern node.}
+  cur_h:=cur_h+delta; synch_h;@/
+  {2. Then insert the accent character possibly shifted up or down.}
   if ((base_height<>base_x_height) and (accent_height>0)) then
     begin {the accent must be shifted up or down}
     cur_v:=base_line+(base_x_height-base_height); synch_v;
     if accent_c>=128 then dvi_out(set1);
-    dvi_out(accent_c);@/
+    dvi_out(accent_c);
     cur_v:=base_line;
     end
   else begin synch_v;
     if accent_c>=128 then dvi_out(set1);
-    dvi_out(accent_c);@/
+    dvi_out(accent_c);
     end;
-  cur_h:=cur_h+accent_width; dvi_h:=cur_h;
-  @/{3. For centering/horizontal shifting insert another kern node.}@/
-  cur_h:=cur_h+(-accent_width-delta);
-  @/{4. Output the base character.}@/
+  cur_h:=cur_h+accent_width; dvi_h:=cur_h;@/
+  {3. For centering/horizontal shifting insert another kern node.}
+  cur_h:=cur_h+(-accent_width-delta);@/
+  {4. Output the base character.}
   synch_h; synch_v;
   if base_c>=128 then dvi_out(set1);
   dvi_out(base_c);@/
