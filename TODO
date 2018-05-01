@@ -7,7 +7,11 @@ diff -u tex-cleaned-orig.ch new.ch
 
 continue to change mltex.ch until diff will be empty
 
-understand why fmt created before purging mltex does not work after purging mltex and fix this
+Find in TeXbook the place where this error is printed and understand why format
+created before purging mltex does not work after purging mltex:
+
+    ---! /usr/local/share/texmf/web2c/tex/lhplain.fmt made by different executable version
+    (Fatal format file error; I'm stymied)
 
 ================================================================================
 
