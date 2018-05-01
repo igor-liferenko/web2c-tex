@@ -275,14 +275,6 @@
 %
 %============================================================
 
-@x limbo l.64 - bug fix (print only changed modules)
-\def\pct!{{\char`\%}} % percent sign in ordinary text
-@y
-\def\pct!{{\char`\%}} % percent sign in ordinary text
-\def\grp{\.{\char'173...\char'175}}
-\let\maybe=\iffalse % print only changed modules
-@z
-
 @x [1] m.2 l.187 - MLTeX: change banner line
 @d TeX_banner_k=='This is TeXk, Version 3.14159265' {printed when \TeX\ starts}
 @y
