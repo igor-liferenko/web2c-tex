@@ -1,10 +1,8 @@
-@@ -345,13 +345,13 @@ substitution definitions.
- 
+@@ -327,12 +327,12 @@ substitution definitions.
  %---------------------------------------
  
--@x [17] m.236 l.4954 - MLTeX: \charsubdefmax and \tracingcharsubdef
+ @x [17] m.236 l.4954 - MLTeX: \charsubdefmax and \tracingcharsubdef
 -@d int_pars=55 {total number of integer parameters}
-+@x
 +@d web2c_int_pars=web2c_int_base {total number of web2c's integer parameters}
  @y
 -@d char_sub_def_min_code=55 {smallest value in the charsubdef list}

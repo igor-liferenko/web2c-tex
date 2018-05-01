@@ -1,11 +1,3 @@
-commit fb0ca15c81e03d5db65714ca889dfe169ee9b05d
-Author: Igor Liferenko <igor.liferenko@gmail.com>
-Date:   Tue May 1 13:30:44 2018 +0700
-
-    edit
-
-diff --git a/mltex.ch b/mltex.ch
-index 95cfd2e..b0fb104 100644
 --- a/mltex.ch
 +++ b/mltex.ch
 @@ -358,6 +358,7 @@ substitution definitions.
