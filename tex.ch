@@ -2352,6 +2352,22 @@ endifn ('IPC')
   else print(" page");
 @z
 
+% disabled in original tex-src-special.ch
+ @x [37.774] l.15291 - source specials
+if every_cr<>null then begin_token_list(every_cr,every_cr_text);
+ @y
+if (insert_src_special_every_cr and head<>tail) then insert_src_special;
+if every_cr<>null then begin_token_list(every_cr,every_cr_text);
+ @z
+
+% disabled in original tex-source-special.ch
+ @x [37.799] l.15682 - source specials
+if every_cr<>null then begin_token_list(every_cr,every_cr_text);
+ @y
+if (insert_src_special_every_cr) then insert_src_special;
+if every_cr<>null then begin_token_list(every_cr,every_cr_text);
+ @z
+
 @x [42.920] l.18056 - bigtrie: allow larger hyphenation tries.
 Comparatively few different number sequences $n_0\ldots n_k$ actually occur,
 since most of the |n|'s are generally zero. Therefore the number sequences
@@ -2831,6 +2847,22 @@ print("' in "); print_mode(mode);
 @y
 print_in_mode(mode);
 @z
+
+% disabled in original tex-src-special.ch
+ @x [47.1083] l.20966 - source specials
+  if every_vbox<>null then begin_token_list(every_vbox,every_vbox_text);
+ @y
+  if (insert_src_special_every_vbox) then insert_src_special;
+  if every_vbox<>null then begin_token_list(every_vbox,every_vbox_text);
+ @z
+
+% disabled in original tex-src-special.ch
+ @x [47.1083] l.20969 - source specials
+  if every_hbox<>null then begin_token_list(every_hbox,every_hbox_text);
+ @y
+  if (insert_src_special_every_hbox) then insert_src_special;
+  if every_hbox<>null then begin_token_list(every_hbox,every_hbox_text);
+ @z
 
 @x [47.1091] l.21064 - source specials
 if indented then
