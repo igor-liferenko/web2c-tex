@@ -12,7 +12,7 @@ patch mltex.ch mltex5.diff
 patch mltex.ch mltex6.diff
 patch mltex.ch mltex7.diff
 patch mltex.ch mltex8.diff
-git show 2cfd8f76e21ca2ff4733b40e2fed1f398a5eb3d3:tex.ch >tex-new.ch
+git show 35908e323ca03ef3025529b3f1c55b59b89d9235:tex.ch >tex-new.ch
 tie -c new.ch tex.web tex-new.ch mltex.ch
 git show 46b41d104e95e723d1f997a25e19433077380510:tex.ch >tex-orig.ch
 tie -c orig.ch tex.web tex-orig.ch
