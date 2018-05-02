@@ -14,6 +14,11 @@ this is known "bug" of encTeX. TeX calculates the number of characters of termin
 
 ----------------------
 
+In EncTeX distribution (http://petr.olsak.net/enctex.html) enctex.ch is change-file for tex.web
+(tangle tex enctex/enctex.ch).
+
+----------------------
+
 TeX must know if \mubytelog is activated when it is breaking lines for
 terminal output,
 because TeX must disable ^^-notation if \xprncode is active for given
