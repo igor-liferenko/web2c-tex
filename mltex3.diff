@@ -1,4 +1,4 @@
-@@ -409,6 +410,7 @@
+@@ -410,6 +410,7 @@
  @d char_info(#)==font_info[char_base[#]+char_info_end
  @y
  as fast as possible under the circumstances.
@@ -6,7 +6,7 @@
  
  ML\TeX{} will assume that a character |c| exists iff either exists in
  the current font or a character substitution definition for this
-@@ -445,19 +447,13 @@
+@@ -446,19 +447,13 @@
  be avoided are, for example, loading a new font and checking the font
  metric information in this font, and character accesses in math mode.
  
