@@ -23,7 +23,7 @@ Simply move code to sections.
  @z
  
  @x [51] m.1337 l.24371 - MLTeX: add. MLTeX banner after loading fmt file
-@@ -1014,7 +1008,25 @@
+@@ -1021,7 +1015,25 @@
    cur_h:=cur_h+base_width;
    dvi_h:=cur_h {update of |dvi_h| is unnecessary, will be set in module 620}
  
