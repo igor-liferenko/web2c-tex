@@ -1,4 +1,12 @@
-@@ -997,31 +997,31 @@
+@@ -347,6 +347,7 @@
+ @d error_context_lines==int_par(error_context_lines_code)
+ @y
+ @d error_context_lines==int_par(error_context_lines_code)
++@#
+ @d char_sub_def_min==int_par(char_sub_def_min_code)
+ @d char_sub_def_max==int_par(char_sub_def_max_code)
+ @d tracing_char_sub_def==int_par(tracing_char_sub_def_code)
+@@ -997,31 +998,31 @@
    base_width:=char_width(f)(ib_c);
    base_height:=char_height(f)(height_depth(ib_c));
    accent_width:=char_width(f)(ia_c);
