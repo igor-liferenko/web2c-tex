@@ -1,32 +1,3 @@
-Use this to check if mltex was purged correctly:
-
-git show 61f18474456d1b5ca2c9a8668c45deef1098265b:mltex.ch >mltex-tmp.ch
-patch mltex-tmp.ch mltex0.diff
-patch mltex-tmp.ch mltex1.diff
-patch mltex-tmp.ch mltex2.diff
-patch mltex-tmp.ch mltex3.diff
-patch mltex-tmp.ch mltex4.diff
-patch mltex-tmp.ch mltex5.diff
-patch mltex-tmp.ch mltex6.diff
-patch mltex-tmp.ch mltex7.diff
-patch mltex-tmp.ch mltex8.diff
-tie -c new.ch tex.web tex.ch mltex-tmp.ch
-git show 46b41d104e95e723d1f997a25e19433077380510:tex.ch >tex-orig.ch
-tie -c tex-cleaned-orig.ch tex.web tex-orig.ch
-diff -u tex-cleaned-orig.ch new.ch|colordiff|less -SR
-
-continue to create mltex diff files until diff will be empty
-
-Find in TeXbook the place where this error is printed and understand why format
-created before purging mltex does not work after purging mltex:
-
-    ---! /usr/local/share/texmf/web2c/tex/lhplain.fmt made by different executable version
-    (Fatal format file error; I'm stymied)
-
-HINT: add rebuilding format to Makefile when you will test this
-
-================================================================================
-
 purge "source specials" from tex.ch
 
 ================================================================================
