@@ -14,7 +14,7 @@
  
  ML\TeX{} will assume that a character |c| exists iff either exists in
  the current font or a character substitution definition for this
-@@ -445,12 +447,6 @@
+@@ -445,19 +447,13 @@
  be avoided are, for example, loading a new font and checking the font
  metric information in this font, and character accesses in math mode.
  
@@ -27,3 +27,12 @@
  @d char_list_exists(#)==(char_sub_code(#)>hi(0))
  @d char_list_accent(#)==(ho(char_sub_code(#)) div 256)
  @d char_list_char(#)==(ho(char_sub_code(#)) mod 256)
+ @#
+-@d char_info_end(#)== #xrparen].qqqq
++@d char_info_end(#)== #@=)@>].qqqq
+ @d char_info(#)==
+-  font_info[char_base[#]+effective_char xlparen true,#,char_info_end
++  font_info[char_base[#]+effective_char@=(@>true,#,char_info_end
+ @#
+ @d orig_char_info_end(#)==#].qqqq
+ @d orig_char_info(#)==font_info[char_base[#]+orig_char_info_end
