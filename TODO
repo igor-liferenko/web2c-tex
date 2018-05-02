@@ -9,6 +9,7 @@ patch mltex-tmp.ch mltex4.diff
 patch mltex-tmp.ch mltex5.diff
 patch mltex-tmp.ch mltex6.diff
 patch mltex-tmp.ch mltex7.diff
+patch mltex-tmp.ch mltex8.diff
 tie -c new.ch tex.web tex.ch mltex-tmp.ch
 git show 46b41d104e95e723d1f997a25e19433077380510:tex.ch >tex-orig.ch
 tie -c tex-cleaned-orig.ch tex.web tex-orig.ch
