@@ -1,6 +1,7 @@
 Use this to check if mltex was purged correctly:
 
 git show 61f18474456d1b5ca2c9a8668c45deef1098265b:mltex.ch >mltex-tmp.ch
+patch mltex-tmp.ch mltex0.diff
 patch mltex-tmp.ch mltex1.diff
 patch mltex-tmp.ch mltex2.diff
 patch mltex-tmp.ch mltex3.diff
