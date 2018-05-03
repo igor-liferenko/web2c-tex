@@ -16,6 +16,7 @@ this is known "bug" of encTeX. TeX calculates the number of characters of termin
 
 In EncTeX distribution (http://petr.olsak.net/enctex.html) enctex.ch is change-file for tex.web
 (weave tex enctex/enctex.ch).
+add this to limbo: \let\maybe=\iffalse % print only changed modules
 
 ----------------------
 
