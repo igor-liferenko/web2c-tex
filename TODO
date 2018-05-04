@@ -6,17 +6,15 @@ make so that terminal output from test.tex will not be broken
 
 ---------------------
 
-TODO: put here explanation from "complexity of correcting this bug"
-
----------------------
-
 this is known "bug" of encTeX. TeX calculates the number of characters of terminal output (for line-breaking) as number of bytes. This processor knows nothing about encTeX. And encTeX is working at different level. The cooperation of these processors is impossible. TeX is unable to know the real multi-byte characters of output on the terminal output. So, it is (unfortunately) possible, that one multibyte character is broken to two parts when line-break of terminal is decided.
 
 ----------------------
 
 In EncTeX distribution (http://petr.olsak.net/enctex.html) enctex.ch is change-file for tex.web
 (weave tex enctex/enctex.ch).
-add this to limbo: \let\maybe=\iffalse % print only changed modules
+add this to limbo:
+\let\maybe=\iffalse % print only changed modules
++try to use \secpagedepth=0 - will it decrease number of pages?
 
 ----------------------
 
