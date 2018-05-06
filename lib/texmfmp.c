@@ -2819,50 +2819,6 @@ gettexstring (strnumber s)
 
 #endif /* not XeTeX */
 
-boolean
-isnewsource (strnumber srcfilename, int lineno)
-{
-  char *name = gettexstring(srcfilename);
-  return (compare_paths(name, last_source_name) != 0 || lineno != last_lineno);
-}
-
-void
-remembersourceinfo (strnumber srcfilename, int lineno)
-{
-  if (last_source_name)
-       free(last_source_name);
-  last_source_name = gettexstring(srcfilename);
-  last_lineno = lineno;
-}
-
-poolpointer
-makesrcspecial (strnumber srcfilename, int lineno)
-{
-  poolpointer oldpoolptr = poolptr;
-  char *filename = gettexstring(srcfilename);
-  /* FIXME: Magic number. */
-  char buf[40];
-  char *s = buf;
-
-  /* Always put a space after the number, which makes things easier
-   * to parse.
-   */
-  sprintf (buf, "src:%d ", lineno);
-
-  if (poolptr + strlen(buf) + strlen(filename) >= (size_t)poolsize) {
-       fprintf (stderr, "\nstring pool overflow\n"); /* fixme */
-       exit (1);
-  }
-  s = buf;
-  while (*s)
-    strpool[poolptr++] = *s++;
-
-  s = filename;
-  while (*s)
-    strpool[poolptr++] = *s++;
-
-  return (oldpoolptr);
-}
 
 /* pdfTeX routines also used for e-pTeX, e-upTeX, and XeTeX */
 #if defined (pdfTeX) || defined (epTeX) || defined (eupTeX) || defined(XeTeX)
