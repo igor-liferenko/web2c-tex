@@ -1,4 +1,5 @@
 purge "source specials" from tex.ch
+HINT: see tex-src-special.ch
 
 ================================================================================
 

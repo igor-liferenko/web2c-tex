@@ -2833,15 +2833,6 @@ l:=k; v:=min_trie_op;
 @y
 @z
 
-@x [46.1034] l.20074 - source specials
-@<Append character |cur_chr|...@>=
-@y
-@<Append character |cur_chr|...@>=
-if ((head=tail) and (mode>0)) then begin
-  if (insert_src_special_auto) then append_src_special;
-end;
-@z
-
 @x [46.1049] l.20407 - i18n fix, see change to [16.211]
 print("' in "); print_mode(mode);
 @y
@@ -2873,38 +2864,6 @@ if indented then
   begin tail:=new_null_box; link(head):=tail; width(tail):=par_indent;
   if (insert_src_special_every_par) then insert_src_special;@+
   end;
-@z
-
-% disabled in original tex-src-special.ch, conflicts with etex.
- @x [47.1096] l.21121 - source specials
-  else line_break(widow_penalty);
- @y
-  else begin
-    if (insert_src_special_every_parend) then insert_src_special;
-    line_break(widow_penalty);
-  end;
- @z
-
-@x [48.1142] l.21697 - source specials
-if every_math<>null then begin_token_list(every_math,every_math_text);
-@y
-if (insert_src_special_every_math) then insert_src_special;
-if every_math<>null then begin_token_list(every_math,every_math_text);
-@z
-
-% disabled in original tex-src-special.ch
- @x [48.1145] l.21705 - source specials
-if every_display<>null then begin_token_list(every_display,every_display_text);
- @y
-if (insert_src_special_every_display) then append_src_special;
-if every_display<>null then begin_token_list(every_display,every_display_text);
- @z
-
-@x [48.1167] l.22042 - source specials
-  if every_vbox<>null then begin_token_list(every_vbox,every_vbox_text);
-@y
-  if (insert_src_special_every_vbox) then insert_src_special;
-  if every_vbox<>null then begin_token_list(every_vbox,every_vbox_text);
 @z
 
 @x [49.1215] l.22719 - hash_extra
@@ -4192,42 +4151,6 @@ exit:end;
 @y
 
 @ @<Declare action procedures for use by |main_control|@>=
-
-procedure insert_src_special;
-var toklist, p, q : pointer;
-begin
-  if (source_filename_stack[in_open] > 0 and is_new_source (source_filename_stack[in_open]
-, line)) then begin
-    toklist := get_avail;
-    p := toklist;
-    info(p) := cs_token_flag+frozen_special;
-    link(p) := get_avail; p := link(p);
-    info(p) := left_brace_token+"{";
-    q := str_toks (make_src_special (source_filename_stack[in_open], line));
-    link(p) := link(temp_head);
-    p := q;
-    link(p) := get_avail; p := link(p);
-    info(p) := right_brace_token+"}";
-    ins_list (toklist);
-    remember_source_info (source_filename_stack[in_open], line);
-  end;
-end;
-
-procedure append_src_special;
-var q : pointer;
-begin
-  if (source_filename_stack[in_open] > 0 and is_new_source (source_filename_stack[in_open]
-, line)) then begin
-    new_whatsit (special_node, write_node_size);
-    write_stream(tail) := 0;
-    def_ref := get_avail;
-    token_ref_count(def_ref) := null;
-    q := str_toks (make_src_special (source_filename_stack[in_open], line));
-    link(def_ref) := link(temp_head);
-    write_tokens(tail) := def_ref;
-    remember_source_info (source_filename_stack[in_open], line);
-  end;
-end;
 
 @ This function used to be in pdftex, but is useful in tex too.
 
