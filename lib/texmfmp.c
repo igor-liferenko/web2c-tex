@@ -632,14 +632,6 @@ static const_string c_job_name;
 string translate_filename;
 string default_translate_filename;
 
-#if defined(TeX)
-/* Needed for --src-specials option. */
-static char *last_source_name;
-static int last_lineno;
-static boolean srcspecialsoption = false;
-static void parse_src_specials_option (const_string);
-#endif
-
 /* Parsing a first %&-line in the input file. */
 static void parse_first_line (const_string);
 
@@ -1648,7 +1640,6 @@ static struct option long_options[]
       { "disable-write18",           0, &shellenabledp, -1 },
       { "shell-restricted",          0, 0, 0 },
       { "debug-format",              0, &debugformatfile, 1 },
-      { "src-specials",              2, 0, 0 },
 #if defined(__SyncTeX__)
       /* Synchronization: just like "interaction" above */
       { "synctex",                   1, 0, 0 },
@@ -1781,17 +1772,6 @@ parse_options (int argc, string *argv)
       shellenabledp = 1;
       restrictedshell = 1;
       
-    } else if (ARGUMENT_IS ("src-specials")) {
-       last_source_name = xstrdup("");
-       /* Option `--src" without any value means `auto' mode. */
-       if (optarg == NULL) {
-         insertsrcspecialeverypar = true;
-         insertsrcspecialauto = true;
-         srcspecialsoption = true;
-         srcspecialsp = true;
-       } else {
-          parse_src_specials_option(optarg);
-       }
 #endif /* TeX */
 #if defined(pdfTeX)
     } else if (ARGUMENT_IS ("output-format")) {
@@ -1865,58 +1845,6 @@ parse_options (int argc, string *argv)
     } /* Else it was a flag; getopt has already done the assignment.  */
   }
 }
-
-#if defined(TeX)
-void 
-parse_src_specials_option (const_string opt_list)
-{
-  char * toklist = xstrdup(opt_list);
-  char * tok;
-  insertsrcspecialauto = false;
-  tok = strtok (toklist, ", ");
-  while (tok) {
-    if (strcmp (tok, "everypar") == 0
-        || strcmp (tok, "par") == 0
-        || strcmp (tok, "auto") == 0) {
-      insertsrcspecialauto = true;
-      insertsrcspecialeverypar = true;
-    } else if (strcmp (tok, "everyparend") == 0
-               || strcmp (tok, "parend") == 0)
-      insertsrcspecialeveryparend = true;
-    else if (strcmp (tok, "everycr") == 0
-             || strcmp (tok, "cr") == 0)
-      insertsrcspecialeverycr = true;
-    else if (strcmp (tok, "everymath") == 0
-             || strcmp (tok, "math") == 0)
-      insertsrcspecialeverymath = true;
-    else if (strcmp (tok, "everyhbox") == 0
-             || strcmp (tok, "hbox") == 0)
-      insertsrcspecialeveryhbox = true;
-    else if (strcmp (tok, "everyvbox") == 0
-             || strcmp (tok, "vbox") == 0)
-      insertsrcspecialeveryvbox = true;
-    else if (strcmp (tok, "everydisplay") == 0
-             || strcmp (tok, "display") == 0)
-      insertsrcspecialeverydisplay = true;
-    else if (strcmp (tok, "none") == 0) {
-      /* This one allows to reset an option that could appear in texmf.cnf */
-      insertsrcspecialauto = insertsrcspecialeverypar = 
-        insertsrcspecialeveryparend = insertsrcspecialeverycr = 
-        insertsrcspecialeverymath =  insertsrcspecialeveryhbox =
-        insertsrcspecialeveryvbox = insertsrcspecialeverydisplay = false;
-    } else {
-      WARNING1 ("Ignoring unknown argument `%s' to --src-specials", tok);
-    }
-    tok = strtok(0, ", ");
-  }
-  free(toklist);
-  srcspecialsp=insertsrcspecialauto | insertsrcspecialeverypar |
-    insertsrcspecialeveryparend | insertsrcspecialeverycr |
-    insertsrcspecialeverymath |  insertsrcspecialeveryhbox |
-    insertsrcspecialeveryvbox | insertsrcspecialeverydisplay;
-  srcspecialsoption = true;
-}
-#endif
 
 /* If the first thing on the command line (we use the globals `argv' and
    `optind') is a normal filename (i.e., does not start with `&' or
