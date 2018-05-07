@@ -64,10 +64,6 @@ const_string ALEPHHELP[] = {
     "-recorder               enable filename recorder (always on)",
     "[-no]-shell-escape      disable/enable \\write18{SHELL COMMAND}",
     "-shell-restricted       enable restricted \\write18",
-    "-src-specials           insert source specials into the DVI file",
-    "-src-specials=WHERE     insert source specials in certain places of",
-    "                          the DVI file. WHERE is a comma-separated value",
-    "                          list: cr display hbox math par parend vbox",
     "-help                   display this help and exit",
     "-version                output version information and exit",
     NULL
@@ -127,10 +123,6 @@ const_string EPTEXHELP[] = {
 #if defined(WIN32)
     "-sjis-terminal          always output to stdout and stderr by CP932",
 #endif
-    "-src-specials           insert source specials into the DVI file",
-    "-src-specials=WHERE     insert source specials in certain places of",
-    "                          the DVI file. WHERE is a comma-separated value",
-    "                          list: cr display hbox math par parend vbox",
 #if defined(__SyncTeX__)
     "-synctex=NUMBER         generate SyncTeX data for previewers according to",
     "                          bits of NUMBER (`man synctex' for details)",
@@ -188,10 +180,6 @@ const_string ETEXHELP[] = {
     "-recorder               enable filename recorder",
     "[-no]-shell-escape      disable/enable \\write18{SHELL COMMAND}",
     "-shell-restricted       enable restricted \\write18",
-    "-src-specials           insert source specials into the DVI file",
-    "-src-specials=WHERE     insert source specials in certain places of",
-    "                          the DVI file. WHERE is a comma-separated value",
-    "                          list: cr display hbox math par parend vbox",
 #if defined(__SyncTeX__)
     "-synctex=NUMBER         generate SyncTeX data for previewers according to",
     "                          bits of NUMBER (`man synctex' for details)",
@@ -257,10 +245,6 @@ const_string EUPTEXHELP[] = {
 #if defined(WIN32)
     "-sjis-terminal          always output to stdout and stderr by CP932",
 #endif
-    "-src-specials           insert source specials into the DVI file",
-    "-src-specials=WHERE     insert source specials in certain places of",
-    "                          the DVI file. WHERE is a comma-separated value",
-    "                          list: cr display hbox math par parend vbox",
 #if defined(__SyncTeX__)
     "-synctex=NUMBER         generate SyncTeX data for previewers according to",
     "                          bits of NUMBER (`man synctex' for details)",
@@ -456,10 +440,6 @@ const_string PDFTEXHELP[] = {
     "-recorder               enable filename recorder",
     "[-no]-shell-escape      disable/enable \\write18{SHELL COMMAND}",
     "-shell-restricted       enable restricted \\write18",
-    "-src-specials           insert source specials into the DVI file",
-    "-src-specials=WHERE     insert source specials in certain places of",
-    "                          the DVI file. WHERE is a comma-separated value",
-    "                          list: cr display hbox math par parend vbox",
 #if defined(__SyncTeX__)
     "-synctex=NUMBER         generate SyncTeX data for previewers according to",
     "                          bits of NUMBER (`man synctex' for details)",
@@ -526,10 +506,6 @@ const_string PTEXHELP[] = {
 #if defined(WIN32)
     "-sjis-terminal          always output to stdout and stderr by CP932",
 #endif
-    "-src-specials           insert source specials into the DVI file",
-    "-src-specials=WHERE     insert source specials in certain places of",
-    "                          the DVI file. WHERE is a comma-separated value",
-    "                          list: cr display hbox math par parend vbox",
 #if defined(__SyncTeX__)
     "-synctex=NUMBER         generate SyncTeX data for previewers according to",
     "                          bits of NUMBER (`man synctex' for details)",
@@ -586,10 +562,6 @@ const_string TEXHELP[] = {
     "-recorder               enable filename recorder",
     "[-no]-shell-escape      disable/enable \\write18{SHELL COMMAND}",
     "-shell-restricted       enable restricted \\write18",
-    "-src-specials           insert source specials into the DVI file",
-    "-src-specials=WHERE     insert source specials in certain places of",
-    "                          the DVI file. WHERE is a comma-separated value",
-    "                          list: cr display hbox math par parend vbox",
 #if defined(__SyncTeX__)
     "-synctex=NUMBER         generate SyncTeX data for previewers according to",
     "                          bits of NUMBER (`man synctex' for details)",
@@ -654,10 +626,6 @@ const_string UPTEXHELP[] = {
 #if defined(WIN32)
     "-sjis-terminal          always output to stdout and stderr by CP932",
 #endif
-    "-src-specials           insert source specials into the DVI file",
-    "-src-specials=WHERE     insert source specials in certain places of",
-    "                          the DVI file. WHERE is a comma-separated value",
-    "                          list: cr display hbox math par parend vbox",
 #if defined(__SyncTeX__)
     "-synctex=NUMBER         generate SyncTeX data for previewers according to",
     "                          bits of NUMBER (`man synctex' for details)",
@@ -712,10 +680,6 @@ const_string XETEXHELP[] = {
     "-recorder               enable filename recorder",
     "[-no]-shell-escape      disable/enable \\write18{SHELL COMMAND}",
     "-shell-restricted       enable restricted \\write18",
-    "-src-specials           insert source specials into the XDV file",
-    "-src-specials=WHERE     insert source specials in certain places of",
-    "                          the XDV file. WHERE is a comma-separated value",
-    "                          list: cr display hbox math par parend vbox",
 #if defined(__SyncTeX__)
     "-synctex=NUMBER         generate SyncTeX data for previewers according to",
     "                          bits of NUMBER (`man synctex' for details)",

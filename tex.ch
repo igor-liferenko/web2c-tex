@@ -563,16 +563,6 @@ tini@/
 @!eight_bit_p:cinttype; {make all characters printable by default}
 @!halt_on_error_p:cinttype; {stop at first error}
 @!quoted_filename:boolean; {current filename is quoted}
-{Variables for source specials}
-@!src_specials_p : boolean;{Whether |src_specials| are enabled at all}
-@!insert_src_special_auto : boolean;
-@!insert_src_special_every_par : boolean;
-@!insert_src_special_every_parend : boolean;
-@!insert_src_special_every_cr : boolean;
-@!insert_src_special_every_math : boolean;
-@!insert_src_special_every_hbox : boolean;
-@!insert_src_special_every_vbox : boolean;
-@!insert_src_special_every_display : boolean;
 @z
 
 @x [3.33] l.964 - We don't need to open terminal files.
@@ -741,7 +731,7 @@ done: if a<>@$ then
 @x l.1536 --  If the ``src-specials'' feature is active, change the banner.
 wterm(banner);
 @y
-if src_specials_p or file_line_error_style_p or parse_first_line_p then
+if file_line_error_style_p or parse_first_line_p then
   wterm(banner_k)
 else
   wterm(banner);
@@ -762,9 +752,6 @@ if shellenabledp then begin
     wterm('restricted ');
   end;
   wterm_ln('\write18 enabled.');
-end;
-if src_specials_p then begin
-  wterm_ln(' Source specials enabled.')
 end;
 if translate_filename then begin
   wterm(' (');
@@ -1145,14 +1132,6 @@ page_depth:=0; page_max_depth:=0;
     print_int(nest[p].pg_field);
     if nest[p].pg_field<>1 then print(" lines")
     else print(" line");
-@z
-
-@x [17.222] l.4523 - frozen_special, for source specials.
-@d frozen_null_font=frozen_control_sequence+10
-@y
-@d frozen_special=frozen_control_sequence+10
-  {permanent `\.{\\special}'}
-@d frozen_null_font=frozen_control_sequence+11
 @z
 
 @x [17.222] l.4526 - max_font_max
@@ -1875,7 +1854,7 @@ recorder_change_filename(stringcast(name_of_file+1));
 begin wlog(banner);
 @y
 begin
-if src_specials_p or file_line_error_style_p or parse_first_line_p
+if file_line_error_style_p or parse_first_line_p
 then
   wlog(banner_k)
 else
@@ -1907,10 +1886,6 @@ if shellenabledp then begin
     wlog('restricted ');
   end;
   wlog('\write18 enabled.')
-  end;
-if src_specials_p then begin
-  wlog_cr;
-  wlog(' Source specials enabled.')
   end;
 if file_line_error_style_p then begin
   wlog_cr;
@@ -2351,22 +2326,6 @@ endifn ('IPC')
   if total_pages<>1 then print(" pages")
   else print(" page");
 @z
-
-% disabled in original tex-src-special.ch
- @x [37.774] l.15291 - source specials
-if every_cr<>null then begin_token_list(every_cr,every_cr_text);
- @y
-if (insert_src_special_every_cr and head<>tail) then insert_src_special;
-if every_cr<>null then begin_token_list(every_cr,every_cr_text);
- @z
-
-% disabled in original tex-source-special.ch
- @x [37.799] l.15682 - source specials
-if every_cr<>null then begin_token_list(every_cr,every_cr_text);
- @y
-if (insert_src_special_every_cr) then insert_src_special;
-if every_cr<>null then begin_token_list(every_cr,every_cr_text);
- @z
 
 @x [42.920] l.18056 - bigtrie: allow larger hyphenation tries.
 Comparatively few different number sequences $n_0\ldots n_k$ actually occur,
@@ -2837,33 +2796,6 @@ l:=k; v:=min_trie_op;
 print("' in "); print_mode(mode);
 @y
 print_in_mode(mode);
-@z
-
-% disabled in original tex-src-special.ch
- @x [47.1083] l.20966 - source specials
-  if every_vbox<>null then begin_token_list(every_vbox,every_vbox_text);
- @y
-  if (insert_src_special_every_vbox) then insert_src_special;
-  if every_vbox<>null then begin_token_list(every_vbox,every_vbox_text);
- @z
-
-% disabled in original tex-src-special.ch
- @x [47.1083] l.20969 - source specials
-  if every_hbox<>null then begin_token_list(every_hbox,every_hbox_text);
- @y
-  if (insert_src_special_every_hbox) then insert_src_special;
-  if every_hbox<>null then begin_token_list(every_hbox,every_hbox_text);
- @z
-
-@x [47.1091] l.21064 - source specials
-if indented then
-  begin tail:=new_null_box; link(head):=tail; width(tail):=par_indent;@+
-  end;
-@y
-if indented then
-  begin tail:=new_null_box; link(head):=tail; width(tail):=par_indent;
-  if (insert_src_special_every_par) then insert_src_special;@+
-  end;
 @z
 
 @x [49.1215] l.22719 - hash_extra
@@ -3842,13 +3774,6 @@ if trie_not_ready then begin {initex without format loaded}
   print_int(font_info[n].qqqq.b2); print_char(":");@/
   print_int(font_info[n].qqqq.b3);
   end;
-@z
-
-@x [53.1344] l.24544 - source specials
-primitive("special",extension,special_node);@/
-@y
-primitive("special",extension,special_node);@/
-text(frozen_special):="special"; eqtb[frozen_special]:=eqtb[cur_val];@/
 @z
 
 @x [53.1348] (do_extension) Remove unused variables
