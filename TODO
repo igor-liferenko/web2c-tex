@@ -1,3 +1,7 @@
+change "or parse_first_line_p" instead of "banner_k"
+
+===============================================================================
+
 purge "source specials" from tex.ch
 HINT: see tex-src-special.ch
 
