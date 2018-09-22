@@ -1,0 +1,3 @@
+Change %&lhplain into something like this (and analogous in cweb-git):
+{\nopagenumbers}
+\ifx\renewenvironment\undefined\else\message{use &ru}\endinput\fi
