@@ -873,6 +873,10 @@ maininit (int ac, string *av)
 #endif /* TeX */
     }
 
+    if (main_input_file == NULL) {
+      if (*argv[1] == '&') dump_name = argv[1] + 1;
+    }
+
     if (!dump_name) {
       /* If called as *vir{mf,tex,mpost} use `plain'.  Otherwise, use the
          name we were invoked under.  */
