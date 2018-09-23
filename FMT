@@ -6,3 +6,4 @@ Do not use "parse_first_line" because in terminal we will not see when format is
 In other words, when tex is started without arguments, user may change format by
 saying "&format", so in terminal output it will look like default format was loaded
 and then overridden by new format, so there will be no inconsistency.
+TODO: put here also from letter to Karl on 2018-09-23
