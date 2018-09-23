@@ -1,4 +1,4 @@
-1. Use %&lhplain as before, but change TeX to exit with error if current format does not match
-the format in input file.
+1. Use %&lhplain as before, but change TeX to exit with error if input file begins with %&lhplain
+and current format is not "ru". HINT: use code from "parse_first_line"
 2. If format is specified in argument list via &, output it after "preloaded format=" in banner instead of "tex"
 3. Generate plain.fmt and instead of argv[0] use "plain" where argv[0] is used, when it is "tex".
