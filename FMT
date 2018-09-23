@@ -2,3 +2,9 @@
 and current format is not "ru". HINT: use code from "parse_first_line"
 2. If format is specified in argument list via &, output it after "preloaded format=" in banner instead of "tex"
 3. Generate plain.fmt and instead of argv[0] use "plain" where argv[0] is used, when it is "tex".
+
+
+Do not use "parse_first_line" because in terminal we will not see when format is changed.
+In other words, when tex is started without arguments, user may change format by
+saying "&format", so in terminal output it will look like default format was loaded
+and then overridden by new format, so there will be no inconsistency.
