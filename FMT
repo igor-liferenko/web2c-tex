@@ -1,7 +1,6 @@
 1. Use %&lhplain as before, but change TeX to exit with error if input file begins with %&lhplain
 and current format is not "ru". HINT: use code from "parse_first_line"
 2. If format is specified in argument list via &, output it after "preloaded format=" in banner instead of "tex".
-3. In post-install use "-jobname plain" instead of "-jobname tex" and instead of argv[0] use "plain" where argv[0] is used, when it is "tex".
 
 Do not use "parse_first_line" because in terminal we will not see when format is changed.
 In other words, when tex is started without arguments, user may change format by

@@ -876,7 +876,7 @@ maininit (int ac, string *av)
     if (!dump_name) {
       /* If called as *vir{mf,tex,mpost} use `plain'.  Otherwise, use the
          name we were invoked under.  */
-      dump_name = (virversion ? "plain" : kpse_program_name);
+      dump_name = "plain";
     }
   }
   
