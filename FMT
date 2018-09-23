@@ -1,4 +1,4 @@
-1. Use %&lhplain as before, but change TeX to exit with error if input file begins with %&lhplain
+Use %&lhplain as before, but change TeX to exit with error if input file begins with %&lhplain
 and current format is not "ru". HINT: use code from "parse_first_line"
 
 Do not use "parse_first_line" because in terminal we will not see when format is changed.
