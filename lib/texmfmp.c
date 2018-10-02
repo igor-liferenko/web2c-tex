@@ -874,7 +874,7 @@ maininit (int ac, string *av)
     }
 
     if (main_input_file == NULL) {
-      if (argv[1] && *argv[1] == '&') dump_name = argv[1] + 1;
+      if (argc > 1 && *argv[1] == '&') dump_name = argv[1] + 1;
     }
 
     if (!dump_name) {
