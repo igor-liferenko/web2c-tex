@@ -66,7 +66,7 @@
 @d TeX_banner=='This is TeX, Version 3.14159265' {printed when \TeX\ starts}
 @#
 @d banner==TeX_banner
-@d banner_k==TeX_banner
+@d banner_k==TeX_banner_k
 @z
 
 @x [1.4] l.233 - program header
@@ -728,36 +728,14 @@ done: if a<>@$ then
 @!trick_buf:array[0..ssup_error_line] of ASCII_code; {circular buffer for
 @z
 
-@x l.1536 --  If the ``src-specials'' feature is active, change the banner.
-wterm(banner);
-@y
-if file_line_error_style_p or parse_first_line_p then
-  wterm(banner_k)
-else
-  wterm(banner);
-@z
-
-@x [5.61] l.1556 - Print rest of banner.
+@x ??????????????????????????????????????????????????????????????????????????????????
 if format_ident=0 then wterm_ln(' (no format preloaded)')
 else  begin slow_print(format_ident); print_ln;
   end;
 @y
-wterm(version_string);
 if format_ident=0 then wterm_ln(' (preloaded format=',dump_name,')')
 else  begin slow_print(format_ident); print_ln;
   end;
-if shellenabledp then begin
-  wterm(' ');
-  if restrictedshell then begin
-    wterm('restricted ');
-  end;
-  wterm_ln('\write18 enabled.');
-end;
-if translate_filename then begin
-  wterm(' (');
-  fputs(translate_filename, stdout);
-  wterm_ln(')');
-end;
 @z
 
 @x [6.73] l.1732 - Add unspecified_mode.
@@ -766,15 +744,6 @@ end;
 @d error_stop_mode=3 {stops at every opportunity to interact}
 @d unspecified_mode=4 {extra value for command-line switch}
 @z
-
-@x [6.73] l.1734 - file:line:error style error messages.
-  print_nl("! "); print(#);
-@y
-  if file_line_error_style_p then print_file_line
-  else print_nl("! ");
-  print(#);
-@z
-
 
 @x [6.73] l.1738 - Add interaction_option.
 @!interaction:batch_mode..error_stop_mode; {current level of interaction}
@@ -1850,58 +1819,10 @@ pack_job_name(".fls");
 recorder_change_filename(stringcast(name_of_file+1));
 @z
 
-@x
-begin wlog(banner);
-@y
-begin
-if file_line_error_style_p or parse_first_line_p
-then
-  wlog(banner_k)
-else
-  wlog(banner);
-@z
-
-@x [29.536] l.10324 - Print rest of banner.
-slow_print(format_ident); print("  ");
-@y
-wlog(version_string);
-slow_print(format_ident); print("  ");
-@z
-
 @x [29.536] l.10327 - Adjust for C string conventions.
 months:='JANFEBMARAPRMAYJUNJULAUGSEPOCTNOVDEC';
 @y
 months := ' JANFEBMARAPRMAYJUNJULAUGSEPOCTNOVDEC';
-@z
-
-% Print whether we're using src-specials and other such features.
-% Print TCX name if one's given.
-@x [29.536] l.10331
-end
-@y
-if shellenabledp then begin
-  wlog_cr;
-  wlog(' ');
-  if restrictedshell then begin
-    wlog('restricted ');
-  end;
-  wlog('\write18 enabled.')
-  end;
-if file_line_error_style_p then begin
-  wlog_cr;
-  wlog(' file:line:error style messages enabled.')
-  end;
-if parse_first_line_p then begin
-  wlog_cr;
-  wlog(' %&-line parsing enabled.');
-  end;
-if translate_filename then begin
-  wlog_cr;
-  wlog(' (');
-  fputs(translate_filename, log_file);
-  wlog(')');
-  end;
-end
 @z
 
 % [29.537] Use a path when calling a_open_in to do a \input; also, try
