@@ -2,7 +2,7 @@ all:
 	tie -c tex-final.ch tex.web tex.ch enctex.ch tex-binpool.ch
 	tangle tex tex-final
 	make -C web2c
-	web2c/convert tex # creates tex0.c and texini.c
+	web2c/convert tex # creates tex0.c, texini.c, texd.h and texcoerce.h
 	gcc -DHAVE_CONFIG_H -I. -I./w2c -Wimplicit -Wreturn-type -g -O2 -c -o tex0.o tex0.c
 	gcc -DHAVE_CONFIG_H -I. -I./w2c -Wimplicit -Wreturn-type -g -O2 -c -o texini.o texini.c
 	web2c/makecpool tex >tex-pool.c || rm -f tex-pool.c
