@@ -1,12 +1,3 @@
-change "or parse_first_line_p" instead of "banner_k"
-
-===============================================================================
-
-purge "source specials" from tex.ch
-HINT: see tex-src-special.ch
-current status of purge can be seen from git diff 8271a73a8ebc088094dfdb82aa39d43baaf951d0..d4ac713fa4800cb52e63da0507caf9665180e0d7
-================================================================================
-
 make so that terminal output from test.tex will not be broken
 
 ---------------------
