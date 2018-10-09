@@ -569,7 +569,7 @@ done: if a<>@$ then
 @!trick_buf:array[0..ssup_error_line] of ASCII_code; {circular buffer for
 @z
 
-always use equivalent of 'virtex &plain' because dumps are impossible (but imitate as if dump is called)
+always use equivalent of 'virtex &fmt' because dumps are impossible (but imitate as if dump is called)
 @x
 if format_ident=0 then wterm_ln(' (no format preloaded)')
 else  begin slow_print(format_ident); print_ln;
