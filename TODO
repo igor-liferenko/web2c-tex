@@ -57,12 +57,12 @@ So, TeX need not know encTeX table to correctly format terminal output.
 
 =====================================
 
-To prove that enctex and %& do not influence the output (to justify
-git diff 0b40e9f51892b51ba44b940b126c2b0591bbb050..a37b3f7aadca0f286794b36dc46fb08e829616b6 tex.ch enctex.ch),
-convert any document to cp866 encoding, compile the document with
-original TeX via "tex '&lhplain' input.tex"
-(where lhplain.fmt is compiled from modified lhplain.ini - convert
+To prove that enctex does not influence the output (to justify
+git diff 0b40e9f51892b51ba44b940b126c2b0591bbb050..a37b3f7aadca0f286794b36dc46fb08e829616b6 enctex.ch),
+convert any document to cp866 encoding, compile the document
+via "tex \&test input-cp866.tex"
+(where test.fmt is compiled from modified lhplain.ini - convert
 hyphenation patterns to cp866 first and generate the format without -enc
 option),
-and do dvidiff with document compiled with current TeX via "tex input.tex" (where lhplain.fmt
-is as now).
+and do dvidiff with document compiled via "tex \&ru input.tex".
+(maybe use TeXLive's tex binary for testing to be sure)
