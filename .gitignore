@@ -1,5 +1,5 @@
 tex-final.ch
-tex-texextra.o
+texextra.o
 tex-pool.c
 tex-pool.o
 tex.p
