@@ -256,6 +256,7 @@ xchr: array [ASCII_code] of text_char;
 xprn: array [ASCII_code] of ASCII_code;
    { non zero iff character is printable }
 @z
+
 @x [2.23] l.723 - Translate characters if desired, otherwise allow them all.
 for i:=0 to @'37 do xchr[i]:=' ';
 for i:=@'177 to @'377 do xchr[i]:=' ';
@@ -536,7 +537,6 @@ else  bad_pool('! I can''t read TEX.POOL.')
 @y
 else  bad_pool('! I can''t read ', pool_name, '; bad path?')
 @z
-
 @x [4.52] l.1326 - Make `TEX.POOL' lowercase, and change how it's read.
 begin if eof(pool_file) then bad_pool('! TEX.POOL has no check sum.');
 @.TEX.POOL has no check sum@>
@@ -643,6 +643,14 @@ been commented~out.
 @<Glob...@>=
 @z
 
+@x [8.110] l.2422 - increase |max_halfword|
+@d min_halfword==0 {smallest allowable value in a |halfword|}
+@d max_halfword==65535 {largest allowable value in a |halfword|}
+@y 2424
+@d min_halfword==-@"FFFFFFF {smallest allowable value in a |halfword|}
+@d max_halfword==@"FFFFFFF {largest allowable value in a |halfword|}
+@z
+
 @x [8.113] l.2453 - data structures for main memory
 @!quarterword = min_quarterword..max_quarterword; {1/4 of a word}
 @!halfword=min_halfword..max_halfword; {1/2 of a word}
@@ -735,6 +743,7 @@ end;
 @y
 @!nest:^list_state_record;
 @z
+
 @x [17.236] l.4954
 @d int_pars=55 {total number of integer parameters}
 @y
@@ -1078,6 +1087,17 @@ loop@+begin
 @!half_buf:integer; {half of |dvi_buf_size|}
 @!dvi_limit:integer; {end of the current half buffer}
 @!dvi_ptr:integer; {the next available buffer address}
+@z
+
+@x [32.597] l.11886 - write_dvi done in C.
+@p procedure write_dvi(@!a,@!b:dvi_index);
+var k:dvi_index;
+begin for k:=a to b do write(dvi_file,dvi_buf[k]);
+end;
+@y
+In C, we use a macro to call |fwrite| or |write| directly, writing all
+the bytes in one shot.  Much better even than writing four
+bytes at a time.
 @z
 
 @x [32.617] l.12280 - Use output_comment if the user set it. Assume it's short enough.
