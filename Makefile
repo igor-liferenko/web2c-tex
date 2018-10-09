@@ -1,4 +1,5 @@
 all:
+	@echo TODO: do not use -ini
 	tie -c tex-final.ch tex.web tex.ch enctex.ch
 	tangle tex tex-final
 	make -C web2c
