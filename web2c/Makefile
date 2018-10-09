@@ -11,5 +11,3 @@ all:
 	gcc -Wimplicit -Wreturn-type -g -O2 -o fixwrites fixwrites.o -L. -lweb2c
 	gcc -DHAVE_CONFIG_H -I. -I.. -I../w2c -Wimplicit -Wreturn-type -g -O2 -c -o splitup.o splitup.c
 	gcc -Wimplicit -Wreturn-type -g -O2 -o splitup splitup.o -L. -lweb2c
-	gcc -DHAVE_CONFIG_H -I. -I./kpathsea -I./../.. -Wimplicit -Wreturn-type -g -O2 -c -o makecpool.o makecpool.c
-	gcc -Wimplicit -Wreturn-type -g -O2 -o makecpool makecpool.o
