@@ -1,5 +1,9 @@
 all:
-	@echo TODO: do not use -ini
+	@echo TODO: do not use -ini:
+	@echo tie -c initex-final.ch tex.web initex.ch enctex.ch \# see initex.ch on ctang - init-tini
+	@echo tangle tex initex-final initex
+	@echo web2c/convert initex
+	@echo ...
 	tie -c tex-final.ch tex.web tex.ch enctex.ch
 	tangle tex tex-final
 	make -C web2c
