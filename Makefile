@@ -4,6 +4,8 @@ all:
 	@echo tangle tex initex-final initex
 	@echo web2c/convert initex
 	@echo ...
+	@echo https://tex.stackexchange.com/questions/417624/installation-procedures-of-early-tex-installations
+	@echo https://tex.stackexchange.com/questions/64000/executables-of-formats-engines-and-executables-of-engines
 	tie -c tex-final.ch tex.web tex.ch enctex.ch
 	tangle tex tex-final
 	make -C web2c
