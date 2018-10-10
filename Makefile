@@ -6,6 +6,7 @@ all:
 	@echo ...
 	@echo https://tex.stackexchange.com/questions/417624/installation-procedures-of-early-tex-installations
 	@echo https://tex.stackexchange.com/questions/64000/executables-of-formats-engines-and-executables-of-engines
+	#TODO: check if this statement is true: Run TANGLE on TEX.WEB and INITEX.CH, obtaining INITEX.PAS and TEX.POOL.
 	tie -c tex-final.ch tex.web tex.ch
 	tangle tex tex-final
 	make -C web2c
