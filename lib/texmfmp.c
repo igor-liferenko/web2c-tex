@@ -882,7 +882,7 @@ maininit (int ac, string *av)
   /* Sanity check: -mltex, -enc, -etex only work in combination with -ini. */
   if (!iniversion) {
 #if !defined(Aleph)
-#if !defined(XeTeX) && !IS_pTeX
+#if 0
     if (enctexp) {
       fprintf(stderr, "-enc only works with -ini\n");
     }
@@ -1620,7 +1620,7 @@ static struct option long_options[]
       { "ipc-start",                 0, &ipcon, 2 },
 #endif /* IPC */
 #if !defined(Aleph)
-#if !defined(XeTeX) && !IS_pTeX
+#if 0
       { "enc",                       0, &enctexp, 1 },
 #endif
 #endif /* !Aleph */
