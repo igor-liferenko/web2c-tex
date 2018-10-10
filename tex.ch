@@ -97,6 +97,12 @@ versions of the program.
 @f Tini==end
 @z
 
+@x [1.8] l.319 - init...tini is dynamic
+@!init @<Initialize table entries (done by \.{INITEX} only)@>@;@+tini
+@y  318
+@!Init @<Initialize table entries (done by \.{INITEX} only)@>@;@+Tini
+@z
+
 @x [1.11] l.375 - Compile-time constants: most removed for dynamic allocation.
 @<Constants...@>=
 @!mem_max=30000; {greatest index in \TeX's internal |mem| array;
@@ -255,15 +261,6 @@ xchr: array [ASCII_code] of text_char;
    { specifies conversion of output characters }
 xprn: array [ASCII_code] of ASCII_code;
    { non zero iff character is printable }
-@z
-
-@x [2.23] l.723 - Translate characters if desired, otherwise allow them all.
-for i:=0 to @'37 do xchr[i]:=' ';
-for i:=@'177 to @'377 do xchr[i]:=' ';
-@y
-{Initialize |xchr| to the identity mapping.}
-for i:=0 to @'37 do xchr[i]:=i;
-for i:=@'177 to @'377 do xchr[i]:=i;
 @z
 
 @x [3.26] l.789 - name_of_file is no longer an array
@@ -506,6 +503,34 @@ to do nothing, since the user should control the terminal.
 @d clear_terminal == do_nothing
 @z
 
+@x [3.37] l.1055 - |init_terminal|, reading the command line.
+@ The following program does the required initialization
+without retrieving a possible command line.
+It should be clear how to modify this routine to deal with command lines,
+if the system permits them.
+@^system dependencies@>
+
+@p function init_terminal:boolean; {gets the terminal input started}
+label exit;
+begin t_open_in;
+@y
+@ The following program does the required initialization.
+Iff anything has been specified on the command line, then |t_open_in|
+will return with |last > first|.
+@^system dependencies@>
+
+@p function init_terminal:boolean; {gets the terminal input started}
+label exit;
+begin t_open_in;
+if last > first then
+  begin loc := first;
+  while (loc < last) and (buffer[loc]=' ') do incr(loc);
+  if loc < last then
+    begin init_terminal := true; goto exit;
+    end;
+  end;
+@z
+
 @x [4.39] l.1131 - Dynamically size pool arrays.
 @!str_pool:packed array[pool_pointer] of packed_ASCII_code; {the characters}
 @!str_start : array[str_number] of pool_pointer; {the starting pointers}
@@ -532,11 +557,6 @@ strcpy (stringcast(name_of_file+1), pool_name); {copy the string}
 if a_open_in (pool_file, kpse_texpool_format) then
 @z
 
-@x [4.51] l.1322 - Make `TEX.POOL' lowercase, and change how it's read.
-else  bad_pool('! I can''t read TEX.POOL.')
-@y
-else  bad_pool('! I can''t read ', pool_name, '; bad path?')
-@z
 @x [4.52] l.1326 - Make `TEX.POOL' lowercase, and change how it's read.
 begin if eof(pool_file) then bad_pool('! TEX.POOL has no check sum.');
 @.TEX.POOL has no check sum@>
@@ -546,23 +566,6 @@ begin if eof(pool_file) then bad_pool('! ', pool_name, ' has no check sum.');
 @.TEX.POOL has no check sum@>
 read(pool_file,m); read(pool_file,n); {read two digits of string length}
 @z
-@x [4.52] l.1332 - Make `TEX.POOL' lowercase, and change how it's read.
-    bad_pool('! TEX.POOL line doesn''t begin with two digits.');
-@y
-    bad_pool('! ', pool_name, ' line doesn''t begin with two digits.');
-@z
-@x [4.53] l.1354 - Make `TEX.POOL' lowercase, and change how it's read.
-  bad_pool('! TEX.POOL check sum doesn''t have nine digits.');
-@y
-  bad_pool('! ', pool_name, ' check sum doesn''t have nine digits.');
-@z
-@x [4.53] l.1360 - Make `TEX.POOL' lowercase, and change how it's read.
-done: if a<>@$ then bad_pool('! TEX.POOL doesn''t match; TANGLE me again.');
-@y
-done: if a<>@$ then
-  bad_pool('! ', pool_name, ' doesn''t match; tangle me again (or fix the path).');
-@z
-
 @x [5.54] l.1422 - error_line
 @!trick_buf:array[0..error_line] of ASCII_code; {circular buffer for
 @y
@@ -649,6 +652,14 @@ been commented~out.
 @y 2424
 @d min_halfword==-@"FFFFFFF {smallest allowable value in a |halfword|}
 @d max_halfword==@"FFFFFFF {largest allowable value in a |halfword|}
+@z
+
+@x [8.111] l.2437 - max_font_max
+if (font_base<min_quarterword)or(font_max>max_quarterword) then bad:=15;
+if font_max>font_base+256 then bad:=16;
+@y
+if (max_font_max<min_halfword)or(max_font_max>max_halfword) then bad:=15;
+if font_max>font_base+max_font_max then bad:=16;
 @z
 
 @x [8.113] l.2453 - data structures for main memory
@@ -744,15 +755,15 @@ end;
 @!nest:^list_state_record;
 @z
 
-@x [17.236] l.4954
-@d int_pars=55 {total number of integer parameters}
+@x [16.215] l.4344 - remove mem[] reference from initialize.
+prev_graf:=0; shown_mode:=0;
+@<Start a new current page@>;
 @y
-@d tex_int_pars=55 {total number of \TeX's integer parameters}
-@#
-@d web2c_int_base=tex_int_pars {base for web2c's integer parameters}
-@d web2c_int_pars=web2c_int_base {total number of web2c's integer parameters}
-@#
-@d int_pars=web2c_int_pars {total number of integer parameters}
+prev_graf:=0; shown_mode:=0;
+@/{The following piece of code is a copy of module 991:}
+page_contents:=empty; page_tail:=page_head; {|link(page_head):=null;|}@/
+last_glue:=max_halfword; last_penalty:=0; last_kern:=0;
+page_depth:=0; page_max_depth:=0;
 @z
 
 @x [17.253] l.5435 - Change eqtb to zeqtb.
@@ -773,6 +784,12 @@ end;
 @!hash_top:pointer; {maximum of the hash array}
 @!eqtb_top:pointer; {maximum of the |eqtb|}
 @!hash_high:pointer; {pointer to next high hash location}
+@z
+
+@x [18.257] l.5491 - hash_extra
+next(hash_base):=0; text(hash_base):=0;
+for k:=hash_base+1 to undefined_control_sequence-1 do hash[k]:=hash[hash_base];
+@y
 @z
 
 @x [19.271] l.5872 - texarray
@@ -831,6 +848,12 @@ expand_depth_count:=0;
 @ The |expand| subroutine is used when |cur_cmd>max_command|. It removes a
 @z
 
+@x [29.516] l.9994 - filenames: more_name
+  if (c=">")or(c=":") then
+@y
+  if IS_DIR_SEP(c) then
+@z
+
 @x [29.517] l.10002 - end_name: string recycling
 @ The third.
 @^system dependencies@>
@@ -873,6 +896,12 @@ if #<>0 then
       print(so(str_pool[j]))
 @z
 
+@x [29.519] l.10051 - pack_file_name, append the extra null
+for k:=name_length+1 to file_name_size do name_of_file[k]:=' ';
+@y
+name_of_file[name_length+1]:=0;
+@z
+
 @x [29.520] l.10060 - filenames: default format.
 @d format_default_length=20 {length of the |TEX_format_default| string}
 @d format_area_length=11 {length of its area part}
@@ -898,6 +927,24 @@ TEX_format_default:='TeXformats:plain.fmt';
 @ We set the name of the default format file and the length of that name
 in C, instead of Pascal, since we want them to depend on the name of the
 program.
+@z
+
+@x [29.523] l.10095 - Change to pack_buffered_name as with pack_file_name.
+for j:=1 to n do append_to_name(xord[TEX_format_default[j]]);
+for j:=a to b do append_to_name(buffer[j]);
+for j:=format_default_length-format_ext_length+1 to format_default_length do
+  append_to_name(xord[TEX_format_default[j]]);
+if k<=file_name_size then name_length:=k@+else name_length:=file_name_size;
+for k:=name_length+1 to file_name_size do name_of_file[k]:=' ';
+@y
+if name_of_file then libc_free (name_of_file);
+name_of_file := xmalloc_array (ASCII_code, n+(b-a+1)+format_ext_length+1);
+for j:=1 to n do append_to_name(xord[ucharcast(TEX_format_default[j])]);
+for j:=a to b do append_to_name(buffer[j]);
+for j:=format_default_length-format_ext_length+1 to format_default_length do
+  append_to_name(xord[ucharcast(TEX_format_default[j])]);
+if k<=file_name_size then name_length:=k@+else name_length:=file_name_size;
+name_of_file[name_length+1]:=0;
 @z
 
 @x [29.525] l.10170 - make_name_string
@@ -944,6 +991,20 @@ loop@+begin
   if kpse_in_name_ok(stringcast(name_of_file+1))
      and a_open_in(cur_file, kpse_tex_format) then
     goto done;
+@z
+
+@x [29.537] l.10350 - start_input: string recycling
+done: name:=a_make_name_string(cur_file);
+@y
+done: name:=a_make_name_string(cur_file);
+source_filename_stack[in_open]:=name;
+full_source_filename_stack[in_open]:=make_full_name_string;
+if name=str_ptr-1 then {we can try to conserve string pool space now}
+  begin temp_str:=search_string(name);
+  if temp_str>0 then
+    begin name:=temp_str; flush_string;
+    end;
+  end;
 @z
 
 @x [30.548] l.10673 - texarray
@@ -1059,6 +1120,29 @@ loop@+begin
   {base addresses for font parameters}
 @z
 
+@x [30.551] l.10743 - texarray
+for k:=font_base to font_max do font_used[k]:=false;
+@y
+@z
+
+@x [30.552] l.10749 - texarray
+font_ptr:=null_font; fmem_ptr:=7;
+font_name[null_font]:="nullfont"; font_area[null_font]:="";
+hyphen_char[null_font]:="-"; skew_char[null_font]:=-1;
+bchar_label[null_font]:=non_address;
+font_bchar[null_font]:=non_char; font_false_bchar[null_font]:=non_char;
+font_bc[null_font]:=1; font_ec[null_font]:=0;
+font_size[null_font]:=0; font_dsize[null_font]:=0;
+char_base[null_font]:=0; width_base[null_font]:=0;
+height_base[null_font]:=0; depth_base[null_font]:=0;
+italic_base[null_font]:=0; lig_kern_base[null_font]:=0;
+kern_base[null_font]:=0; exten_base[null_font]:=0;
+font_glue[null_font]:=null; font_params[null_font]:=7;
+param_base[null_font]:=-1;
+for k:=0 to 6 do font_info[k].sc:=0;
+@y
+@z
+
 @x [30.560] l.10898 - Check lengths
 @!file_opened:boolean; {was |tfm_file| successfully opened?}
 @y
@@ -1066,6 +1150,21 @@ loop@+begin
 @!file_opened:boolean; {was |tfm_file| successfully opened?}
 @z
 
+@x [30.563] l.10961 - Check lengths, don't use TEX_font_area.
+if aire="" then pack_file_name(nom,TEX_font_area,".tfm")
+else pack_file_name(nom,aire,".tfm");
+@y
+name_too_long:=(length(nom)>255)or(length(aire)>255);
+if name_too_long then abort;
+{|kpse_find_file| will append the |".tfm"|, and avoid searching the disk
+ before the font alias files as well.}
+pack_file_name(nom,aire,"");
+@z
+
+% [30.564] Reading the tfm file.  As a special case, whenever we open a
+% tfm file, we read its first byte into `tfm_temp' right away.  TeX
+% looks at `fbyte' before calling `fget', so it ends up seeing every
+% byte.  This is Pascal-like I/O.
 @x [30.564] l.10956 - reading the tfm file, define fget & fbyte
 @d fget==get(tfm_file)
 @d fbyte==tfm_file^
@@ -1077,6 +1176,12 @@ loop@+begin
 % [30.575] We only want `eof' on the TFM file to be true if we
 % previously had EOF, not if we're at EOF now.  This is like `feof', and
 % unlike our implementation of `eof' elsewhere.
+@x [30.575] l.11180 - Reading the tfm file, replace eof() by feof().
+if eof(tfm_file) then abort;
+@y
+if feof(tfm_file) then abort;
+@z
+
 @x [32.595] l.11860 - texarray
 @!dvi_buf:array[dvi_index] of eight_bits; {buffer for \.{DVI} output}
 @!half_buf:dvi_index; {half of |dvi_buf_size|}
@@ -1160,6 +1265,20 @@ another macro.
 @!hyph_link: ^hyph_pointer; {link array for hyphen exceptions hash table}
 @!hyph_count:integer; {the number of words in the exception dictionary}
 @!hyph_next:integer; {next free slot in hyphen exceptions hash table}
+@z
+
+%%%%%%%% dynamic hyph_size
+@x 18145 m.928
+for z:=0 to hyph_size do
+  begin hyph_word[z]:=0; hyph_list[z]:=null;
+  end;
+hyph_count:=0;
+@y  18148
+for z:=0 to hyph_size do
+  begin hyph_word[z]:=0; hyph_list[z]:=null; hyph_link[z]:=0;
+  end;
+hyph_count:=0;
+hyph_next:=hyph_prime+1; if hyph_next>hyph_size then hyph_next:=hyph_prime;
 @z
 
 %%%%%%%% dynamic hyph_size
@@ -1289,6 +1408,12 @@ tini
 tini
 @z
 
+@x [43.951] l.18539 - Dynamically allocate.
+trie_not_ready:=true; trie_root:=0; trie_c[0]:=si(0); trie_ptr:=0;
+@y
+trie_not_ready:=true;
+@z
+
 @x [43.958] l.18634 - bigtrie: Larger tries.
 @<Move the data into |trie|@>=
 h.rh:=0; h.b0:=min_quarterword; h.b1:=min_quarterword; {|trie_link:=0|,
@@ -1373,6 +1498,31 @@ h.rh:=0; h.b0:=min_quarterword; h.b1:=min_quarterword; {|trie_link:=0|,
   too_small(#)@+else format_debug (#)(x); undump_end_end
 @z
 
+@x [50,1307] l.23779 - texarray
+dump_int(@$);@/
+@y
+dump_int(@"57325458);  {Web2C \TeX's magic constant: "W2TX"}
+{Align engine to 4 bytes with one or more trailing NUL}
+x:=strlen(engine_name);
+format_engine:=xmalloc_array(text_char,x+4);
+strcpy(stringcast(format_engine), engine_name);
+for k:=x to x+3 do format_engine[k]:=0;
+x:=x+4-(x mod 4);
+dump_int(x);dump_things(format_engine[0], x);
+libc_free(format_engine);@/
+dump_int(@$);@/
+@<Dump |xord|, |xchr|, and |xprn|@>;
+dump_int(max_halfword);@/
+dump_int(hash_high);
+@z
+
+%%%%%%%% dynamic hyph_size
+@x 23784 m.1307
+dump_int(hyph_size)
+@y  23784
+dump_int(hyph_prime)
+@z
+
 @x [50.1308] l.23793 - texarray
 x:=fmt_file^.int;
 if x<>@$ then goto bad_fmt; {check that strings are the same}
@@ -1428,6 +1578,38 @@ undump_int(hash_high);
     eqtb[x]:=eqtb[undefined_control_sequence];
 @z
 
+@x [50.1308] l.23795 - texarray
+undump_int(x);
+if x<>mem_bot then goto bad_fmt;
+undump_int(x);
+if x<>mem_top then goto bad_fmt;
+@y
+undump_int(x); format_debug ('mem_bot')(x);
+if x<>mem_bot then goto bad_fmt;
+undump_int(mem_top); format_debug ('mem_top')(mem_top);
+if mem_bot+1100>mem_top then goto bad_fmt;
+
+
+head:=contrib_head; tail:=contrib_head;
+     page_tail:=page_head;  {page initialization}
+
+mem_min := mem_bot - extra_mem_bot;
+mem_max := mem_top + extra_mem_top;
+
+yzmem:=xmalloc_array (memory_word, mem_max - mem_min + 1);
+zmem := yzmem - mem_min;   {this pointer arithmetic fails with some compilers}
+mem := zmem;
+@z
+
+%%%%%%%% dynamic hyph_size
+@x 23804 m.1308
+if x<>hyph_size then goto bad_fmt
+@y  23804
+if x<>hyph_prime then goto bad_fmt
+@z
+
+% [1309] Make dumping/undumping more efficient by doing whole arrays at
+% a time, via fread/fwrite in texmfmp.c.
 @x [50.1309] l.23814 - Make dumping/undumping more efficient.
 for k:=0 to str_ptr do dump_int(str_start[k]);
 k:=0;
@@ -1478,12 +1660,247 @@ while k<l do
 dump_things(eqtb[k], l-k);
 @z
 
+@x [50.1321] l.23994 - texarray
+undump_size(7)(font_mem_size)('font mem size')(fmem_ptr);
+for k:=0 to fmem_ptr-1 do undump_wd(font_info[k]);
+undump_size(font_base)(font_max)('font max')(font_ptr);
+for k:=null_font to font_ptr do
+  @<Undump the array info for internal font number |k|@>
+@y
+undump_size(7)(sup_font_mem_size)('font mem size')(fmem_ptr);
+if fmem_ptr>font_mem_size then font_mem_size:=fmem_ptr;
+font_info:=xmalloc_array(fmemory_word, font_mem_size);
+undump_things(font_info[0], fmem_ptr);@/
+undump_size(font_base)(font_base+max_font_max)('font max')(font_ptr);
+{This undumps all of the font info, despite the name.}
+@<Undump the array info for internal font number |k|@>;
+@z
+
+% [50.1322] Dumping font_info.
+% Knuth's code writes all the information relevant to a single font
+% in the same section of the fmt file.  But it's a lot faster to
+% write the arrays of information out, one whole array at a time.
+% So that's the way we handle dumping and undumping font info.
+@x [50.1322] l.24000 - Make dumping/undumping more efficient - tfm
+@ @<Dump the array info for internal font number |k|@>=
+begin dump_qqqq(font_check[k]);
+dump_int(font_size[k]);
+dump_int(font_dsize[k]);
+dump_int(font_params[k]);@/
+dump_int(hyphen_char[k]);
+dump_int(skew_char[k]);@/
+dump_int(font_name[k]);
+dump_int(font_area[k]);@/
+dump_int(font_bc[k]);
+dump_int(font_ec[k]);@/
+dump_int(char_base[k]);
+dump_int(width_base[k]);
+dump_int(height_base[k]);@/
+dump_int(depth_base[k]);
+dump_int(italic_base[k]);
+dump_int(lig_kern_base[k]);@/
+dump_int(kern_base[k]);
+dump_int(exten_base[k]);
+dump_int(param_base[k]);@/
+dump_int(font_glue[k]);@/
+dump_int(bchar_label[k]);
+dump_int(font_bchar[k]);
+dump_int(font_false_bchar[k]);@/
+print_nl("\font"); print_esc(font_id_text(k)); print_char("=");
+print_file_name(font_name[k],font_area[k],"");
+if font_size[k]<>font_dsize[k] then
+  begin print(" at "); print_scaled(font_size[k]); print("pt");
+  end;
+end
+@y
+@ @<Dump the array info for internal font number |k|@>=
+begin
+dump_things(font_check[null_font], font_ptr+1-null_font);
+dump_things(font_size[null_font], font_ptr+1-null_font);
+dump_things(font_dsize[null_font], font_ptr+1-null_font);
+dump_things(font_params[null_font], font_ptr+1-null_font);
+dump_things(hyphen_char[null_font], font_ptr+1-null_font);
+dump_things(skew_char[null_font], font_ptr+1-null_font);
+dump_things(font_name[null_font], font_ptr+1-null_font);
+dump_things(font_area[null_font], font_ptr+1-null_font);
+dump_things(font_bc[null_font], font_ptr+1-null_font);
+dump_things(font_ec[null_font], font_ptr+1-null_font);
+dump_things(char_base[null_font], font_ptr+1-null_font);
+dump_things(width_base[null_font], font_ptr+1-null_font);
+dump_things(height_base[null_font], font_ptr+1-null_font);
+dump_things(depth_base[null_font], font_ptr+1-null_font);
+dump_things(italic_base[null_font], font_ptr+1-null_font);
+dump_things(lig_kern_base[null_font], font_ptr+1-null_font);
+dump_things(kern_base[null_font], font_ptr+1-null_font);
+dump_things(exten_base[null_font], font_ptr+1-null_font);
+dump_things(param_base[null_font], font_ptr+1-null_font);
+dump_things(font_glue[null_font], font_ptr+1-null_font);
+dump_things(bchar_label[null_font], font_ptr+1-null_font);
+dump_things(font_bchar[null_font], font_ptr+1-null_font);
+dump_things(font_false_bchar[null_font], font_ptr+1-null_font);
+for k:=null_font to font_ptr do
+  begin print_nl("\font"); print_esc(font_id_text(k)); print_char("=");
+  print_file_name(font_name[k],font_area[k],"");
+  if font_size[k]<>font_dsize[k] then
+    begin print(" at "); print_scaled(font_size[k]); print("pt");
+    end;
+  end;
+end
+@z
+
+@x [50.1322] l.24031 - Make dumping/undumping more efficient - tfm
+@ @<Undump the array info for internal font number |k|@>=
+begin undump_qqqq(font_check[k]);@/
+undump_int(font_size[k]);
+undump_int(font_dsize[k]);
+undump(min_halfword)(max_halfword)(font_params[k]);@/
+undump_int(hyphen_char[k]);
+undump_int(skew_char[k]);@/
+undump(0)(str_ptr)(font_name[k]);
+undump(0)(str_ptr)(font_area[k]);@/
+undump(0)(255)(font_bc[k]);
+undump(0)(255)(font_ec[k]);@/
+undump_int(char_base[k]);
+undump_int(width_base[k]);
+undump_int(height_base[k]);@/
+undump_int(depth_base[k]);
+undump_int(italic_base[k]);
+undump_int(lig_kern_base[k]);@/
+undump_int(kern_base[k]);
+undump_int(exten_base[k]);
+undump_int(param_base[k]);@/
+undump(min_halfword)(lo_mem_max)(font_glue[k]);@/
+undump(0)(fmem_ptr-1)(bchar_label[k]);
+undump(min_quarterword)(non_char)(font_bchar[k]);
+undump(min_quarterword)(non_char)(font_false_bchar[k]);
+end
+@y
+@ This module should now be named `Undump all the font arrays'.
+
+@<Undump the array info for internal font number |k|@>=
+begin {Allocate the font arrays}
+font_check:=xmalloc_array(four_quarters, font_max);
+font_size:=xmalloc_array(scaled, font_max);
+font_dsize:=xmalloc_array(scaled, font_max);
+font_params:=xmalloc_array(font_index, font_max);
+font_name:=xmalloc_array(str_number, font_max);
+font_area:=xmalloc_array(str_number, font_max);
+font_bc:=xmalloc_array(eight_bits, font_max);
+font_ec:=xmalloc_array(eight_bits, font_max);
+font_glue:=xmalloc_array(halfword, font_max);
+hyphen_char:=xmalloc_array(integer, font_max);
+skew_char:=xmalloc_array(integer, font_max);
+bchar_label:=xmalloc_array(font_index, font_max);
+font_bchar:=xmalloc_array(nine_bits, font_max);
+font_false_bchar:=xmalloc_array(nine_bits, font_max);
+char_base:=xmalloc_array(integer, font_max);
+width_base:=xmalloc_array(integer, font_max);
+height_base:=xmalloc_array(integer, font_max);
+depth_base:=xmalloc_array(integer, font_max);
+italic_base:=xmalloc_array(integer, font_max);
+lig_kern_base:=xmalloc_array(integer, font_max);
+kern_base:=xmalloc_array(integer, font_max);
+exten_base:=xmalloc_array(integer, font_max);
+param_base:=xmalloc_array(integer, font_max);
+
+undump_things(font_check[null_font], font_ptr+1-null_font);
+undump_things(font_size[null_font], font_ptr+1-null_font);
+undump_things(font_dsize[null_font], font_ptr+1-null_font);
+undump_checked_things(min_halfword, max_halfword,
+                      font_params[null_font], font_ptr+1-null_font);
+undump_things(hyphen_char[null_font], font_ptr+1-null_font);
+undump_things(skew_char[null_font], font_ptr+1-null_font);
+undump_upper_check_things(str_ptr, font_name[null_font], font_ptr+1-null_font);
+undump_upper_check_things(str_ptr, font_area[null_font], font_ptr+1-null_font);
+{There's no point in checking these values against the range $[0,255]$,
+ since the data type is |unsigned char|, and all values of that type are
+ in that range by definition.}
+undump_things(font_bc[null_font], font_ptr+1-null_font);
+undump_things(font_ec[null_font], font_ptr+1-null_font);
+undump_things(char_base[null_font], font_ptr+1-null_font);
+undump_things(width_base[null_font], font_ptr+1-null_font);
+undump_things(height_base[null_font], font_ptr+1-null_font);
+undump_things(depth_base[null_font], font_ptr+1-null_font);
+undump_things(italic_base[null_font], font_ptr+1-null_font);
+undump_things(lig_kern_base[null_font], font_ptr+1-null_font);
+undump_things(kern_base[null_font], font_ptr+1-null_font);
+undump_things(exten_base[null_font], font_ptr+1-null_font);
+undump_things(param_base[null_font], font_ptr+1-null_font);
+undump_checked_things(min_halfword, lo_mem_max,
+                     font_glue[null_font], font_ptr+1-null_font);
+undump_checked_things(0, fmem_ptr-1,
+                     bchar_label[null_font], font_ptr+1-null_font);
+undump_checked_things(min_quarterword, non_char,
+                     font_bchar[null_font], font_ptr+1-null_font);
+undump_checked_things(min_quarterword, non_char,
+                     font_false_bchar[null_font], font_ptr+1-null_font);
+end
+@z
+
+%%%%%%%% dynamic hyph_size
+@x 24058 m.1324
+dump_int(hyph_count);
+for k:=0 to hyph_size do if hyph_word[k]<>0 then
+  begin dump_int(k); dump_int(hyph_word[k]); dump_int(hyph_list[k]);
+  end;
+@y  24061
+dump_int(hyph_count);
+if hyph_next <= hyph_prime then hyph_next:=hyph_size;
+dump_int(hyph_next);{minumum value of |hyphen_size| needed}
+for k:=0 to hyph_size do if hyph_word[k]<>0 then
+  begin dump_int(k+65536*hyph_link[k]);
+        {assumes number of hyphen exceptions does not exceed 65535}
+   dump_int(hyph_word[k]); dump_int(hyph_list[k]);
+  end;
+@z
+
 @x [50.1324] l.24066 - Make dumping/undumping more efficient - trie
 for k:=0 to trie_max do dump_hh(trie[k]);
 @y
 dump_things(trie_trl[0], trie_max+1);
 dump_things(trie_tro[0], trie_max+1);
 dump_things(trie_trc[0], trie_max+1);
+@z
+
+@x [50.1324] l.24068 - Make dumping/undumping more efficient - trie
+for k:=1 to trie_op_ptr do
+  begin dump_int(hyf_distance[k]);
+  dump_int(hyf_num[k]);
+  dump_int(hyf_next[k]);
+  end;
+@y
+dump_things(hyf_distance[1], trie_op_ptr);
+dump_things(hyf_num[1], trie_op_ptr);
+dump_things(hyf_next[1], trie_op_ptr);
+@z
+
+@x 24087 m.1325
+undump(0)(hyph_size)(hyph_count);
+for k:=1 to hyph_count do
+  begin undump(0)(hyph_size)(j);
+  undump(0)(str_ptr)(hyph_word[j]);
+  undump(min_halfword)(max_halfword)(hyph_list[j]);
+  end;
+@y  24092
+undump_size(0)(hyph_size)('hyph_size')(hyph_count);
+undump_size(hyph_prime)(hyph_size)('hyph_size')(hyph_next);
+j:=0;
+for k:=1 to hyph_count do
+  begin undump_int(j); if j<0 then goto bad_fmt;
+   if j>65535 then
+   begin hyph_next:= j div 65536; j:=j - hyph_next * 65536; end
+       else hyph_next:=0;
+   if (j>=hyph_size)or(hyph_next>hyph_size) then goto bad_fmt;
+   hyph_link[j]:=hyph_next;
+  undump(0)(str_ptr)(hyph_word[j]);
+  undump(min_halfword)(max_halfword)(hyph_list[j]);
+  end;
+  {|j| is now the largest occupied location in |hyph_word|}
+  incr(j);
+  if j<hyph_prime then j:=hyph_prime;
+  hyph_next:=j;
+  if hyph_next >= hyph_size then hyph_next:=hyph_prime else
+  if hyph_next >= hyph_prime then incr(hyph_next);
 @z
 
 @x [50.1325] l.24094 - Make dumping/undumping more efficient - trie
@@ -1497,6 +1914,26 @@ if not trie_tro then trie_tro:=xmalloc_array(trie_pointer,j+1);
 undump_things(trie_tro[0], j+1);
 if not trie_trc then trie_trc:=xmalloc_array(quarterword, j+1);
 undump_things(trie_trc[0], j+1);
+@z
+
+@x [50.1325] l.24096 - Make dumping/undumping more efficient - trie
+for k:=1 to j do
+  begin undump(0)(63)(hyf_distance[k]); {a |small_number|}
+  undump(0)(63)(hyf_num[k]);
+  undump(min_quarterword)(max_quarterword)(hyf_next[k]);
+  end;
+@y
+{I'm not sure we have such a strict limitation (64) on these values, so
+ let's leave them unchecked.}
+undump_things(hyf_distance[1], j);
+undump_things(hyf_num[1], j);
+undump_upper_check_things(max_trie_op, hyf_next[1], j);
+@z
+
+@x [50.1327] l.24172 - Test for end-of-file already done by undump.
+if (x<>69069)or eof(fmt_file) then goto bad_fmt
+@y
+if x<>69069 then goto bad_fmt
 @z
 
 @x [51.1332] l.24203 - make the main program a procedure, for eqtb hack.
@@ -1614,6 +2051,18 @@ begin @!{|start_here|}
 @+Tini
 @z
 
+@x [51.1332] l.24215 - INI = VIR, so pool init needs runtime test
+@!init if not get_strings_started then goto final_end;
+init_prim; {call |primitive| for each primitive}
+init_str_ptr:=str_ptr; init_pool_ptr:=pool_ptr; fix_date_and_time;
+tini@/
+@y
+@!Init if not get_strings_started then goto final_end;
+init_prim; {call |primitive| for each primitive}
+init_str_ptr:=str_ptr; init_pool_ptr:=pool_ptr; fix_date_and_time;
+Tini@/
+@z
+
 @x [51.1332] l.24225 - main
 end_of_TEX: close_files_and_terminate;
 final_end: ready_already:=0;
@@ -1636,6 +2085,83 @@ end {|main_body|};
   store_fmt_file; return;@+Tini@/
 @z
 
+@x [51.1337] l.24366 - Dynamic arrays size.
+  w_close(fmt_file);
+@y
+  w_close(fmt_file);
+  eqtb:=zeqtb;
+@z
+
+@x [51.1337] l.24371 - Allocate hyphenation tries, do char translation
+fix_date_and_time;@/
+@y
+fix_date_and_time;@/
+
+@!init
+if trie_not_ready then begin {initex without format loaded}
+  trie_trl:=xmalloc_array (trie_pointer, trie_size);
+  trie_tro:=xmalloc_array (trie_pointer, trie_size);
+  trie_trc:=xmalloc_array (quarterword, trie_size);
+
+  trie_c:=xmalloc_array (packed_ASCII_code, trie_size);
+  trie_o:=xmalloc_array (trie_opcode, trie_size);
+  trie_l:=xmalloc_array (trie_pointer, trie_size);
+  trie_r:=xmalloc_array (trie_pointer, trie_size);
+  trie_hash:=xmalloc_array (trie_pointer, trie_size);
+  trie_taken:=xmalloc_array (boolean, trie_size);
+
+  trie_root:=0; trie_c[0]:=si(0); trie_ptr:=0;
+
+  {Allocate and initialize font arrays}
+  font_check:=xmalloc_array(four_quarters, font_max);
+  font_size:=xmalloc_array(scaled, font_max);
+  font_dsize:=xmalloc_array(scaled, font_max);
+  font_params:=xmalloc_array(font_index, font_max);
+  font_name:=xmalloc_array(str_number, font_max);
+  font_area:=xmalloc_array(str_number, font_max);
+  font_bc:=xmalloc_array(eight_bits, font_max);
+  font_ec:=xmalloc_array(eight_bits, font_max);
+  font_glue:=xmalloc_array(halfword, font_max);
+  hyphen_char:=xmalloc_array(integer, font_max);
+  skew_char:=xmalloc_array(integer, font_max);
+  bchar_label:=xmalloc_array(font_index, font_max);
+  font_bchar:=xmalloc_array(nine_bits, font_max);
+  font_false_bchar:=xmalloc_array(nine_bits, font_max);
+  char_base:=xmalloc_array(integer, font_max);
+  width_base:=xmalloc_array(integer, font_max);
+  height_base:=xmalloc_array(integer, font_max);
+  depth_base:=xmalloc_array(integer, font_max);
+  italic_base:=xmalloc_array(integer, font_max);
+  lig_kern_base:=xmalloc_array(integer, font_max);
+  kern_base:=xmalloc_array(integer, font_max);
+  exten_base:=xmalloc_array(integer, font_max);
+  param_base:=xmalloc_array(integer, font_max);
+
+  font_ptr:=null_font; fmem_ptr:=7;
+  font_name[null_font]:="nullfont"; font_area[null_font]:="";
+  hyphen_char[null_font]:="-"; skew_char[null_font]:=-1;
+  bchar_label[null_font]:=non_address;
+  font_bchar[null_font]:=non_char; font_false_bchar[null_font]:=non_char;
+  font_bc[null_font]:=1; font_ec[null_font]:=0;
+  font_size[null_font]:=0; font_dsize[null_font]:=0;
+  char_base[null_font]:=0; width_base[null_font]:=0;
+  height_base[null_font]:=0; depth_base[null_font]:=0;
+  italic_base[null_font]:=0; lig_kern_base[null_font]:=0;
+  kern_base[null_font]:=0; exten_base[null_font]:=0;
+  font_glue[null_font]:=null; font_params[null_font]:=7;
+  param_base[null_font]:=-1;
+  for font_k:=0 to 6 do font_info[font_k].sc:=0;
+  end;
+  tini@/
+
+  font_used:=xmalloc_array (boolean, font_max);
+  for font_k:=font_base to font_max do font_used[font_k]:=false;
+@z
+
+% [52.1338] Core-dump in debugging mode on 0 input.  Under Unix, it's
+% not possible to portably switch into the debugger while a program is
+% running.  The best approximation is to do a core dump, then run the
+% debugger on it later.
 @x [53.1370] l.24770 - \write18{foo}
 begin @<Expand macros in the token list
 @y
