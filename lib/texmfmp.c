@@ -872,6 +872,10 @@ maininit (int ac, string *av)
       virversion = true;
 #endif /* TeX */
     }
+
+    if (main_input_file == NULL) {
+      if (argc > 1) dump_name = argv[1] + 1;
+    }
   }
   
 #ifdef TeX
