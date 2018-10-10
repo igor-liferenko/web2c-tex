@@ -872,18 +872,6 @@ maininit (int ac, string *av)
       virversion = true;
 #endif /* TeX */
     }
-
-    // in banner print format specified in argument list via '&' (to imitate dump)
-    if (main_input_file == NULL) {
-      if (argc > 1 && *argv[1] == '&') dump_name = argv[1] + 1;
-    }
-
-    if (!dump_name) {
-      /* If called as *vir{mf,tex,mpost} or tex, use `plain'.  Otherwise, use the
-         name we were invoked under.  */
-      dump_name = (virversion || FILESTRCASEEQ (kpse_program_name, "tex") ?
-                   "plain" : kpse_program_name);
-    }
   }
   
 #ifdef TeX
