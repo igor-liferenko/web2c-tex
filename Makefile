@@ -1,3 +1,4 @@
+# https://bencane.com/2011/09/22/kill-creating-a-core-dump/
 all:
 	@echo TODO: do not use -ini:
 	@echo tie -c initex-final.ch tex.web initex.ch \# see initex.ch on CTAN - init-tini
