@@ -1,8 +1,0 @@
-@@ -578,7 +578,6 @@
- for valid substitutions.
- %
- % 93/10/29 \leaders bug detected by Eberhard Mattes
--%      ==> prevent nullfont from being sent to .dvi file (B.R.)
- (Additional it is necessary to be careful---if leaders are used
- the current hlist is normally traversed more than once!)
- @^inner loop@>
