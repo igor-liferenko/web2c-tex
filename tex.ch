@@ -7,6 +7,15 @@
 \let\maybe=\iffalse
 @z
 
+@x [1.4] l.233 - program header
+Actually the heading shown here is not quite normal: The |program| line
+does not mention any |output| file, because \ph\ would ask the \TeX\ user
+to specify a file name if |output| were specified here.
+@:PASCAL H}{\ph@>
+@^system dependencies@>
+@y
+@z
+
 @x [1.4] l.243 - labels in outer block not needed
 program TEX; {all file names are defined dynamically}
 label @<Labels in the outer block@>@/
