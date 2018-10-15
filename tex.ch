@@ -1773,6 +1773,14 @@ if trie_not_ready then begin {initex without format loaded}
 % not possible to portably switch into the debugger while a program is
 % running.  The best approximation is to do a core dump, then run the
 % debugger on it later.
+@x [52.1338] l.24411 - Core-dump in debugging mode on 0 input.
+    begin goto breakpoint;@\ {go to every label at least once}
+    breakpoint: m:=0; @{'BREAKPOINT'@}@\
+    end
+@y
+    dump_core {do something to cause a core dump}
+@z
+
 @x [53.1370] l.24770 - \write18{foo}
 begin @<Expand macros in the token list
 @y
