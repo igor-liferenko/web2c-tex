@@ -806,52 +806,6 @@ begin if p>mem_end then print_esc("CLOBBERED.")
 else  begin if (font(p)>font_max) then print_char("*")
 @z
 
-@x [16.211] l.4256
-begin if m>0 then
-  case m div (max_command+1) of
-  0:print("vertical");
-  1:print("horizontal");
-  2:print("display math");
-  end
-else if m=0 then print("no")
-else  case (-m) div (max_command+1) of
-  0:print("internal vertical");
-  1:print("restricted horizontal");
-  2:print("math");
-  end;
-print(" mode");
-end;
-@y
-begin if m>0 then
-  case m div (max_command+1) of
-  0:print("vertical mode");
-  1:print("horizontal mode");
-  2:print("display math mode");
-  end
-else if m=0 then print("no mode")
-else  case (-m) div (max_command+1) of
-  0:print("internal vertical mode");
-  1:print("restricted horizontal mode");
-  2:print("math mode");
-  end;
-end;
-
-procedure print_in_mode(@!m:integer); {prints the mode represented by |m|}
-begin if m>0 then
-  case m div (max_command+1) of
-  0:print("' in vertical mode");
-  1:print("' in horizontal mode");
-  2:print("' in display math mode");
-  end
-else if m=0 then print("' in no mode")
-else  case (-m) div (max_command+1) of
-  0:print("' in internal vertical mode");
-  1:print("' in restricted horizontal mode");
-  2:print("' in math mode");
-  end;
-end;
-@z
-
 @x [16.213] l.4321 - texarray
 @!nest:array[0..nest_size] of list_state_record;
 @y
