@@ -790,6 +790,22 @@ are debugging.)
 @t\hskip10pt@>@!was_free: packed array [0..9] of boolean;
 @z
 
+@x [12.174] l.3526 - Eliminate unsigned comparisons to zero.
+        begin if (font(p)<font_base)or(font(p)>font_max) then
+@y
+        begin if (font(p)>font_max) then
+@z
+
+@x [12.176] l.3563 - Eliminate unsigned comparisons to zero.
+@p procedure print_font_and_char(@!p:integer); {prints |char_node| data}
+begin if p>mem_end then print_esc("CLOBBERED.")
+else  begin if (font(p)<font_base)or(font(p)>font_max) then print_char("*")
+@y
+@p procedure print_font_and_char(@!p:integer); {prints |char_node| data}
+begin if p>mem_end then print_esc("CLOBBERED.")
+else  begin if (font(p)>font_max) then print_char("*")
+@z
+
 @x [16.211] l.4256
 begin if m>0 then
   case m div (max_command+1) of
