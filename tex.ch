@@ -474,6 +474,12 @@ if last > first then
   end;
 @z
 
+@x [3.37] l.1068 - |init_terminal|, output missing newline.
+    write(term_out,'! End of file on the terminal... why?');
+@y
+    write_ln(term_out,'! End of file on the terminal... why?');
+@z
+
 @x [4.39] l.1131 - Dynamically size pool arrays.
 @!str_pool:packed array[pool_pointer] of packed_ASCII_code; {the characters}
 @!str_start : array[str_number] of pool_pointer; {the starting pointers}
