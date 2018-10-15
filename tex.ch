@@ -936,26 +936,6 @@ expand_depth_count:=0;
   if c="/" then
 @z
 
-@x [29.517] l.10002 - end_name: string recycling
-@ The third.
-@^system dependencies@>
-
-@p procedure end_name;
-@y
-@ The third.
-@^system dependencies@>
-If a string is already in the string pool, the function
-|slow_make_string| does not create a new string but returns this string
-number, thus saving string space.  Because of this new property of the
-returned string number it is not possible to apply |flush_string| to
-these strings.
-
-@p procedure end_name;
-var temp_str: str_number; {result of file name cache lookups}
-@!j,@!s,@!t: pool_pointer; {running indices}
-@!must_quote:boolean; {whether we need to quote a string}
-@z
-
 @x [29.518] l.10042 - print_file_name: quote if spaces in names.
 some operating systems put the file area last instead of first.)
 @^system dependencies@>
