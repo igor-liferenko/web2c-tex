@@ -198,6 +198,15 @@ we still have to declare the symbolic names.
 @y
 @z
 
+% The text_char type is used as an array index into xord.  The
+% default type `char' produces signed integers, which are bad array
+% indices in C.
+@x [2.19] l.565 - data type text_char is 8-bit ASCII_code
+@d text_char == char {the data type of characters in text files}
+@y
+@d text_char == ASCII_code {the data type of characters in text files}
+@z
+
 @x [2.20] l.579 - printable characters
 @!xchr: array [ASCII_code] of text_char;
   {specifies conversion of output characters}
