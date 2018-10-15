@@ -1301,6 +1301,12 @@ end;
   end
 @z
 
+@x [32.645] l.12780 - use print_file_name
+  print_nl("Output written on "); slow_print(output_file_name);
+@y
+  print_nl("Output written on "); print_file_name(0, output_file_name, 0);
+@z
+
 @x [42.920] l.18068 - bigtrie: allow larger hyphenation tries.
 @!trie_pointer=0..trie_size; {an index into |trie|}
 @y
