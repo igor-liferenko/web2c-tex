@@ -669,6 +669,13 @@ noreturn procedure confusion(@!s:str_number);
 @<Glob...@>=
 @z
 
+@x [7.109] l.2352 - Define glue_ratio in C.
+@!glue_ratio=real; {one-word representation of a glue expansion factor}
+@y
+@z
+
+% [8.110] Make it easy to change constants.  Do not increase
+% max_quarterword without changing the memoryword structure in `texmfmem.h'.
 @x [8.110] l.2422 - increase |max_halfword|
 @d min_halfword==0 {smallest allowable value in a |halfword|}
 @d max_halfword==65535 {largest allowable value in a |halfword|}
