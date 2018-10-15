@@ -217,13 +217,6 @@ xprn: array [ASCII_code] of ASCII_code;
    { non zero iff character is printable }
 @z
 
-@x [3.26] l.789 - name_of_file is no longer an array
-@!name_of_file:packed array[1..file_name_size] of char;@;@/
-  {on some systems this may be a \&{record} variable}
-@y
-@!name_of_file:^text_char;
-@z
-
 @x [3.27] l.794 - Do file opening in C.
 @ The \ph\ compiler with which the present version of \TeX\ was prepared has
 extended the rules of \PASCAL\ in a very convenient way. To open file~|f|,
