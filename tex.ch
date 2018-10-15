@@ -781,6 +781,15 @@ are debugging.)
 @d free==free_arr
 @z
 
+@x [11.165] l.3367 - dummy |free| and |was_free| arrays
+@!debug @!free: packed array [mem_min..mem_max] of boolean; {free cells}
+@t\hskip10pt@>@!was_free: packed array [mem_min..mem_max] of boolean;
+@y
+ {The debug memory arrays have not been mallocated yet.}
+@!debug @!free: packed array [0..9] of boolean; {free cells}
+@t\hskip10pt@>@!was_free: packed array [0..9] of boolean;
+@z
+
 @x [16.211] l.4256
 begin if m>0 then
   case m div (max_command+1) of
