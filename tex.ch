@@ -936,28 +936,6 @@ expand_depth_count:=0;
   if c="/" then
 @z
 
-@x [29.518] l.10042 - print_file_name: quote if spaces in names.
-some operating systems put the file area last instead of first.)
-@^system dependencies@>
-@y
-some operating systems put the file area last instead of first.)
-@^system dependencies@>
-
-@d check_quoted(#) == {check if string |#| needs quoting}
-if #<>0 then begin
-  j:=str_start[#];
-  while (not must_quote) and (j<str_start[#+1]) do begin
-    must_quote:=str_pool[j]=" "; incr(j);
-  end;
-end
-@#
-@d print_quoted(#) == {print string |#|, omitting quotes}
-if #<>0 then
-  for j:=str_start[#] to str_start[#+1]-1 do
-    if so(str_pool[j])<>"""" then
-      print(so(str_pool[j]))
-@z
-
 @x [29.519] l.10051 - pack_file_name, append the extra null
 for k:=name_length+1 to file_name_size do name_of_file[k]:=' ';
 @y
