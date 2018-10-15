@@ -567,6 +567,10 @@ read(pool_file,m); read(pool_file,n); {read two digits of string length}
 @d unspecified_mode=4 {extra value for command-line switch}
 @z
 
+% [6.81] Eliminate nonlocal goto, since C doesn't have them.
+% Plus, it's nicer just to do an exit with the appropriate status code
+% under Unix.  We call it `uexit' because there's a WEB symbol called
+% `exit' already.  We use a C macro to change `uexit' back to `exit'.
 @x [6.81] l.1852 - Eliminate nonlocal goto, since C doesn't have them.
 @<Error hand...@>=
 procedure jump_out;
