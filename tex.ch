@@ -867,6 +867,12 @@ is conditionally compiled in the C code.
 @!zeqtb:^memory_word;
 @z
 
+@x [18.262] l.5584 - Remove more unsigned comparisons to zero.
+else if (text(p)<0)or(text(p)>=str_ptr) then print_esc("NONEXISTENT.")
+@y
+else if (text(p)>=str_ptr) then print_esc("NONEXISTENT.")
+@z
+
 @x [19.271] l.5872 - texarray
 @!save_stack : array[0..save_size] of memory_word;
 @y
