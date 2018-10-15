@@ -42,8 +42,30 @@ we still have to declare the symbolic names.
 @d final_end=9999 {this label marks the ending of the program}
 @z
 
-% Here we change these WEB symbols, which are used much as #ifdef's
-% are in C, into something which will get translated into actual #ifdef's.
+------------------------------------
+Here we change these WEB symbols, which are used much as #ifdef's
+are in C, into something which will get translated into actual #ifdef's.
+
+@x [1.7] l.292 - debug..gubed, stat..tats
+@d debug==@{ {change this to `$\\{debug}\equiv\null$' when debugging}
+@d gubed==@t@>@} {change this to `$\\{gubed}\equiv\null$' when debugging}
+@y
+@d debug==ifdef('TEXMF_DEBUG')
+@d gubed==endif('TEXMF_DEBUG')
+@z
+
+@x [1.7] l.297 - debug..gubed, stat..tats
+@d stat==@{ {change this to `$\\{stat}\equiv\null$' when gathering
+  usage statistics}
+@d tats==@t@>@} {change this to `$\\{tats}\equiv\null$' when gathering
+  usage statistics}
+@y
+@d stat==ifdef('STAT')
+@d tats==endif('STAT')
+@z
+
+-----------------------------------------------
+
 @x [1.8] Somewhat different for `init...tini'..  310 m.8
 the codewords `$|init|\ldots|tini|$'.
 
