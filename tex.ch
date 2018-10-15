@@ -641,6 +641,20 @@ procedure fatal_error(@!s:str_number); {prints |s|, and that's it}
 noreturn procedure fatal_error(@!s:str_number); {prints |s|, and that's it}
 @z
 
+FIXME: why is it needed ????????????????????????????????
+@x [6.94] l.2065 - Declare overflow as noreturn.
+procedure overflow(@!s:str_number;@!n:integer); {stop due to finiteness}
+@y
+noreturn procedure overflow(@!s:str_number;@!n:integer); {stop due to finiteness}
+@z
+
+FIXME: why is it needed ????????????????????????????????
+@x [6.95] l.2084 - Declare confusion as noreturn.
+procedure confusion(@!s:str_number);
+@y
+noreturn procedure confusion(@!s:str_number);
+@z
+
 @x [7.104] l.2227 - avoid name conflicts with lib routine remainder()
 |remainder|, holds the remainder after a division.
 
