@@ -936,6 +936,16 @@ expand_depth_count:=0;
   if c="/" then
 @z
 
+% [29.519] In pack_file_name, leave room for the extra null we append at
+% the end of a filename.
+@x [29.519] l.10047 - pack_file_name, leave room for the extra null
+begin k:=0;
+@y
+begin k:=0;
+if name_of_file then libc_free (name_of_file);
+name_of_file:= xmalloc_array (ASCII_code, length(a)+length(n)+length(e)+1);
+@z
+
 @x [29.519] l.10051 - pack_file_name, append the extra null
 for k:=name_length+1 to file_name_size do name_of_file[k]:=' ';
 @y
