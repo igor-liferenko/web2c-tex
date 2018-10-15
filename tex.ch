@@ -332,11 +332,7 @@ else  begin last_nonblank:=first;
   end;
 end;
 @y
-We define |input_ln| in C, for efficiency. Nevertheless we quote the module
-`Report overflow of the input buffer, and abort' here in order to make
-\.{WEAVE} happy, since part of that module is needed by e-TeX.
-
-@p @{ @<Report overflow of the input buffer, and abort@> @}
+We define |input_ln| in C, for efficiency.
 @z
 
 % [3.32] `term_in' and `term_out' are standard input and output.
