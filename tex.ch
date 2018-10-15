@@ -407,7 +407,6 @@ tini@/
 @!dvi_buf_size:integer; {size of the output buffer; must be a multiple of 8}
 @!expand_depth:integer; {limits recursive calls to the |expand| procedure}
 @!parse_first_line_p:cinttype; {parse the first line for options}
-@!file_line_error_style_p:cinttype; {format messages as file:line:error}
 @!eight_bit_p:cinttype; {make all characters printable by default}
 @!halt_on_error_p:cinttype; {stop at first error}
 @!quoted_filename:boolean; {current filename is quoted}
@@ -560,11 +559,6 @@ read(pool_file,m,n); {read two digits of string length}
 begin if eof(pool_file) then bad_pool('! ', pool_name, ' has no check sum.');
 @.TEX.POOL has no check sum@>
 read(pool_file,m); read(pool_file,n); {read two digits of string length}
-@z
-@x [5.54] l.1422 - error_line
-@!trick_buf:array[0..error_line] of ASCII_code; {circular buffer for
-@y
-@!trick_buf:array[0..ssup_error_line] of ASCII_code; {circular buffer for
 @z
 
 @x [6.73] l.1732 - Add unspecified_mode.
@@ -799,7 +793,7 @@ for k:=hash_base+1 to undefined_control_sequence-1 do hash[k]:=hash[hash_base];
 @!input_stack : ^in_state_record;
 @z
 
-@x [22.304] l.6536 - texarray; additions for file:line:error style.
+@x [22.304] l.6536 - texarray
 @!input_file : array[1..max_in_open] of alpha_file;
 @!line : integer; {current line number in the current source file}
 @!line_stack : array[1..max_in_open] of integer;
@@ -807,8 +801,6 @@ for k:=hash_base+1 to undefined_control_sequence-1 do hash[k]:=hash[hash_base];
 @!input_file : ^alpha_file;
 @!line : integer; {current line number in the current source file}
 @!line_stack : ^integer;
-@!source_filename_stack : ^str_number;
-@!full_source_filename_stack : ^str_number;
 @z
 
 @x [22.308] l.6701 - texarray
@@ -2224,28 +2216,6 @@ end;
 
 @<Glob...@> =
 @!debug_format_file: boolean;
-
-
-@ A helper for printing file:line:error style messages.  Look for a
-filename in |full_source_filename_stack|, and if we fail to find
-one fall back on the non-file:line:error style.
-
-@<Basic print...@>=
-procedure print_file_line;
-var level: 0..max_in_open;
-begin
-  level:=in_open;
-  while (level>0) and (full_source_filename_stack[level]=0) do
-    decr(level);
-  if level=0 then
-    print_nl("! ")
-  else begin
-    print_nl (""); print (full_source_filename_stack[level]); print (":");
-    if level=in_open then print_int (line)
-    else print_int (line_stack[level+1]);
-    print (": ");
-  end;
-end;
 
 @ To be able to determine whether \.{\\write18} is enabled from within
 \TeX\ we also implement \.{\\eof18}.  We sort of cheat by having an
