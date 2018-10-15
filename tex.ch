@@ -1025,6 +1025,13 @@ var k:0..buf_size; {index into |buffer|}
 @!saved_cur_area:str_number; {to catch empty terminal input}
 @z
 
+@x [29.532] l.10263 - avoid conflict, `logname' in <unistd.h> on some systems.
+@d ensure_dvi_open==if output_file_name=0 then
+@y
+@d log_name == texmf_log_name
+@d ensure_dvi_open==if output_file_name=0 then
+@z
+
 @x [29.534] l.10285 - Adjust for C string conventions.
 @!months:packed array [1..36] of char; {abbreviations of month names}
 @y
