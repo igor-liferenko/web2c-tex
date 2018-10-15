@@ -1307,38 +1307,6 @@ end;
   print_nl("Output written on "); print_file_name(0, output_file_name, 0);
 @z
 
-@x [42.920] l.18068 - bigtrie: allow larger hyphenation tries.
-@!trie_pointer=0..trie_size; {an index into |trie|}
-@y
-@!trie_pointer=0..ssup_trie_size; {an index into |trie|}
-@!trie_opcode=0..ssup_trie_opcode;  {a trie opcode}
-@z
-
-@x [42.921] l.18070 - bigtrie: allow larger hyphenation tries.
-@ @d trie_link(#)==trie[#].rh {``downward'' link in a trie}
-@d trie_char(#)==trie[#].b1 {character matched at this trie location}
-@d trie_op(#)==trie[#].b0 {program for hyphenation at this trie location}
-@y
-@ For more than 255 trie op codes, the three fields |trie_link|, |trie_char|,
-and |trie_op| will no longer fit into one memory word; thus using web2c
-we define |trie| as three array instead of an array of records.
-The variant will be implented by reusing the opcode field later on with
-another macro.
-
-@d trie_link(#)==trie_trl[#] {``downward'' link in a trie}
-@d trie_char(#)==trie_trc[#] {character matched at this trie location}
-@d trie_op(#)==trie_tro[#] {program for hyphenation at this trie location}
-@z
-
-@x [42.921] l.18075 - bigtrie: allow larger hyphenation tries.
-@!trie:array[trie_pointer] of two_halves; {|trie_link|, |trie_char|, |trie_op|}
-@y
-{We will dynamically allocate these arrays.}
-@!trie_trl:^trie_pointer; {|trie_link|}
-@!trie_tro:^trie_pointer; {|trie_op|}
-@!trie_trc:^quarterword; {|trie_char|}
-@z
-
 @x 18137 m.926
 @!hyph_word:array[hyph_pointer] of str_number; {exception words}
 @!hyph_list:array[hyph_pointer] of pointer; {lists of hyphen positions}
@@ -1428,18 +1396,6 @@ tini@;
 @!small_op:boolean; {flag used while dumping or undumping}
 @z
 
-@x [43.944] l.18365 - bigtrie: Larger hyphenation tries.
-function new_trie_op(@!d,@!n:small_number;@!v:quarterword):quarterword;
-label exit;
-var h:-trie_op_size..trie_op_size; {trial hash location}
-@!u:quarterword; {trial op code}
-@y
-function new_trie_op(@!d,@!n:small_number;@!v:trie_opcode):trie_opcode;
-label exit;
-var h:neg_trie_op_size..trie_op_size; {trial hash location}
-@!u:trie_opcode; {trial op code}
-@z
-
 @x [43.947] l.18438 - Dynamically allocate arrays, and a casting problem.
 @!init @!trie_c:packed array[trie_pointer] of packed_ASCII_code;
   {characters to match}
@@ -1496,32 +1452,6 @@ tini
 trie_not_ready:=true; trie_root:=0; trie_c[0]:=si(0); trie_ptr:=0;
 @y
 trie_not_ready:=true;
-@z
-
-@x [43.958] l.18634 - bigtrie: Larger tries.
-@<Move the data into |trie|@>=
-h.rh:=0; h.b0:=min_quarterword; h.b1:=min_quarterword; {|trie_link:=0|,
-  |trie_op:=min_quarterword|, |trie_char:=qi(0)|}
-@y
-@d clear_trie == {clear |trie[r]|}
-  begin trie_link(r):=0;
-  trie_op(r):=min_trie_op;
-  trie_char(r):=min_quarterword; {|trie_char:=qi(0)|}
-  end
-
-@<Move the data into |trie|@>=
-@z
-
-@x [43.958] l.18638 - bigtrie: Larger tries.
-  begin for r:=0 to 256 do trie[r]:=h;
-@y
-  begin for r:=0 to 256 do clear_trie;
-@z
-
-@x [43.958] l.18643 - bigtrie: Larger tries.
-  repeat s:=trie_link(r); trie[r]:=h; r:=s;
-@y
-  repeat s:=trie_link(r); clear_trie; r:=s;
 @z
 
 @x [49.1275] l.23441 - Same stuff as for \input, this time for \openin.
