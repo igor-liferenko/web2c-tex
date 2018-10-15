@@ -1355,6 +1355,8 @@ flushable_string:=str_ptr-1;
     read_open[n]:=just_open;
 @z
 
+% Eliminate now-unused variable `w' in `store_fmt_file'.
+% Add format_engine.
 @x [50.1302] l.23690 - store_fmt_file
 @!w: four_quarters; {four ASCII codes}
 @y
