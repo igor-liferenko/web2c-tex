@@ -1781,6 +1781,17 @@ if trie_not_ready then begin {initex without format loaded}
     dump_core {do something to cause a core dump}
 @z
 
+@x [52.1339] l.24429 - debug - print tfm info
+5: print_word(font_info[n]);
+@y 24397
+5: begin print_scaled(font_info[n].sc); print_char(" ");@/
+  print_int(font_info[n].qqqq.b0); print_char(":");@/
+  print_int(font_info[n].qqqq.b1); print_char(":");@/
+  print_int(font_info[n].qqqq.b2); print_char(":");@/
+  print_int(font_info[n].qqqq.b3);
+  end;
+@z
+
 @x [53.1370] l.24770 - \write18{foo}
 begin @<Expand macros in the token list
 @y
