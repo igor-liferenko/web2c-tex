@@ -728,6 +728,8 @@ sufficiently large.
 @d ho(#)==# {to take a sixteen-bit item from a halfword}
 @z
 
+% [8.113] We've put the memory structure into the include file
+% `texmf.h', since it's too hard to translate automatically.
 @x [8.113] l.2453 - data structures for main memory
 @!quarterword = min_quarterword..max_quarterword; {1/4 of a word}
 @!halfword=min_halfword..max_halfword; {1/2 of a word}
