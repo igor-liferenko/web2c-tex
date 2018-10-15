@@ -823,6 +823,17 @@ last_glue:=max_halfword; last_penalty:=0; last_kern:=0;
 page_depth:=0; page_max_depth:=0;
 @z
 
+@x [17.236] l.4954
+@d int_pars=55 {total number of integer parameters}
+@y
+@d tex_int_pars=55 {total number of \TeX's integer parameters}
+@#
+@d web2c_int_base=tex_int_pars {base for web2c's integer parameters}
+@d web2c_int_pars=web2c_int_base {total number of web2c's integer parameters}
+@#
+@d int_pars=web2c_int_pars {total number of integer parameters}
+@z
+
 @x [17.253] l.5435 - Change eqtb to zeqtb.
 @!eqtb:array[active_base..eqtb_size] of memory_word;
 @y
