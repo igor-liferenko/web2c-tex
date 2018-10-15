@@ -1,3 +1,12 @@
+@x [0.0] l.83 - WEAVE: print changes only.
+  \def\?##1]{\hbox to 1in{\hfil##1.\ }}
+  }
+@y 83
+  \def\?##1]{\hbox{Changes to \hbox to 1em{\hfil##1}.\ }}
+  }
+\let\maybe=\iffalse
+@z
+
 @x [1.4] l.243 - labels in outer block not needed
 program TEX; {all file names are defined dynamically}
 label @<Labels in the outer block@>@/
