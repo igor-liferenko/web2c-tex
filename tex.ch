@@ -1307,6 +1307,19 @@ end;
   print_nl("Output written on "); print_file_name(0, output_file_name, 0);
 @z
 
+% undo Knuth's change because
+%   a) the string is already replaced in |scan_file_name| and therefore
+%   b) the wrong string will get flushed!!!
+%
+@x [49.1257] l.23328 unused variable
+@!flushable_string:str_number; {string not yet referenced}
+@y
+@z
+@x [49.1260] l.23383 new_font: string recycling -- already done
+flushable_string:=str_ptr-1;
+@y
+@z
+
 @x [49.1275] l.23441 - Same stuff as for \input, this time for \openin.
   if cur_ext="" then cur_ext:=".tex";
   pack_cur_name;
