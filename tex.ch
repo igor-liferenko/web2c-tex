@@ -867,26 +867,6 @@ is conditionally compiled in the C code.
 @!zeqtb:^memory_word;
 @z
 
-@x [18.256] l.5483 - hash_extra
-@!hash: array[hash_base..undefined_control_sequence-1] of two_halves;
-  {the hash table}
-@!hash_used:pointer; {allocation pointer for |hash|}
-@y
-@!hash: ^two_halves; {the hash table}
-@!yhash: ^two_halves; {auxiliary pointer for freeing hash}
-@!hash_used:pointer; {allocation pointer for |hash|}
-@!hash_extra:pointer; {|hash_extra=hash| above |eqtb_size|}
-@!hash_top:pointer; {maximum of the hash array}
-@!eqtb_top:pointer; {maximum of the |eqtb|}
-@!hash_high:pointer; {pointer to next high hash location}
-@z
-
-@x [18.257] l.5491 - hash_extra
-next(hash_base):=0; text(hash_base):=0;
-for k:=hash_base+1 to undefined_control_sequence-1 do hash[k]:=hash[hash_base];
-@y
-@z
-
 @x [19.271] l.5872 - texarray
 @!save_stack : array[0..save_size] of memory_word;
 @y
