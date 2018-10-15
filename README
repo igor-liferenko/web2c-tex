@@ -1,0 +1,15 @@
+The following changes must be done to initex.ch to produce tex.ch:
+
+-@d init==
+-@d tini==
++@d init==@{
++@d tini==@t@>@}
+
+-@!mem_max=30000; {greatest index in \TeX's internal |mem| array;
++@!mem_max=32766; {greatest index in \TeX's internal |mem| array;
+
+-@!max_strings=3000; {maximum number of strings; must not exceed |max_halfword|}
++@!max_strings=6000; {maximum number of strings; must not exceed |max_halfword|}
+
+-@!trie_size=8000; {space for hyphenation patterns; should be larger for
++@!trie_size=6500; {space for hyphenation patterns; should be larger for
