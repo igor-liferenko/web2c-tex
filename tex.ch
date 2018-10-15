@@ -407,7 +407,6 @@ tini@/
 @!dvi_buf_size:integer; {size of the output buffer; must be a multiple of 8}
 @!expand_depth:integer; {limits recursive calls to the |expand| procedure}
 @!eight_bit_p:cinttype; {make all characters printable by default}
-@!halt_on_error_p:cinttype; {stop at first error}
 @!quoted_filename:boolean; {current filename is quoted}
 @z
 
