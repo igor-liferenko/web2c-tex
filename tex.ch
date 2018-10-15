@@ -834,6 +834,33 @@ page_depth:=0; page_max_depth:=0;
 @d int_pars=web2c_int_pars {total number of integer parameters}
 @z
 
+@x [17.241] l.5219 - Do `fix_date_and_time' in C.
+@ The following procedure, which is called just before \TeX\ initializes its
+input and output, establishes the initial values of the date and time.
+@^system dependencies@>
+Since standard \PASCAL\ cannot provide such information, something special
+is needed. The program here simply specifies July 4, 1776, at noon; but
+users probably want a better approximation to the truth.
+
+@p procedure fix_date_and_time;
+begin time:=12*60; {minutes since midnight}
+day:=4; {fourth day of the month}
+month:=7; {seventh month of the year}
+year:=1776; {Anno Domini}
+end;
+@y
+@ The following procedure, which is called just before \TeX\ initializes its
+input and output, establishes the initial values of the date and time.
+It calls a macro-defined |date_and_time| routine.  |date_and_time|
+in turn is a C macro, which calls |get_date_and_time|, passing
+it the addresses of the day, month, etc., so they can be set by the
+routine.  |get_date_and_time| also sets up interrupt catching if that
+is conditionally compiled in the C code.
+@^system dependencies@>
+
+@d fix_date_and_time==date_and_time(time,day,month,year)
+@z
+
 @x [17.253] l.5435 - Change eqtb to zeqtb.
 @!eqtb:array[active_base..eqtb_size] of memory_word;
 @y
