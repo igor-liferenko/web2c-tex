@@ -1320,6 +1320,29 @@ flushable_string:=str_ptr-1;
 @y
 @z
 
+% If you don't want to remove code with the following two changes,
+% please replace the former change by
+%
+% @x
+% flushable_string:=str_ptr-1;
+% @y
+% if cur_name=str_ptr-1 then
+%   flushable_string:=str_ptr-1
+% else
+%   flushable_string:=str_ptr;  {number of a non-existing}
+% @z
+%
+% otherwise the wrong string will get removed by |flush_string|!!
+%
+@x [49.1260] l.23386 new_font: string recycling -- already done
+    begin if cur_name=flushable_string then
+      begin flush_string; cur_name:=font_name[f];
+      end;
+    if s>0 then
+@y
+    begin if s>0 then
+@z
+
 @x [49.1275] l.23441 - Same stuff as for \input, this time for \openin.
   if cur_ext="" then cur_ext:=".tex";
   pack_cur_name;
