@@ -217,6 +217,17 @@ xprn: array [ASCII_code] of ASCII_code;
    { non zero iff character is printable }
 @z
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% [2.23] allow any character that we can input to get in
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+@x
+for i:=0 to @'37 do xchr[i]:=' ';
+for i:=@'177 to @'377 do xchr[i]:=' ';
+@y
+for i:=0 to @'37 do xchr[i]:=i;
+for i:=@'177 to @'377 do xchr[i]:=i;
+@z
+
 @x [3.27] l.794 - Do file opening in C.
 @ The \ph\ compiler with which the present version of \TeX\ was prepared has
 extended the rules of \PASCAL\ in a very convenient way. To open file~|f|,
