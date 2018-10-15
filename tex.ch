@@ -618,6 +618,22 @@ been commented~out.
 @d edit_file==input_stack[base_ptr]
 @z
 
+@x [6.84] l.1903 - Implement the switch-to-editor option.
+"E": if base_ptr>0 then
+  begin print_nl("You want to edit file ");
+@.You want to edit file x@>
+  slow_print(input_stack[base_ptr].name_field);
+  print(" at line "); print_int(line);
+  interaction:=scroll_mode; jump_out;
+@y
+"E": if base_ptr>0 then
+    begin edit_name_start:=str_start[edit_file.name_field];
+    edit_name_length:=str_start[edit_file.name_field+1] -
+                      str_start[edit_file.name_field];
+    edit_line:=line;
+    jump_out;
+@z
+
 @x [7.104] l.2227 - avoid name conflicts with lib routine remainder()
 |remainder|, holds the remainder after a division.
 
