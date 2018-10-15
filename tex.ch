@@ -192,6 +192,12 @@ we still have to declare the symbolic names.
                 if you change this, you should also change |iinf_hyphen_size|.}
 @z
 
+@x [1.16] l.498 - Use C macros for `incr' and `decr'.
+@d incr(#) == #:=#+1 {increase a variable by unity}
+@d decr(#) == #:=#-1 {decrease a variable by unity}
+@y
+@z
+
 @x [2.20] l.579 - printable characters
 @!xchr: array [ASCII_code] of text_char;
   {specifies conversion of output characters}
