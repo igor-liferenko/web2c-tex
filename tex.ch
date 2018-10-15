@@ -634,6 +634,13 @@ been commented~out.
     jump_out;
 @z
 
+FIXME: why is it needed ????????????????????????????????
+@x [6.93] l.2056 - Declare fatal_error as noreturn.
+procedure fatal_error(@!s:str_number); {prints |s|, and that's it}
+@y
+noreturn procedure fatal_error(@!s:str_number); {prints |s|, and that's it}
+@z
+
 @x [7.104] l.2227 - avoid name conflicts with lib routine remainder()
 |remainder|, holds the remainder after a division.
 
