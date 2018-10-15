@@ -349,7 +349,6 @@ We define |input_ln| in C, for efficiency.
 @!init
 @!ini_version:boolean; {are we \.{INITEX}?}
 @!dump_option:boolean; {was the dump name option used?}
-@!dump_line:boolean; {was a \.{\%\AM format} line seen?}
 tini@/
 @#
 @!dump_name:const_cstring; {format name for terminal display}
