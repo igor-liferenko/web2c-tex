@@ -538,6 +538,10 @@ if last > first then
 @!init function get_strings_started:boolean; {initializes the string pool,
 @z
 
+% [4.51] Open the pool file using a path, and can't do string
+% assignments directly.  (`strcpy' and `strlen' work here because
+% `pool_name' is a constant string, and thus ends in a null and doesn't
+% start with a space.)
 @x [4.51] l.1314 - Open the pool file.
 name_of_file:=pool_name; {we needn't set |name_length|}
 if a_open_in(pool_file) then
