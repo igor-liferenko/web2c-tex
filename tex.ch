@@ -567,13 +567,6 @@ read(pool_file,m); read(pool_file,n); {read two digits of string length}
 @d unspecified_mode=4 {extra value for command-line switch}
 @z
 
-@x [6.73] l.1738 - Add interaction_option.
-@!interaction:batch_mode..error_stop_mode; {current level of interaction}
-@y
-@!interaction:batch_mode..error_stop_mode; {current level of interaction}
-@!interaction_option:batch_mode..unspecified_mode; {set from command line}
-@z
-
 @x [6.81] l.1852 - Eliminate nonlocal goto, since C doesn't have them.
 @<Error hand...@>=
 procedure jump_out;
