@@ -2265,14 +2265,12 @@ system-dependent section allows easy integration of Web2c and e-\TeX, etc.)
 @!edit_name_start: pool_pointer; {where the filename to switch to starts}
 @!edit_name_length,@!edit_line: integer; {what line to start editing at}
 @!ipc_on: cinttype; {level of IPC action, 0 for none [default]}
-@!stop_at_space: boolean; {whether |more_name| returns false for space}
 
 @ The |edit_name_start| will be set to point into |str_pool| somewhere after
 its beginning if \TeX\ is supposed to switch to an editor on exit.
 
 @<Set init...@>=
 edit_name_start:=0;
-stop_at_space:=true;
 
 @ These are used when we regenerate the representation of the first 256
 strings.
