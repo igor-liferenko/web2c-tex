@@ -655,6 +655,8 @@ procedure confusion(@!s:str_number);
 noreturn procedure confusion(@!s:str_number);
 @z
 
+% [7.104] `remainder' is a library routine on some systems, so change
+% its name to avoid conflicts.
 @x [7.104] l.2227 - avoid name conflicts with lib routine remainder()
 |remainder|, holds the remainder after a division.
 
