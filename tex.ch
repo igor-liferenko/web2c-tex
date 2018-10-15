@@ -42,55 +42,6 @@ we still have to declare the symbolic names.
 @d final_end=9999 {this label marks the ending of the program}
 @z
 
-------------------------------------
-Here we change these WEB symbols, which are used much as #ifdef's
-are in C, into something which will get translated into actual #ifdef's.
-
-@x [1.7] l.292 - debug..gubed, stat..tats
-@d debug==@{ {change this to `$\\{debug}\equiv\null$' when debugging}
-@d gubed==@t@>@} {change this to `$\\{gubed}\equiv\null$' when debugging}
-@y
-@d debug==ifdef('TEXMF_DEBUG')
-@d gubed==endif('TEXMF_DEBUG')
-@z
-
-@x [1.7] l.297 - debug..gubed, stat..tats
-@d stat==@{ {change this to `$\\{stat}\equiv\null$' when gathering
-  usage statistics}
-@d tats==@t@>@} {change this to `$\\{tats}\equiv\null$' when gathering
-  usage statistics}
-@y
-@d stat==ifdef('STAT')
-@d tats==endif('STAT')
-@z
-
------------------------------------------------
-
-@x [1.8] Somewhat different for `init...tini'..  310 m.8
-the codewords `$|init|\ldots|tini|$'.
-
-@d init== {change this to `$\\{init}\equiv\.{@@\{}$' in the production version}
-@d tini== {change this to `$\\{tini}\equiv\.{@@\}}$' in the production version}
-@y 314
-the codewords `$|init|\ldots|tini|$' for declarations and by the codewords
-`$|Init|\ldots|Tini|$' for executable code.  This distinction is helpful for
-implementations where a run-time switch differentiates between the two
-versions of the program.
-
-@d init==ifdef('INITEX')
-@d tini==endif('INITEX')
-@d Init==init if ini_version then begin
-@d Tini==end;@+tini
-@f Init==begin
-@f Tini==end
-@z
-
-@x [1.8] l.319 - init...tini is dynamic
-@!init @<Initialize table entries (done by \.{INITEX} only)@>@;@+tini
-@y  318
-@!Init @<Initialize table entries (done by \.{INITEX} only)@>@;@+Tini
-@z
-
 @x [1.11] l.375 - Compile-time constants: most removed for dynamic allocation.
 @<Constants...@>=
 @!mem_max=30000; {greatest index in \TeX's internal |mem| array;
