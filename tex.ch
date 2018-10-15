@@ -927,10 +927,13 @@ expand_depth_count:=0;
 @ The |expand| subroutine is used when |cur_cmd>max_command|. It removes a
 @z
 
-@x [29.516] l.9994 - filenames: more_name
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% [29.516] more_name
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+@x
   if (c=">")or(c=":") then
 @y
-  if IS_DIR_SEP(c) then
+  if c="/" then
 @z
 
 @x [29.517] l.10002 - end_name: string recycling
