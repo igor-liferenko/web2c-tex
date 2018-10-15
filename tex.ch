@@ -684,6 +684,14 @@ noreturn procedure confusion(@!s:str_number);
 @d max_halfword==@"FFFFFFF {largest allowable value in a |halfword|}
 @z
 
+@x [8.111] l.2435 - min_halfword and max_halfword
+if (mem_min<min_halfword)or(mem_max>=max_halfword)or@|
+  (mem_bot-mem_min>max_halfword+1) then bad:=14;
+@y
+if (mem_bot-sup_main_memory<min_halfword)or@|
+  (mem_top+sup_main_memory>=max_halfword) then bad:=14;
+@z
+
 @x [8.111] l.2437 - max_font_max
 if (font_base<min_quarterword)or(font_max>max_quarterword) then bad:=15;
 if font_max>font_base+256 then bad:=16;
