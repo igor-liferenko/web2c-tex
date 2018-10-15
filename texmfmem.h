@@ -95,9 +95,6 @@ typedef union
 #else
   twohalves hhfield;
 #endif
-#ifdef XeTeX
-  voidpointer ptr;
-#endif
 #ifdef WORDS_BIGENDIAN
   integer cint;
   fourquarters qqqq;
@@ -112,11 +109,9 @@ typedef union
 
   struct
   {
-#ifndef XeTeX
 #if defined (TeX) && !defined (SMALLTeX) || defined (MF) && !defined (SMALLMF) || defined (MP) && !defined (SMALLMP)
     halfword junk;
 #endif /* big {TeX,MF,MP} */
-#endif
     fourquarters QQQQ;
   } v;
 #endif /* not WORDS_BIGENDIAN */
@@ -133,9 +128,6 @@ typedef union
 #else /* not WORDS_BIGENDIAN */
   struct
   {
-#ifdef XeTeX
-    halfword junk; /* quarterword is really 16 bits in XeTeX, so integer does not fill the union */
-#endif
     integer CINT;
   } u;
 
@@ -163,4 +155,3 @@ typedef union
 #ifndef WORDS_BIGENDIAN
 #define qqqq v.QQQQ
 #endif
-
