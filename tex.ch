@@ -700,6 +700,34 @@ if (max_font_max<min_halfword)or(max_font_max>max_halfword) then bad:=15;
 if font_max>font_base+max_font_max then bad:=16;
 @z
 
+@x [8.112] l.2450 - Efficiency.
+macros are simplified in the obvious way when |min_quarterword=0|.
+@^inner loop@>@^system dependencies@>
+
+@d qi(#)==#+min_quarterword
+  {to put an |eight_bits| item into a quarterword}
+@d qo(#)==#-min_quarterword
+  {to take an |eight_bits| item out of a quarterword}
+@d hi(#)==#+min_halfword
+  {to put a sixteen-bit item into a halfword}
+@d ho(#)==#-min_halfword
+  {to take a sixteen-bit item from a halfword}
+@y
+macros are simplified in the obvious way when |min_quarterword=0|.
+So they have been simplified here in the obvious way.
+@^inner loop@>@^system dependencies@>
+
+The \.{WEB} source for \TeX\ defines |hi(#)==#+min_halfword| which can be
+simplified when |min_halfword=0|.  The Web2C implemetation of \TeX\ can use
+|hi(#)==#| together with |min_halfword<0| as long as |max_halfword| is
+sufficiently large.
+
+@d qi(#)==# {to put an |eight_bits| item into a quarterword}
+@d qo(#)==# {to take an |eight_bits| item from a quarterword}
+@d hi(#)==# {to put a sixteen-bit item into a halfword}
+@d ho(#)==# {to take a sixteen-bit item from a halfword}
+@z
+
 @x [8.113] l.2453 - data structures for main memory
 @!quarterword = min_quarterword..max_quarterword; {1/4 of a word}
 @!halfword=min_halfword..max_halfword; {1/2 of a word}
