@@ -771,6 +771,16 @@ sufficiently large.
 @!zmem : ^memory_word; {the big dynamic storage area}
 @z
 
+% [11.165] Fix the word `free' so that it doesn't conflict with the
+% standard C library routine of the same name.
+@x [11.165] l.3364 - avoid conflict with lib function free()
+are debugging.)
+@y
+are debugging.)
+
+@d free==free_arr
+@z
+
 @x [16.211] l.4256
 begin if m>0 then
   case m div (max_command+1) of
