@@ -1038,6 +1038,16 @@ var k:0..buf_size; {index into |buffer|}
 @!months:const_cstring;
 @z
 
+@x [29.536] l.10327 - Adjust for C string conventions.
+months:='JANFEBMARAPRMAYJUNJULAUGSEPOCTNOVDEC';
+@y
+months := ' JANFEBMARAPRMAYJUNJULAUGSEPOCTNOVDEC';
+@z
+
+% [29.537] Use a path when calling a_open_in to do a \input; also, try
+% to open the file with and without the `.tex' extension, regardless of
+% whether the file already has an extension.  This allows filenames like
+% `foo' and `foo.bar.tex', as well as `foo.tex' and `foo.bar'.
 @x [29.537] l.10338 - start_input
 begin scan_file_name; {set |cur_name| to desired file name}
 if cur_ext="" then cur_ext:=".tex";
