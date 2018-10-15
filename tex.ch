@@ -1672,6 +1672,19 @@ final_end: do_final_end;
 end {|main_body|};
 @z
 
+@x [51.1333] l.24254 - Print new line before termination; switch to editor if necessary.
+    slow_print(log_name); print_char(".");
+    end;
+  end;
+@y
+    print_file_name(0, log_name, 0); print_char(".");
+    end;
+  end;
+print_ln;
+if (edit_name_start<>0) and (interaction>batch_mode) then
+  call_edit(str_pool,edit_name_start,edit_name_length,edit_line);
+@z
+
 @x [51.1335] l.24335 - Only do dump if ini.
   begin @!init for c:=top_mark_code to split_bot_mark_code do
 @y
