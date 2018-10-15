@@ -997,6 +997,17 @@ if k<=file_name_size then name_length:=k@+else name_length:=file_name_size;
 name_of_file[name_length+1]:=0;
 @z
 
+@x [29.524] l.10118 - Format file opening: only try once, with path searching.
+  pack_buffered_name(0,loc,j-1); {try first without the system file area}
+  if w_open_in(fmt_file) then goto found;
+  pack_buffered_name(format_area_length,loc,j-1);
+    {now try the system format file area}
+  if w_open_in(fmt_file) then goto found;
+@y
+  pack_buffered_name(0,loc,j-1); {Kpathsea does everything}
+  if w_open_in(fmt_file) then goto found;
+@z
+
 @x [29.525] l.10170 - make_name_string
 begin if (pool_ptr+name_length>pool_size)or(str_ptr=max_strings)or
 @y
