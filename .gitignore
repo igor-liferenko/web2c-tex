@@ -12,3 +12,5 @@ texini.c
 texini.o
 test.dvi
 test.log
+initex-final.ch
+initex.p
