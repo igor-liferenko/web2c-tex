@@ -1845,7 +1845,6 @@ system-dependent section allows easy integration of Web2c and e-\TeX, etc.)
 @<Glob...@>=
 @!edit_name_start: pool_pointer; {where the filename to switch to starts}
 @!edit_name_length,@!edit_line: integer; {what line to start editing at}
-@!ipc_on: cinttype; {level of IPC action, 0 for none [default]}
 
 @ The |edit_name_start| will be set to point into |str_pool| somewhere after
 its beginning if \TeX\ is supposed to switch to an editor on exit.
@@ -1890,102 +1889,6 @@ end;
 
 @<Glob...@> =
 @!debug_format_file: boolean;
-
-@ To be able to determine whether \.{\\write18} is enabled from within
-\TeX\ we also implement \.{\\eof18}.  We sort of cheat by having an
-additional route |scan_four_bit_int_or_18| which is the same as
-|scan_four_bit_int| except it also accepts the value 18.
-
-@<Declare procedures that scan restricted classes of integers@>=
-procedure scan_four_bit_int_or_18;
-begin scan_int;
-if (cur_val<0)or((cur_val>15)and(cur_val<>18)) then
-  begin print_err("Bad number");
-@.Bad number@>
-  help2("Since I expected to read a number between 0 and 15,")@/
-    ("I changed this one to zero."); int_error(cur_val); cur_val:=0;
-  end;
-end;
-
-@ Dumping the |xord|, |xchr|, and |xprn| arrays.  We dump these always
-in the format, so a TCX file loaded during format creation can set a
-default for users of the format.
-
-@<Dump |xord|, |xchr|, and |xprn|@>=
-dump_things(xord[0], 256);
-dump_things(xchr[0], 256);
-dump_things(xprn[0], 256);
-
-@ Undumping the |xord|, |xchr|, and |xprn| arrays.  This code is more
-complicated, because we want to ensure that a TCX file specified on
-the command line will override whatever is in the format.  Since the
-tcx file has already been loaded, that implies throwing away the data
-in the format.  Also, if no |translate_filename| is given, but
-|eight_bit_p| is set we have to make all characters printable.
-
-@<Undump |xord|, |xchr|, and |xprn|@>=
-if translate_filename then begin
-  for k:=0 to 255 do undump_things(dummy_xord, 1);
-  for k:=0 to 255 do undump_things(dummy_xchr, 1);
-  for k:=0 to 255 do undump_things(dummy_xprn, 1);
-  end
-else begin
-  undump_things(xord[0], 256);
-  undump_things(xchr[0], 256);
-  undump_things(xprn[0], 256);
-  if eight_bit_p then
-    for k:=0 to 255 do
-      xprn[k]:=1;
-end;
-
-
-@* \[54/web2c-string] The string recycling routines.
-\TeX{} uses 2 upto 4 {\it new\/} strings when scanning a filename in an
-\.{\\input}, \.{\\openin}, or \.{\\openout} operation.  These strings are
-normally lost because the reference to them are not saved after finishing
-the operation.  |search_string| searches through the string pool for the
-given string and returns either 0 or the found string number.
-
-@<Declare additional routines for string recycling@>=
-function search_string(@!search:str_number):str_number;
-label found;
-var result: str_number;
-@!s: str_number; {running index}
-@!len: integer; {length of searched string}
-begin result:=0; len:=length(search);
-if len=0 then  {trivial case}
-  begin result:=""; goto found;
-  end
-else  begin s:=search-1;  {start search with newest string below |s|; |search>1|!}
-  while s>255 do  {first 256 strings depend on implementation!!}
-    begin if length(s)=len then
-      if str_eq_str(s,search) then
-        begin result:=s; goto found;
-        end;
-    decr(s);
-    end;
-  end;
-found:search_string:=result;
-end;
-
-@ The following routine is a variant of |make_string|.  It searches
-the whole string pool for a string equal to the string currently built
-and returns a found string.  Otherwise a new string is created and
-returned.  Be cautious, you can not apply |flush_string| to a replaced
-string!
-
-@<Declare additional routines for string recycling@>=
-function slow_make_string : str_number;
-label exit;
-var s: str_number; {result of |search_string|}
-@!t: str_number; {new string}
-begin t:=make_string; s:=search_string(t);
-if s>0 then
-  begin flush_string; slow_make_string:=s; return;
-  end;
-slow_make_string:=t;
-exit:end;
-
 
 @* \[54] System-dependent changes.
 @z
