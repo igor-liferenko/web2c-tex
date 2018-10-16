@@ -1,4 +1,4 @@
-# http://ftp.math.utah.edu/pub/tex/historic/systems/web2c/web2c-7.5.4/
+# ftp://tug.ctan.org/pub/tex/historic/systems/web2c/
 # https://bencane.com/2011/09/22/kill-creating-a-core-dump/
 all:
 	make -C web2c
