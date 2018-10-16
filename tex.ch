@@ -42,6 +42,37 @@ we still have to declare the symbolic names.
 @d final_end=9999 {this label marks the ending of the program}
 @z
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% [1.7] debug..gubed, stat..tats
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+@x
+@d debug==@{ {change this to `$\\{debug}\equiv\null$' when debugging}
+@d gubed==@t@>@} {change this to `$\\{gubed}\equiv\null$' when debugging}
+@y
+@d debug==@{ {the trip test will use debugging}
+@d gubed==@t@>@}
+@z
+@x
+@d stat==@{ {change this to `$\\{stat}\equiv\null$' when gathering
+  usage statistics}
+@d tats==@t@>@} {change this to `$\\{tats}\equiv\null$' when gathering
+  usage statistics}
+@y
+@d stat==
+@d tats==
+@z
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% [1.8] init..tini
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+@x
+@d init== {change this to `$\\{init}\equiv\.{@@\{}$' in the production version}
+@d tini== {change this to `$\\{tini}\equiv\.{@@\}}$' in the production version}
+@y
+@d init==
+@d tini==
+@z
+
 @x [1.11] l.375 - Compile-time constants: most removed for dynamic allocation.
 @<Constants...@>=
 @!mem_max=30000; {greatest index in \TeX's internal |mem| array;
