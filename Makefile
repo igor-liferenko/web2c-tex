@@ -4,15 +4,14 @@ all:
 	tie -c initex-final.ch tex.web tex.ch initex.ch
 	tangle tex initex-final
 	mv tex.p initex.p
-	#web2c/convert initex
+	web2c/convert initex
 	tie -c tex-final.ch tex.web tex.ch
-	diff initex-final.ch tex-final.ch
-	false
+	@#diff -u0 initex-final.ch tex-final.ch
 	tangle tex tex-final
 	web2c/convert tex # creates tex0.c, texini.c, texcoerce.h and texd.h (texcoerce.h is used in texd.h)
 	gcc -DHAVE_CONFIG_H -I. -I./w2c -Wimplicit -Wreturn-type -g -O2 -c -o tex0.o tex0.c # texd.h is used here
 	gcc -DHAVE_CONFIG_H -I. -I./w2c -Wimplicit -Wreturn-type -g -O2 -c -o texini.o texini.c # texd.h is used here
 	gcc -DHAVE_CONFIG_H -I. -I./w2c -Wimplicit -Wreturn-type -g -O2 -c -o texextra.o texextra.c # texd.h is used here
-	#make -C lib # creates lib.a
+	make -C lib # creates lib.a
 	gcc -Wimplicit -Wreturn-type -g -O2 -o virtex texextra.o texini.o tex0.o lib/lib.a -lkpathsea -lm
-	#mv virtex /usr/local/bin/
+	mv virtex /usr/local/bin/
