@@ -135,15 +135,6 @@ we still have to declare the symbolic names.
 @<Constants...@>=
 @!hash_offset=514; {smallest index in hash array, i.e., |hash_base| }
   {Use |hash_offset=0| for compilers which cannot decrement pointers.}
-@!trie_op_size=35111; {space for ``opcodes'' in the hyphenation patterns;
-  best if relatively prime to 313, 361, and 1009.}
-@!neg_trie_op_size=-35111; {for lower |trie_op_hash| array bound;
-  must be equal to |-trie_op_size|.}
-@!min_trie_op=0; {first possible trie op code for any language}
-@!max_trie_op=ssup_trie_opcode; {largest possible trie opcode for any language}
-@!pool_name=TEXMF_POOL_NAME; {this is configurable, for the sake of ML-\TeX}
-  {string of length |file_name_size|; tells where the string pool appears}
-@!engine_name=TEXMF_ENGINE_NAME; {the name of this engine}
 @#
 @!inf_mem_bot = 0;
 @!sup_mem_bot = 1;
