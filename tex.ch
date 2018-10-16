@@ -1800,7 +1800,7 @@ undump_int(kern_base[k]);
 undump_int(exten_base[k]);
 undump_int(param_base[k]);@/
 undump(min_halfword)(lo_mem_max)(font_glue[k]);@/
-undump(0)(fmem_ptr-1)(bchar_label[k]);
+undump(0)(font_mem_size)(bchar_label[k]);
 undump(min_quarterword)(non_char)(font_bchar[k]);
 undump(min_quarterword)(non_char)(font_false_bchar[k]);
 end
