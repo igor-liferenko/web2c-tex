@@ -69,8 +69,8 @@ we still have to declare the symbolic names.
 @d init== {change this to `$\\{init}\equiv\.{@@\{}$' in the production version}
 @d tini== {change this to `$\\{tini}\equiv\.{@@\}}$' in the production version}
 @y
-@d init==
-@d tini==
+@d init==@{
+@d tini==@t@>@}
 @z
 
 @x [1.11] l.375 - Compile-time constants: most removed for dynamic allocation.
