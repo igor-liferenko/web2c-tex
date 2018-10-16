@@ -1,15 +1,14 @@
 # https://bencane.com/2011/09/22/kill-creating-a-core-dump/
 all:
-	@echo TODO: do not use -ini:
-	@echo tie -c initex-final.ch tex.web initex.ch \# see initex.ch on CTAN - init-tini
-	@echo tangle tex initex-final initex
-	@echo web2c/convert initex
-	@echo ...
-	@echo https://tex.stackexchange.com/questions/417624/installation-procedures-of-early-tex-installations
-	@echo https://tex.stackexchange.com/questions/64000/executables-of-formats-engines-and-executables-of-engines
-	#TODO: check if this statement is true: Run TANGLE on TEX.WEB and INITEX.CH, obtaining INITEX.PAS and TEX.POOL.
-	tangle tex tex
-	#make -C web2c
+	make -C web2c
+	tie -c initex-final.ch tex.web tex.ch initex.ch
+	tangle tex initex-final
+	mv tex.p initex.p
+	#web2c/convert initex
+	tie -c tex-final.ch tex.web tex.ch
+	diff initex-final.ch tex-final.ch
+	false
+	tangle tex tex-final
 	web2c/convert tex # creates tex0.c, texini.c, texcoerce.h and texd.h (texcoerce.h is used in texd.h)
 	gcc -DHAVE_CONFIG_H -I. -I./w2c -Wimplicit -Wreturn-type -g -O2 -c -o tex0.o tex0.c # texd.h is used here
 	gcc -DHAVE_CONFIG_H -I. -I./w2c -Wimplicit -Wreturn-type -g -O2 -c -o texini.o texini.c # texd.h is used here
