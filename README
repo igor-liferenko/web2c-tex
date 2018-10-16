@@ -1,4 +1,4 @@
-The following changes must be done to initex.ch to produce tex.ch:
+The following changes must be output by commented diff in Makefile:
 
 -@d init==
 -@d tini==
