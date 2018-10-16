@@ -62,36 +62,14 @@ start_of_TEX@t\hskip-2pt@>, end_of_TEX@t\hskip-2pt@>,@,final_end;
 @z
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% [1.7] debug..gubed, stat..tats
-% Here we change these WEB symbols, which are used much as #ifdef's
-% are in C, into something which will get translated into actual #ifdef's.
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-@x
-@d debug==@{ {change this to `$\\{debug}\equiv\null$' when debugging}
-@d gubed==@t@>@} {change this to `$\\{gubed}\equiv\null$' when debugging}
-@y
-@d debug==ifdef('DEBUG')
-@d gubed==endif('DEBUG')
-@z
-@x
-@d stat==@{ {change this to `$\\{stat}\equiv\null$' when gathering
-  usage statistics}
-@d tats==@t@>@} {change this to `$\\{tats}\equiv\null$' when gathering
-  usage statistics}
-@y
-@d stat==ifdef('STAT')
-@d tats==endif('STAT')
-@z
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % [1.8] Same, for `init..tini'.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 @x
 @d init== {change this to `$\\{init}\equiv\.{@@\{}$' in the production version}
 @d tini== {change this to `$\\{tini}\equiv\.{@@\}}$' in the production version}
 @y
-@d init==ifdef('INITEX')
-@d tini==endif('INITEX')
+@d init==@{
+@d tini==@t@>@}
 @z
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
