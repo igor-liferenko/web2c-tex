@@ -13,3 +13,8 @@ The following changes must be done to initex.ch to produce tex.ch:
 
 -@!trie_size=8000; {space for hyphenation patterns; should be larger for
 +@!trie_size=6500; {space for hyphenation patterns; should be larger for
+
+---------------------------------------------------------
+
+This is the plan:
+make it work for web2c-6.1, and then using tex.ch-diff (from 3.1415 to 3.14159) and likewise one by one up to 3.14159265, making it work after each new version - pick just necessary changes from each corresponding web2c version
