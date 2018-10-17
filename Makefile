@@ -22,7 +22,7 @@ all:
 	gcc -DTeX -Ilib -g  -c tex0.c
 	/bin/sh ./convert
 	touch texd.h
-	gcc -DTeX -Ilib -Iweb2c-6.1 -g  -c tex1.c
+	gcc -DTeX -Ilib -g  -c tex1.c
 	/bin/sh ./convert
 	touch texd.h
 	gcc -DTeX -Ilib -g  -c tex2.c
@@ -31,7 +31,7 @@ all:
 	gcc -DTeX -Ilib -g  -c tex3.c
 	/bin/sh ./convert
 	touch texd.h
-	gcc -DTeX -Ilib -Iweb2c-6.1 -g  -c tex4.c
+	gcc -DTeX -Ilib -g  -c tex4.c
 	/bin/sh ./convert
 	touch texd.h
 	gcc -DTeX -Ilib -g  -c tex5.c
@@ -46,10 +46,10 @@ all:
 	gcc -DTeX -Ilib -g  -c tex8.c
 	/bin/sh ./convert
 	touch texd.h
-	gcc -DTeX -Ilib -Iweb2c-6.1 -g  -c tex9.c
+	gcc -DTeX -Ilib -g  -c tex9.c
 	gcc -o initex -g   iextra.o initex.o openinout.o tex0.o tex1.o tex2.o tex3.o tex4.o tex5.o tex6.o tex7.o tex8.o tex9.o  lib/lib.a -lkpathsea
 	rm -f vextra.c
 	ln -s lib/texmf.c vextra.c
 	gcc -DTeX -Ilib -g  -c vextra.c
-	gcc -DTeX -Ilib -Iweb2c-6.1 -g  -c itex.c
+	gcc -DTeX -Ilib -g  -c itex.c
 	gcc -o virtex -g   vextra.o itex.o openinout.o tex0.o tex1.o tex2.o tex3.o tex4.o tex5.o tex6.o tex7.o tex8.o tex9.o  lib/lib.a -lkpathsea
