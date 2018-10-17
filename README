@@ -42,3 +42,5 @@ ln -s /usr/bin/tangle web/tangle
 in tex/Makefile change to this:
 
 program = initex virtex
+
+in splitup.c put "in = stdin" inside main()
