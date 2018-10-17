@@ -51,7 +51,7 @@ extern int next_sym_free, next_string_free;
 extern int mark_sym_free, mark_string_free;
 
 /* configure figures out how to declare the yytext variable.  */
-DECLARE_YYTEXT
+extern char *yytext;
 
 extern void find_next_temp(), normal(), new_line(), indent_line(), my_output();
 extern void semicolon(), remove_locals(), mark(), initialize();
