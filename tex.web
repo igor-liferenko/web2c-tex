@@ -42,12 +42,9 @@
 % Version 3.14 fixed unprintable font names and corrected typos (March 1991).
 % Version 3.141 more of same; reconstituted ligatures better (March 1992).
 % Version 3.1415 preserved nonexplicit kerns, tidied up (February 1993).
-% Version 3.14159 allowed fontmemsize to change; bulletproofing (March 1995).
-% Version 3.141592 fixed \xleaders, glueset, weird alignments (December 2002).
-% Version 3.1415926 was a general cleanup with minor fixes (February 2008).
-% Version 3.14159265 was similar (January 2014).
 
-% A reward of $327.68 will be paid to the first finder of any remaining bug.
+% A reward of $327.68 will be paid to the first finder of any remaining bug,
+% not counting changes introduced after August 1989.
 
 % Although considerable effort has been expended to make the TeX program
 % correct and reliable, no warranty is implied; the author disclaims any
@@ -58,7 +55,6 @@
 
 % Here is TeX material that gets inserted after \input webmac
 \def\hang{\hangindent 3em\noindent\ignorespaces}
-\def\hangg#1 {\hang\hbox{#1 }}
 \def\textindent#1{\hangindent2.5em\noindent\hbox to2.5em{\hss#1 }\ignorespaces}
 \font\ninerm=cmr9
 \let\mc=\ninerm % medium caps for names like SAIL
@@ -144,10 +140,9 @@ complete version of \TeX\ was designed and coded by the author in late
 {\mc SAIL} language, for which an excellent debugging system was
 available. Preliminary plans to convert the {\mc SAIL} code into a form
 somewhat like the present ``web'' were developed by Luis Trabb~Pardo and
-@^Trabb Pardo, Luis Isidoro@>
 the author at the beginning of 1979, and a complete implementation was
 created by Ignacio~A. Zabala in 1979 and 1980. The \TeX82 program, which
-@^Zabala Salelles, Ignacio Andr\'es@>
+@^Zabala Salelles, Ignacio Andres@>
 was written by the author during the latter part of 1981 and the early
 part of 1982, also incorporates ideas from the 1979 implementation of
 @^Guibas, Leonidas Ioannis@>
@@ -188,7 +183,7 @@ helping to determine whether a particular implementation deserves to be
 known as `\TeX' [cf.~Stanford Computer Science report CS1027,
 November 1984].
 
-@d banner=='This is TeX, Version 3.14159265' {printed when \TeX\ starts}
+@d banner=='This is TeX, Version 3.1415' {printed when \TeX\ starts}
 
 @ Different \PASCAL s have slightly different conventions, and the present
 @!@:PASCAL H}{\ph@>
@@ -221,11 +216,6 @@ of \PASCAL\ have not been followed perfectly, for one reason or another.
 @!@^system dependencies@>
 @!@^dirty \PASCAL@>
 
-Incidentally, \PASCAL's standard |round| function can be problematical,
-because it disagrees with the IEEE floating-point standard.
-Many implementors have
-therefore chosen to substitute their own home-grown rounding procedure.
-
 @ The program begins with a normal \PASCAL\ program heading, whose
 components will be filled in later, using the conventions of \.{WEB}.
 @.WEB@>
@@ -242,7 +232,6 @@ portions of the program heading.
 Actually the heading shown here is not quite normal: The |program| line
 does not mention any |output| file, because \ph\ would ask the \TeX\ user
 to specify a file name if |output| were specified here.
-@:PASCAL H}{\ph@>
 @^system dependencies@>
 
 @d mtype==t@&y@&p@&e {this is a \.{WEB} coding trick:}
@@ -335,9 +324,8 @@ directives shown below specify full checking and inclusion of the \PASCAL\
 debugger when \TeX\ is being debugged, but they cause range checking and other
 redundant code to be eliminated when the production system is being generated.
 Arithmetic overflow will be detected in all cases.
-@:PASCAL H}{\ph@>
 @^system dependencies@>
-@^overflow in arithmetic@>
+@^Overflow in arithmetic@>
 
 @<Compiler directives@>=
 @{@&$C-,A+,D-@} {no range check, catch arithmetic overflow, no debug overhead}
@@ -371,7 +359,6 @@ if the compiler wants one. (Of course, if no default mechanism is
 available, the |case| statements of \TeX\ will have to be laboriously
 extended by listing all remaining cases. People who are stuck with such
 \PASCAL s have, in fact, done this, successfully but not happily!)
-@:PASCAL H}{\ph@>
 
 @d othercases == others: {default for cases not listed explicitly}
 @d endcases == @+end {follows the default case in an extended |case| statement}
@@ -473,7 +460,7 @@ if mem_top<256+11 then bad:=7; {we will want |null_list>255|}
 
 @ Labels are given symbolic names by the following definitions, so that
 occasional |goto| statements will be meaningful. We insert the label
-`|exit|' just before the `\ignorespaces|end|\unskip' of a procedure in
+`|exit|:' just before the `\ignorespaces|end|\unskip' of a procedure in
 which we have used the `|return|' statement defined below; the label
 `|restart|' is occasionally used at the very beginning of a procedure; and
 the label `|reswitch|' is occasionally used just prior to a |case|
@@ -860,7 +847,6 @@ begin rewrite(f,name_of_file,'/O'); w_open_out:=rewrite_OK(f);
 end;
 
 @ Files can be closed with the \ph\ routine `|close(f)|', which
-@:PASCAL H}{\ph@>
 @^system dependencies@>
 should be used when all input or output with respect to |f| has been completed.
 This makes |f| available to be opened again, if desired; and if |f| was used for
@@ -976,7 +962,6 @@ is considered an output file the file variable is |term_out|.
 
 @ Here is how to open the terminal files
 in \ph. The `\.{/I}' switch suppresses the first |get|.
-@:PASCAL H}{\ph@>
 @^system dependencies@>
 
 @d t_open_in==reset(term_in,'TTY:','/O/I') {open the terminal for text input}
@@ -994,7 +979,6 @@ issue an unexpected error message). The third, |wake_up_terminal|,
 is supposed to revive the terminal if the user has disabled it by
 some instruction to the operating system.  The following macros show how
 these operations can be specified in \ph:
-@:PASCAL H}{\ph@>
 @^system dependencies@>
 
 @d update_terminal == break(term_out) {empty the terminal output buffer}
@@ -1133,7 +1117,6 @@ not to those generated dynamically by the user.)
 Some \PASCAL\ compilers won't pack integers into a single byte unless the
 integers lie in the range |-128..127|. To accommodate such systems
 we access the string pool only via macros that can easily be redefined.
-@^system dependencies@>
 
 @d si(#) == # {convert from |ASCII_code| to |packed_ASCII_code|}
 @d so(#) == # {convert from |packed_ASCII_code| to |ASCII_code|}
@@ -1302,8 +1285,8 @@ extended character set recommended in {\sl The \TeX book\/} would, for
 example, be `|k in [0,@'10..@'12,@'14,@'15,@'33,@'177..@'377]|'.
 If character |k| cannot be printed, and |k<@'200|, then character |k+@'100| or
 |k-@'100| must be printable; moreover, ASCII codes |[@'41..@'46,
-@'60..@'71, @'136, @'141..@'146, @'160..@'171]| must be printable.
-Thus, at least 81 printable characters are needed.
+@'60..@'71, @'141..@'146, @'160..@'171]| must be printable.
+Thus, at least 80 printable characters are needed.
 @:TeXbook}{\sl The \TeX book@>
 @^character set dependencies@>
 @^system dependencies@>
@@ -1707,7 +1690,7 @@ This procedure is never called when |interaction<scroll_mode|.
 
 @p procedure term_input; {gets a line from the terminal}
 var k:0..buf_size; {index into |buffer|}
-begin update_terminal; {now the user sees the prompt for sure}
+begin update_terminal; {Now the user sees the prompt for sure}
 if not input_ln(term_in,true) then fatal_error("End of file on the terminal!");
 @.End of file on the terminal@>
 term_offset:=0; {the user's line ended with \<\rm return>}
@@ -2228,7 +2211,7 @@ meters); two such quantities can be added without overflow on a 32-bit
 computer.
 
 The present implementation of \TeX\ does not check for overflow when
-@^overflow in arithmetic@>
+@^Overflow in arithmetic@>
 dimensions are added or subtracted. This could be done by inserting a
 few dozen tests of the form `\ignorespaces|if x>=@'10000000000 then
 @t\\{report\_overflow}@>|', but the chance of overflow is so remote that
@@ -3203,7 +3186,7 @@ leader_ptr(p):=null; glue_ptr(p):=q; incr(glue_ref_count(q));
 new_glue:=p;
 end;
 
-@ Still another subroutine is needed: This one is sort of a combination
+@ Still another subroutine is needed: this one is sort of a combination
 of |new_param_glue| and |new_glue|. It creates a glue node for one of
 the current glue parameters, but it makes a fresh copy of the glue
 specification, since that specification will probably be subject to change,
@@ -4067,12 +4050,12 @@ ordinary commands when the catcode cannot emerge from \TeX's scanning routine.
 @d mac_param=6 {macro parameter symbol ( \.\# )}
 @d sup_mark=7 {superscript ( \.{\char'136} )}
 @d sub_mark=8 {subscript ( \.{\char'137} )}
-@d ignore=9 {characters to ignore ( \.{\^\^@@} )}
+@d ignore=9 {characters to ignore ( \.{\^\^J} )}
 @d endv=9 {end of \<v_j> list in alignment template}
 @d spacer=10 {characters equivalent to blank space ( \.{\ } )}
 @d letter=11 {characters regarded as letters ( \.{A..Z}, \.{a..z} )}
 @d other_char=12 {none of the special character types}
-@d active_char=13 {characters that invoke macros ( \.{\char`\~} )}
+@d active_char=13 {characters that invoke macros ( \.{\^\^[} )}
 @d par_end=13 {end of paragraph ( \.{\\par} )}
 @d match=13 {match a macro parameter}
 @d comment=14 {characters that introduce comments ( \.\% )}
@@ -4449,25 +4432,25 @@ or what their current values are, for all quantities that are subject to
 the nesting structure provided by \TeX's grouping mechanism. There are six
 parts to |eqtb|:
 
-\yskip\hangg 1) |eqtb[active_base..(hash_base-1)]| holds the current
+\yskip\hang 1) |eqtb[active_base..(hash_base-1)]| holds the current
 equivalents of single-character control sequences.
 
-\yskip\hangg 2) |eqtb[hash_base..(glue_base-1)]| holds the current
+\yskip\hang 2) |eqtb[hash_base..(glue_base-1)]| holds the current
 equivalents of multiletter control sequences.
 
-\yskip\hangg 3) |eqtb[glue_base..(local_base-1)]| holds the current
+\yskip\hang 3) |eqtb[glue_base..(local_base-1)]| holds the current
 equivalents of glue parameters like the current baselineskip.
 
-\yskip\hangg 4) |eqtb[local_base..(int_base-1)]| holds the current
+\yskip\hang 4) |eqtb[local_base..(int_base-1)]| holds the current
 equivalents of local halfword quantities like the current box registers,
 the current ``catcodes,'' the current font, and a pointer to the current
 paragraph shape.
 
-\yskip\hangg 5) |eqtb[int_base..(dimen_base-1)]| holds the current
+\yskip\hang 5) |eqtb[int_base..(dimen_base-1)]| holds the current
 equivalents of fullword integer parameters like the current hyphenation
 penalty.
 
-\yskip\hangg 6) |eqtb[dimen_base..eqtb_size]| holds the current equivalents
+\yskip\hang 6) |eqtb[dimen_base..eqtb_size]| holds the current equivalents
 of fullword dimension parameters like the current hsize or amount of
 hanging indentation.
 
@@ -4480,19 +4463,19 @@ in region~3 of |eqtb|, while the current meaning of the control sequence
 @ Each entry in |eqtb| is a |memory_word|. Most of these words are of type
 |two_halves|, and subdivided into three fields:
 
-\yskip\hangg 1) The |eq_level| (a quarterword) is the level of grouping at
+\yskip\hang 1) The |eq_level| (a quarterword) is the level of grouping at
 which this equivalent was defined. If the level is |level_zero|, the
 equivalent has never been defined; |level_one| refers to the outer level
 (outside of all groups), and this level is also used for global
 definitions that never go away. Higher levels are for equivalents that
 will disappear at the end of their group.  @^global definitions@>
 
-\yskip\hangg 2) The |eq_type| (another quarterword) specifies what kind of
+\yskip\hang 2) The |eq_type| (another quarterword) specifies what kind of
 entry this is. There are many types, since each \TeX\ primitive like
 \.{\\hbox}, \.{\\def}, etc., has its own special code. The list of
 command codes above includes all possible settings of the |eq_type| field.
 
-\yskip\hangg 3) The |equiv| (a halfword) is the current equivalent value.
+\yskip\hang 3) The |equiv| (a halfword) is the current equivalent value.
 This may be a font number, a pointer into |mem|, or a variety of other
 things.
 
@@ -5588,7 +5571,7 @@ procedure print_cs(@!p:integer); {prints a purported control sequence}
 begin if p<hash_base then {single character}
   if p>=single_base then
     if p=null_cs then
-      begin print_esc("csname"); print_esc("endcsname"); print_char(" ");
+      begin print_esc("csname"); print_esc("endcsname");
       end
     else  begin print_esc(p-single_base);
       if cat_code(p-single_base)=letter then print_char(" ");
@@ -5815,22 +5798,22 @@ this stack is |save_stack[p]|, where |p=save_ptr-1|; it contains three
 fields called |save_type|, |save_level|, and |save_index|, and it is
 interpreted in one of four ways:
 
-\yskip\hangg 1) If |save_type(p)=restore_old_value|, then
+\yskip\hang 1) If |save_type(p)=restore_old_value|, then
 |save_index(p)| is a location in |eqtb| whose current value should
 be destroyed at the end of the current group and replaced by |save_stack[p-1]|.
 Furthermore if |save_index(p)>=int_base|, then |save_level(p)|
 should replace the corresponding entry in |xeq_level|.
 
-\yskip\hangg 2) If |save_type(p)=restore_zero|, then |save_index(p)|
+\yskip\hang 2) If |save_type(p)=restore_zero|, then |save_index(p)|
 is a location in |eqtb| whose current value should be destroyed at the end
 of the current group, when it should be
 replaced by the current value of |eqtb[undefined_control_sequence]|.
 
-\yskip\hangg 3) If |save_type(p)=insert_token|, then |save_index(p)|
+\yskip\hang 3) If |save_type(p)=insert_token|, then |save_index(p)|
 is a token that should be inserted into \TeX's input when the current
 group ends.
 
-\yskip\hangg 4) If |save_type(p)=level_boundary|, then |save_level(p)|
+\yskip\hang 4) If |save_type(p)=level_boundary|, then |save_level(p)|
 is a code explaining what kind of group we were previously in, and
 |save_index(p)| points to the level boundary word at the bottom of
 the entries for that group.
@@ -5839,7 +5822,7 @@ the entries for that group.
 @d save_level(#)==save_stack[#].hh.b1
   {saved level for regions 5 and 6, or group code}
 @d save_index(#)==save_stack[#].hh.rh
-  {|eqtb| location or token or |save_stack| location}
+  {|eqtb| location or |save_stack| location}
 @d restore_old_value=0 {|save_type| when a value should be restored later}
 @d restore_zero=1 {|save_type| when an undefined entry should be restored}
 @d insert_token=2 {|save_type| when a token is being saved for later use}
@@ -5865,7 +5848,7 @@ one that starts with \.{\\begingroup} should end with \.{\\endgroup}.
 @d align_group=6 {code for `\.{\\halign}\grp', `\.{\\valign}\grp'}
 @d no_align_group=7 {code for `\.{\\noalign}\grp'}
 @d output_group=8 {code for output routine}
-@d math_group=9 {code for, e.g., `\.{\char'136}\grp'}
+@d math_group=9 {code for, e.g, `\.{\char'136}\grp'}
 @d disc_group=10 {code for `\.{\\discretionary}\grp\grp\grp'}
 @d insert_group=11 {code for `\.{\\insert}\grp', `\.{\\vadjust}\grp'}
 @d vcenter_group=12 {code for `\.{\\vcenter}\grp'}
@@ -6421,14 +6404,14 @@ This implementation of
 \TeX\ uses two different conventions for representing sequential stacks.
 @^stack conventions@>@^conventions for representing stacks@>
 
-\yskip\hangg 1) If there is frequent access to the top entry, and if the
+\yskip\hang 1) If there is frequent access to the top entry, and if the
 stack is essentially never empty, then the top entry is kept in a global
 variable (even better would be a machine register), and the other entries
 appear in the array $\\{stack}[0\to(\\{ptr}-1)]$. For example, the
 semantic stack described above is handled this way, and so is the input
 stack that we are about to study.
 
-\yskip\hangg 2) If there is infrequent top access, the entire stack contents
+\yskip\hang 2) If there is infrequent top access, the entire stack contents
 are in the array $\\{stack}[0\to(\\{ptr}-1)]$. For example, the |save_stack|
 is treated this way, as we have seen.
 
@@ -7011,7 +6994,7 @@ so it has been slightly optimized for speed.
 
 @p procedure back_input; {undoes one token of input}
 var p:pointer; {a token list of length one}
-begin while (state=token_list)and(loc=null)and(token_type<>v_template) do
+begin while (state=token_list)and(loc=null) do
   end_token_list; {conserve stack space}
 p:=get_avail; info(p):=cur_tok;
 if cur_tok<right_brace_limit then
@@ -7123,7 +7106,7 @@ when detecting a blank line.
 @!par_token:halfword; {token representing `\.{\\par}'}
 
 @ @<Put each...@>=
-primitive("par",par_end,256); {cf.\ |scan_file_name|}
+primitive("par",par_end,256); {cf. |scan_file_name|}
 @!@:par_}{\.{\\par} primitive@>
 par_loc:=cur_val; par_token:=cs_token_flag+par_loc;
 
@@ -7231,7 +7214,7 @@ label restart, {go here to get the next input token}
   exit; {go here when the next input token has been got}
 var k:0..buf_size; {an index into |buffer|}
 @!t:halfword; {a token}
-@!cat:0..max_char_code; {|cat_code(cur_chr)|, usually}
+@!cat:0..15; {|cat_code(cur_chr)|, usually}
 @!c,@!cc:ASCII_code; {constituents of a possible expanded code}
 @!d:2..3; {number of excess characters in an expanded code}
 begin restart: cur_cs:=0;
@@ -7357,7 +7340,7 @@ if cur_cmd>=outer_call then check_outer_validity;
 end
 
 @ Notice that a code like \.{\^\^8} becomes \.x if not followed by a hex digit.
-
+ 
 @d is_hex(#)==(((#>="0")and(#<="9"))or((#>="a")and(#<="f")))
 @d hex_to_cur_chr==
   if c<="9" then cur_chr:=c-"0" @+else cur_chr:=c-"a"+10;
@@ -7367,7 +7350,7 @@ end
 @<If this |sup_mark| starts an expanded character...@>=
 begin if cur_chr=buffer[loc] then if loc<limit then
   begin c:=buffer[loc+1]; @+if c<@'200 then {yes we have an expanded char}
-    begin loc:=loc+2;
+    begin loc:=loc+2; 
     if is_hex(c) then if loc<=limit then
       begin cc:=buffer[loc]; @+if is_hex(cc) then
         begin incr(loc); hex_to_cur_chr; goto reswitch;
@@ -7608,7 +7591,9 @@ or the evaluation of the conditional.
 |get_next| has already been called.
 
 \yskip\noindent
-In fact, these three procedures account for almost every use of |get_next|.
+In fact, these three procedures account for {\sl all\/} uses of |get_next|,
+except for two places in the ``inner loop'' when |cur_tok| need not be set,
+and except when the arguments to \.{\\ifx} are being scanned.
 
 @ No new control sequences will be defined except during a call of
 |get_token|, or when \.{\\csname} compresses a token list, because
@@ -7968,8 +7953,7 @@ all token lists that have recently been depleted. Then a user macro that ends
 with a call to itself will not require unbounded stack space.
 
 @<Feed the macro body and its parameters to the scanner@>=
-while (state=token_list)and(loc=null)and(token_type<>v_template) do
-  end_token_list; {conserve stack space}
+while (state=token_list)and(loc=null) do end_token_list; {conserve stack space}
 begin_token_list(ref_count,macro); name:=warning_index; loc:=link(r);
 if n>0 then
   begin if param_ptr+n>max_param_stack then
@@ -8065,7 +8049,6 @@ help6("I've run across a `}' that doesn't seem to match anything.")@/
   ("argument that might be the root of the problem. But if")@/
   ("your `}' was spurious, just type `2' and it will go away.");
 incr(align_state); long_state:=call; cur_tok:=par_token; ins_error;
-goto continue;
 end {a white lie; the \.{\\par} won't always trigger a runaway}
 
 @ If |long_state=outer_call|, a runaway argument has already been reported.
@@ -8286,7 +8269,7 @@ The output of |scan_something_internal| (and of the other routines
 variable |cur_val|, and its level is put into |cur_val_level|. The highest
 values of |cur_val_level| are special: |mu_val| is used only when
 |cur_val| points to something in a ``muskip'' register, or to one of the
-three parameters \.{\\thinmuskip}, \.{\\medmuskip}, \.{\\thickmuskip};
+three parameters \.{\\thinmuskip}, \.{\\midmuskip}, \.{\\thickmuskip};
 |ident_val| is used only when |cur_val| points to a font identifier;
 |tok_val| is used only when |cur_val| points to |null| or to the reference
 count of a token list. The last two cases are allowed only when
@@ -8463,8 +8446,11 @@ if abs(mode)<>m then
   if level<>tok_val then scanned_result(0)(dimen_val)
   else scanned_result(0)(int_val);
   end
-else if m=vmode then scanned_result(prev_depth)(dimen_val)
-else scanned_result(space_factor)(int_val)
+else if m=vmode then
+  begin cur_val:=prev_depth; cur_val_level:=dimen_val;
+  end
+else begin cur_val:=space_factor; cur_val_level:=int_val;
+  end
 
 @ @<Fetch the |dead_cycles| or the |insert_penalties|@>=
 begin if m=0 then cur_val:=dead_cycles@+else cur_val:=insert_penalties;
@@ -8684,7 +8670,7 @@ comes into action before any of the basic scanning routines has assigned
 them a value.
 
 @<Set init...@>=
-cur_val:=0; cur_val_level:=int_val; radix:=0; cur_order:=normal;
+cur_val:=0; cur_val_level:=int_val; radix:=0; cur_order:=0;
 
 @ The |scan_int| routine is used also to scan the integer part of a
 fraction; for example, the `\.3' in `\.{3.14159}' will be found by
@@ -8995,7 +8981,7 @@ if mag<>1000 then
 end
 
 @ The necessary conversion factors can all be specified exactly as
-fractions whose numerator and denominator sum to 32768 or less.
+fractions whose numerator and denominator are 32768 or less.
 According to the definitions here, $\rm2660\,dd\approx1000.33297\,mm$;
 this agrees well with the value $\rm1000.333\,mm$ cited by Bosshard
 @^Bosshard, Hans Rudolf@>
@@ -9916,7 +9902,7 @@ The file area can be arbitrary on input files, but files are usually
 output to the user's current area.  If an input file cannot be
 found on the specified area, \TeX\ will look for it on a special system
 area; this special area is intended for commonly used input files like
-\.{webmac.tex}.
+\.{webhdr.tex}.
 
 Simple uses of \TeX\ refer only to file names that have no explicit
 extension or area. For example, a person usually says `\.{\\input} \.{paper}'
@@ -9930,12 +9916,6 @@ when responding to error messages concerning unopenable files; therefore
 we want to let them use the syntax that appears in their favorite
 operating system.
 
-The following procedures don't allow spaces to be part of
-file names; but some users seem to like names that are spaced-out.
-System-dependent changes to allow such things should probably
-be made with reluctance, and only when an entire file name that
-includes spaces is ``quoted'' somehow.
-
 @ In order to isolate the system-dependent aspects of file names, the
 @^system dependencies@>
 system-independent parts of \TeX\ are expressed in terms
@@ -9943,7 +9923,7 @@ of three system-dependent
 procedures called |begin_name|, |more_name|, and |end_name|. In
 essence, if the user-specified characters of the file name are $c_1\ldots c_n$,
 the system-independent driver program does the operations
-$$|begin_name|;\,|more_name|(c_1);\,\ldots\,;\,|more_name|(c_n);
+$$|begin_name|;\,|more_name|(c_1);\,\ldots\,;|more_name|(c_n);
 \,|end_name|.$$
 These three procedures communicate with each other via global variables.
 Afterwards the file name will appear in the string pool as three strings
@@ -10541,13 +10521,13 @@ only if it lies between |bc| and |ec| and has a nonzero |width_index|.
 @ The |tag| field in a |char_info_word| has four values that explain how to
 interpret the |remainder| field.
 
-\yskip\hangg|tag=0| (|no_tag|) means that |remainder| is unused.\par
-\hangg|tag=1| (|lig_tag|) means that this character has a ligature/kerning
+\yskip\hang|tag=0| (|no_tag|) means that |remainder| is unused.\par
+\hang|tag=1| (|lig_tag|) means that this character has a ligature/kerning
 program starting at position |remainder| in the |lig_kern| array.\par
-\hangg|tag=2| (|list_tag|) means that this character is part of a chain of
+\hang|tag=2| (|list_tag|) means that this character is part of a chain of
 characters of ascending sizes, and not the largest in the chain.  The
 |remainder| field gives the character code of the next larger character.\par
-\hangg|tag=3| (|ext_tag|) means that this character code represents an
+\hang|tag=3| (|ext_tag|) means that this character code represents an
 extensible character, i.e., a character that is built up of smaller pieces
 so that it can be made arbitrarily large. The pieces are specified in
 |@!exten[remainder]|.\par
@@ -10695,7 +10675,7 @@ the font.
 @ Here now is the (rather formidable) array of font arrays.
 
 @d non_char==qi(256) {a |halfword| code that can't match a real character}
-@d non_address=0 {a spurious |bchar_label|}
+@d non_address==font_mem_size {a spurious |font_index|}
 
 @<Glob...@>=
 @!font_info:array[font_index] of memory_word;
@@ -10705,7 +10685,7 @@ the font.
 @!font_check:array[internal_font_number] of four_quarters; {check sum}
 @!font_size:array[internal_font_number] of scaled; {``at'' size}
 @!font_dsize:array[internal_font_number] of scaled; {``design'' size}
-@!font_params:array[internal_font_number] of font_index; {how many font
+@!font_params:array[internal_font_number] of halfword; {how many font
   parameters are present}
 @!font_name:array[internal_font_number] of str_number; {name of the font}
 @!font_area:array[internal_font_number] of str_number; {area of the font}
@@ -11003,7 +10983,6 @@ fget; read_sixteen(nk);
 fget; read_sixteen(ne);
 fget; read_sixteen(np);
 if lf<>6+lh+(ec-bc+1)+nw+nh+nd+ni+nl+nk+ne+np then abort;
-if (nw=0)or(nh=0)or(nd=0)or(ni=0) then abort;
 end
 
 @ The preliminary settings of the index-offset variables |char_base|,
@@ -12326,11 +12305,7 @@ var base_line: scaled; {the baseline coordinate for this box}
 @!lx:scaled; {extra space between leader boxes}
 @!outer_doing_leaders:boolean; {were we doing leaders?}
 @!edge:scaled; {left edge of sub-box, or right edge of leader space}
-@!glue_temp:real; {glue value before rounding}
-@!cur_glue:real; {glue seen so far}
-@!cur_g:scaled; {rounded equivalent of |cur_glue| times the glue ratio}
-begin cur_g:=0; cur_glue:=float_constant(0);
-this_box:=temp_ptr; g_order:=glue_order(this_box);
+begin this_box:=temp_ptr; g_order:=glue_order(this_box);
 g_sign:=glue_sign(this_box); p:=list_ptr(this_box);
 incr(cur_s);
 if cur_s>0 then dvi_out(push);
@@ -12412,31 +12387,18 @@ if (rule_ht>0)and(rule_wd>0) then {we don't output empty rules}
   cur_v:=base_line; dvi_h:=dvi_h+rule_wd;
   end
 
-@ @d billion==float_constant(1000000000)
-@d vet_glue(#)== glue_temp:=#;
-  if glue_temp>billion then
-           glue_temp:=billion
-  else if glue_temp<-billion then
-           glue_temp:=-billion
-
-@<Move right or output leaders@>=
-begin g:=glue_ptr(p); rule_wd:=width(g)-cur_g;
+@ @<Move right or output leaders@>=
+begin g:=glue_ptr(p); rule_wd:=width(g);
 if g_sign<>normal then
   begin if g_sign=stretching then
     begin if stretch_order(g)=g_order then
-      begin cur_glue:=cur_glue+stretch(g);
-      vet_glue(float(glue_set(this_box))*cur_glue);
+      rule_wd:=rule_wd+round(float(glue_set(this_box))*stretch(g));
 @^real multiplication@>
-      cur_g:=round(glue_temp);
-      end;
     end
-  else if shrink_order(g)=g_order then
-      begin cur_glue:=cur_glue-shrink(g);
-      vet_glue(float(glue_set(this_box))*cur_glue);
-      cur_g:=round(glue_temp);
-      end;
+  else  begin if shrink_order(g)=g_order then
+      rule_wd:=rule_wd-round(float(glue_set(this_box))*shrink(g));
+    end;
   end;
-rule_wd:=rule_wd+cur_g;
 if subtype(p)>=a_leaders then
   @<Output leaders in an hlist, |goto fin_rule| if a rule
     or to |next_p| if done@>;
@@ -12487,7 +12449,7 @@ if subtype(p)=a_leaders then
 else  begin lq:=rule_wd div leader_wd; {the number of box copies}
   lr:=rule_wd mod leader_wd; {the remaining space}
   if subtype(p)=c_leaders then cur_h:=cur_h+(lr div 2)
-  else  begin lx:=lr div (lq+1);
+  else  begin lx:=(2*lr+lq+1) div (2*lq+2); {round|(lr/(lq+1))|}
     cur_h:=cur_h+((lr-(lq-1)*lx) div 2);
     end;
   end
@@ -12522,11 +12484,7 @@ var left_edge: scaled; {the left coordinate for this box}
 @!lx:scaled; {extra space between leader boxes}
 @!outer_doing_leaders:boolean; {were we doing leaders?}
 @!edge:scaled; {bottom boundary of leader space}
-@!glue_temp:real; {glue value before rounding}
-@!cur_glue:real; {glue seen so far}
-@!cur_g:scaled; {rounded equivalent of |cur_glue| times the glue ratio}
-begin cur_g:=0; cur_glue:=float_constant(0);
-this_box:=temp_ptr; g_order:=glue_order(this_box);
+begin this_box:=temp_ptr; g_order:=glue_order(this_box);
 g_sign:=glue_sign(this_box); p:=list_ptr(this_box);
 incr(cur_s);
 if cur_s>0 then dvi_out(push);
@@ -12589,23 +12547,17 @@ if (rule_ht>0)and(rule_wd>0) then {we don't output empty rules}
 goto next_p
 
 @ @<Move down or output leaders@>=
-begin g:=glue_ptr(p); rule_ht:=width(g)-cur_g;
+begin g:=glue_ptr(p); rule_ht:=width(g);
 if g_sign<>normal then
   begin if g_sign=stretching then
     begin if stretch_order(g)=g_order then
-      begin cur_glue:=cur_glue+stretch(g);
-      vet_glue(float(glue_set(this_box))*cur_glue);
+      rule_ht:=rule_ht+round(float(glue_set(this_box))*stretch(g));
 @^real multiplication@>
-      cur_g:=round(glue_temp);
-      end;
     end
-  else if shrink_order(g)=g_order then
-      begin cur_glue:=cur_glue-shrink(g);
-      vet_glue(float(glue_set(this_box))*cur_glue);
-      cur_g:=round(glue_temp);
-      end;
+  else  begin if shrink_order(g)=g_order then
+      rule_ht:=rule_ht-round(float(glue_set(this_box))*shrink(g));
+    end;
   end;
-rule_ht:=rule_ht+cur_g;
 if subtype(p)>=a_leaders then
   @<Output leaders in a vlist, |goto fin_rule| if a rule
     or to |next_p| if done@>;
@@ -12640,7 +12592,7 @@ if subtype(p)=a_leaders then
 else  begin lq:=rule_ht div leader_ht; {the number of box copies}
   lr:=rule_ht mod leader_ht; {the remaining space}
   if subtype(p)=c_leaders then cur_v:=cur_v+(lr div 2)
-  else  begin lx:=lr div (lq+1);
+  else  begin lx:=(2*lr+lq+1) div (2*lq+2); {round|(lr/(lq+1))|}
     cur_v:=cur_v+((lr-(lq-1)*lx) div 2);
     end;
   end
@@ -12750,8 +12702,7 @@ if width(p)+h_offset>max_h then max_h:=width(p)+h_offset
 
 @ At the end of the program, we must finish things off by writing the
 post\-amble. If |total_pages=0|, the \.{DVI} file was never opened.
-If |total_pages>=65536|, the \.{DVI} file will lie. And if
-|max_push>=65536|, the user deserves whatever chaos might ensue.
+If |total_pages>=65536|, the \.{DVI} file will lie.
 
 An integer variable |k| will be declared for use by this routine.
 
@@ -12985,7 +12936,6 @@ it always points to some node in the list preceding |p|. Thus, we can delete
 nodes by moving |q| when necessary. The algorithm takes linear time, and the
 extra computation does not intrude on the inner loop unless it is necessary
 to make a deletion.
-@^inner loop@>
 
 @<Transfer node |p| to the adjustment list@>=
 begin while link(q)<>p do q:=link(q);
@@ -13298,7 +13248,7 @@ baselineskip calculation is handled by the |append_to_vlist| routine.
 
 @p procedure append_to_vlist(@!b:pointer);
 var d:scaled; {deficiency of space between baselines}
-@!p:pointer; {a new glue node}
+@!p:pointer; {a new glue specification}
 begin if prev_depth>ignore_depth then
   begin d:=width(baseline_skip)-prev_depth-height(b);
   if d<line_skip_limit then p:=new_param_glue(line_skip_code)
@@ -13343,7 +13293,7 @@ similar ``nodes'' in hlists and vlists. Certain kinds of ordinary nodes are
 allowed to appear in mlists together with the noads; \TeX\ tells the difference
 by means of the |type| field, since a noad's |type| is always greater than
 that of a node. An mlist does not contain character nodes, hlist nodes, vlist
-nodes, math nodes, ligature nodes,
+nodes, math nodes, ligature nodes, mark nodes, insert nodes, adjust nodes,
 or unset nodes; in particular, each mlist item appears in the
 variable-size part of |mem|, so the |type| field is always present.
 
@@ -13700,9 +13650,9 @@ radical_noad: begin print_esc("radical"); print_delimiter(left_delimiter(p));
   end;
 accent_noad: begin print_esc("accent"); print_fam_and_char(accent_chr(p));
   end;
-left_noad: begin print_esc("left"); print_delimiter(delimiter(p));
+left_noad: begin print_esc("left"); print_delimiter(nucleus(p));
   end;
-right_noad: begin print_esc("right"); print_delimiter(delimiter(p));
+right_noad: begin print_esc("right"); print_delimiter(nucleus(p));
   end;
 end;
 if subtype(p)<>normal then
@@ -13780,7 +13730,7 @@ larger as the type gets smaller.)
 
 @<Basic printing procedures@>=
 procedure print_size(@!s:integer);
-begin if s=text_size then print_esc("textfont")
+begin if s=0 then print_esc("textfont")
 else if s=script_size then print_esc("scriptfont")
 else print_esc("scriptscriptfont");
 end;
@@ -14109,7 +14059,7 @@ begin if subtype(p)=mu_glue then
   if f<0 then
     begin decr(n); f:=f+@'200000;
     end;
-  width(p):=mu_mult(width(p)); subtype(p):=explicit;
+  width(p):=mu_mult(width(p)); subtype(p):=normal;
   end;
 end;
 
@@ -14187,8 +14137,8 @@ end;
 q:=list_ptr(x);
 if is_char_node(q) then
   begin r:=link(q);
-  if r<>null then if link(r)=null then if not is_char_node(r) then
-   if type(r)=kern_node then {unneeded italic correction}
+  if r<>null then if link(r)=null then
+   if not is_char_node(r) then if type(r)=kern_node then
     begin free_node(r,small_node_size); link(q):=null;
     end;
   end
@@ -14389,8 +14339,8 @@ if subtype(q)=mu_glue then
 else if (cur_size<>text_size)and(subtype(q)=cond_math_glue) then
   begin p:=link(q);
   if p<>null then if (type(p)=glue_node)or(type(p)=kern_node) then
-    begin link(q):=link(p); link(p):=null; flush_node_list(p);
-    end;
+      begin link(q):=link(p); link(p):=null; flush_node_list(p);
+      end;
   end
 
 @ @<Cases for noads that can follow a |bin_noad|@>=
@@ -14586,7 +14536,7 @@ x:=clean_box(numerator(q),num_style(cur_style));
 z:=clean_box(denominator(q),denom_style(cur_style));
 if width(x)<width(z) then x:=rebox(x,width(z))
 else z:=rebox(z,width(x));
-if cur_style<text_style then {display style}
+if cur_style<text_style then {text style}
   begin shift_up:=num1(cur_size); shift_down:=denom1(cur_size);
   end
 else  begin shift_down:=denom2(cur_size);
@@ -14858,7 +14808,7 @@ end
 
 @ The purpose of |make_scripts(q,delta)| is to attach the subscript and/or
 superscript of noad |q| to the list that starts at |new_hlist(q)|,
-given that the subscript and superscript aren't both empty. The superscript
+given that subscript and superscript aren't both empty. The superscript
 will appear to the right of the subscript by a given distance |delta|.
 
 We set |shift_down| and |shift_up| to the minimum amounts to shift the
@@ -15555,10 +15505,10 @@ We need to remember the |cur_chr|, which is either |cr_cr_code|, |cr_code|,
 |span_code|, or a character code, depending on how the column text has ended.
 
 This part of the program had better not be activated when the preamble
-to another alignment is being scanned, or when no alignment preamble is active.
+to another alignment is being scanned.
 
 @<Insert the \(v)\<v_j>...@>=
-begin if (scanner_status=aligning) or (cur_align=null) then
+begin if scanner_status=aligning then
   fatal_error("(interwoven alignment preambles are not allowed)");
 @.interwoven alignment preambles...@>
 cur_cmd:=extra_info(cur_align); extra_info(cur_align):=cur_chr;
@@ -15752,7 +15702,7 @@ widths. Let $w_{ij}$ be the maximum of the natural widths of all entries
 that span columns $i$ through $j$, inclusive. The alignrecord for column~$i$
 contains $w_{ii}$ in its |width| field, and there is also a linked list of
 the nonzero $w_{ij}$ for increasing $j$, accessible via the |info| field;
-these span nodes contain the value $j-i+|min_quarterword|$ in their
+these span nodes contain the value $j-i-1+|min_quarterword|$ in their
 |link| fields. The values of $w_{ii}$ were initialized to |null_flag|, which
 we regard as $-\infty$.
 
@@ -15965,9 +15915,9 @@ it. (In case the enclosing mode is |mmode|, for displayed formulas,
 we will need to insert glue before and after the display; that part of the
 program will be deferred until we're more familiar with such operations.)
 
-In restricted horizontal mode, the |clang| part of |aux| is undefined;
-an over-cautious \PASCAL\ runtime system may complain about this.
-@^dirty \PASCAL@>
+In horizontal mode, the |clang| part of |aux| is undefined; an over-cautious
+\PASCAL\ runtime system may complain about this.
+@^dirty Pascal@>
 
 @<Insert the \(c)current list into its environment@>=
 aux_save:=aux; p:=link(head); q:=tail; pop_nest;
@@ -15998,7 +15948,7 @@ line-breaking problem can be regarded as a special case of the problem of
 computing the shortest path in an acyclic network. The cited paper includes
 numerous examples and describes the history of line breaking as it has been
 practiced by printers through the ages. The present implementation adds two
-new ideas to the algorithm of 1980: Memory space requirements are considerably
+new ideas to the algorithm of 1980: memory space requirements are considerably
 reduced by using smaller records for inactive nodes than for active ones,
 and arithmetic overflow is avoided by using ``delta distances'' instead of
 keeping track of the total distance from the beginning of the paragraph to the
@@ -16014,7 +15964,7 @@ There are also a number of implicit parameters: The hlist to be broken
 starts at |link(head)|, and it is nonempty. The value of |prev_graf| in the
 enclosing semantic level tells where the paragraph should begin in the
 sequence of line numbers, in case hanging indentation or \.{\\parshape}
-is in use; |prev_graf| is zero unless this paragraph is being continued
+are in use; |prev_graf| is zero unless this paragraph is being continued
 after a displayed formula.  Other implicit parameters, such as the
 |par_shape_ptr| and various penalties to use for hyphenation, etc., appear
 in |eqtb|.
@@ -16207,7 +16157,7 @@ macro makes such six-tuples convenient.
 
 @d do_all_six(#)==#(1);#(2);#(3);#(4);#(5);#(6)
 
-@<Glob...@>=
+@<Glo...@>=
 @!active_width:array[1..6] of scaled;
   {distance from first active node to~|cur_p|}
 @!cur_active_width:array[1..6] of scaled; {distance from current active node}
@@ -16299,7 +16249,7 @@ for breakpoints. This variable is global, since it is used both by |line_break|
 and by its subprocedure |try_break|.
 
 Another global variable called |threshold| is used to determine the feasibility
-of individual lines: Breakpoints are feasible if there is a way to reach
+of individual lines: breakpoints are feasible if there is a way to reach
 them without creating lines whose badness exceeds |threshold|.  (The
 badness is compared to |threshold| before penalties are added, so that
 penalty values do not affect the feasibility of breakpoints, except that
@@ -16666,7 +16616,7 @@ specifications for line |n| apply to all subsequent lines. If
 n\vert$. When hanging indentation is active, the left margin is
 |hang_indent|, if |hang_indent>=0|, else it is 0; the line length is
 $|hsize|-\vert|hang_indent|\vert$. The normal setting is
-|par_shape_ptr=null|, |hang_after=1|, and |hang_indent=0|.
+|par_shape_ptr=null|, |hang_after=0|, and |hang_indent=1|.
 Note that if |hang_indent=0|, the value of |hang_after| is irrelevant.
 @^length of lines@> @^hanging indentation@>
 
@@ -16714,7 +16664,7 @@ end
 
 @ When we come to the following code, we have just encountered the first
 active node~|r| whose |line_number| field contains |l|. Thus we want to
-compute the length of the $l\mskip1mu$th line of the current paragraph. Furthermore,
+compute the length of the $l\,$th line of the current paragraph. Furthermore,
 we want to set |old_l| to the last number in the class of line numbers
 equivalent to~|l|.
 
@@ -17731,7 +17681,7 @@ has the form $y_1\ldots y_t$ followed by the translation of $x_{m+1}\ldots x_n$,
 where $y_1\ldots y_t$ is some nonempty sequence of character, ligature, and
 kern nodes. We call $x_j\ldots x_m$ a ``cut prefix'' of $x_j\ldots x_n$.
 For example, if $x_1x_2x_3=\.{fly}$, and if the font contains `fl' as a
-ligature and a kern between `fl' and `y', then $m=2$, $t=2$, and $y_1$ will
+ligature and a kern between `fl' and `y', then $m=2$, $y=2$, and $y_1$ will
 be a ligature node for `fl' followed by an appropriate kern node~$y_2$.
 In the most common case, $x_j$~forms no ligature with $x_{j+1}$ and we
 simply have $m=j$, $y_1=x_j$. If $m<n$ we can repeat the procedure on
@@ -17766,7 +17716,7 @@ affect the translation of the beginning of the word.
 function reconstitute(@!j,@!n:small_number;@!bchar,@!hchar:halfword):
   small_number;
 label continue,done;
-var @!p:pointer; {temporary register for list manipulation}
+var @!p:pointer; {temporary register for list manipulation} 
 @!t:pointer; {a node being appended to}
 @!q:four_quarters; {character information or a lig/kern instruction}
 @!cur_rh:halfword; {hyphen character for ligature testing}
@@ -17901,7 +17851,7 @@ case op_byte(q) of
 qi(1),qi(5):begin cur_l:=rem_byte(q); {\.{=:\?}, \.{=:\?>}}
   ligature_present:=true;
   end;
-qi(2),qi(6):begin cur_r:=rem_byte(q); {\.{\?=:}, \.{\?=:>}}
+qi(2),qi(6):begin cur_r:=rem_byte(q); {\.{\?=:}. \.{\?=:>}}
   if lig_stack>null then character(lig_stack):=cur_r
   else begin lig_stack:=new_lig_item(cur_r);
     if j=n then bchar:=non_char
@@ -18012,7 +17962,7 @@ if hyf_node<>null then
 
 @<Put the \(c)characters |hu[i+1..@,]| into |post_break(r)|...@>=
 minor_tail:=null; post_break(r):=null; c_loc:=0;
-if bchar_label[hf]<>non_address then {put left boundary at beginning of new line}
+if bchar_label[hf]<non_address then {put left boundary at beginning of new line}
   begin decr(l); c:=hu[l]; c_loc:=l; hu[l]:=256;
   end;
 while l<j do
@@ -18170,7 +18120,7 @@ $c_{k+1}$.
 
 @ @<Glob...@>=
 @!hyph_word:array[hyph_pointer] of str_number; {exception words}
-@!hyph_list:array[hyph_pointer] of pointer; {lists of hyphen positions}
+@!hyph_list:array[hyph_pointer] of pointer; {list of hyphen positions}
 @!hyph_count:hyph_pointer; {the number of words in the exception dictionary}
 
 @ @<Local variables for init...@>=
@@ -18779,7 +18729,7 @@ while l<=k do
   if (p=0)or(c<so(trie_c[p])) then
     @<Insert a new trie node between |q| and |p|, and
       make |p| point to it@>;
-  q:=p; {now node |q| represents $p_1\ldots p_{l-1}$}
+  q:=p; {now node |q| represents $p_1\ldots p_l$}
   end;
 if trie_o[q]<>min_quarterword then
   begin print_err("Duplicate pattern");
@@ -19275,9 +19225,7 @@ if page_head<>page_tail then
     while r<>page_ins_head do
       begin print_ln; print_esc("insert"); t:=qo(subtype(r));
       print_int(t); print(" adds ");
-      if count(t)=1000 then t:=height(r)
-      else t:=x_over_n(height(r),1000)*count(t);
-      print_scaled(t);
+      t:=x_over_n(height(r),1000)*count(t); print_scaled(t);
       if type(r)=split_up then
         begin q:=page_head; t:=0;
         repeat q:=link(q);
@@ -19914,7 +19862,7 @@ end
 in internal vertical mode, and \TeX\ will do the following:
 
 @<Resume the page builder after an output routine has come to an end@>=
-begin if (loc<>null) or
+begin if (loc<>null) or 
  ((token_type<>output_text)and(token_type<>backed_up)) then
   @<Recover from an unbalanced output routine@>;
 end_token_list; {conserve stack space in case more outputs are triggered}
@@ -19997,7 +19945,6 @@ with particular care.
 
 @ We shall concentrate first on the inner loop of |main_control|, deferring
 consideration of the other cases until later.
-@^inner loop@>
 
 @d big_switch=60 {go here to branch on the next token of input}
 @d main_loop=70 {go here to typeset a string of consecutive characters}
@@ -20097,7 +20044,6 @@ case is |sf_code(cur_chr)=1000|, so we want that case to be fast.
 
 The overall structure of the main loop is presented here. Some program labels
 are inside the individual sections.
-@^inner loop@>
 
 @d adjust_space_factor==@t@>@;@/
   main_s:=sf_code(cur_chr);
@@ -20136,14 +20082,15 @@ main_lig_loop:@<If there's a ligature/kern command relevant to |cur_l| and
 main_loop_move_lig:@<Move the cursor past a pseudo-ligature, then
   |goto main_loop_lookahead| or |main_lig_loop|@>
 
-@ If |link(cur_q)| is nonnull when |wrapup| is invoked, |cur_q| points to
-the list of characters that were consumed while building the ligature
-character~|cur_l|.
+@ If the current horizontal list is empty, the reference to |character(tail)|
+here is not strictly legal, since |tail| will be a node freshly returned by
+|get_avail|. But this should cause no problem on most implementations, and we
+do want the inner loop to be fast.
+@^dirty Pascal@>
 
 A discretionary break is not inserted for an explicit hyphen when we are in
 restricted horizontal mode. In particular, this avoids putting discretionary
 nodes inside of other discretionaries.
-@^inner loop@>
 
 @d pack_lig(#)== {the parameter is either |rt_hit| or |false|}
   begin main_p:=new_ligature(main_f,cur_l,link(cur_q));
@@ -20157,8 +20104,8 @@ nodes inside of other discretionaries.
   end
 
 @d wrapup(#)==if cur_l<non_char then
-  begin if link(cur_q)>null then
-    if character(tail)=qi(hyphen_char[main_f]) then ins_disc:=true;
+  begin if character(tail)=qi(hyphen_char[main_f]) then if link(cur_q)>null then
+    ins_disc:=true;
   if ligature_present then pack_lig(#);
   if ins_disc then
     begin ins_disc:=false;
@@ -20170,7 +20117,6 @@ nodes inside of other discretionaries.
 wrapup(rt_hit)
 
 @ @<If the cursor is immediately followed by the right boundary...@>=
-@^inner loop@>
 if lig_stack=null then goto reswitch;
 cur_q:=tail; cur_l:=character(lig_stack);
 main_loop_move+1:if not is_char_node(lig_stack) then goto main_loop_move_lig;
@@ -20181,14 +20127,14 @@ main_i:=char_info(main_f)(cur_l);
 if not char_exists(main_i) then
   begin char_warning(main_f,cur_chr); free_avail(lig_stack); goto big_switch;
   end;
-link(tail):=lig_stack; tail:=lig_stack {|main_loop_lookahead| is next}
+tail_append(lig_stack) {|main_loop_lookahead| is next}
 
 @ Here we are at |main_loop_move_lig|.
 When we begin this code we have |cur_q=tail| and |cur_l=character(lig_stack)|.
 
 @<Move the cursor past a pseudo-ligature...@>=
 main_p:=lig_ptr(lig_stack);
-if main_p>null then tail_append(main_p); {append a single character}
+if main_p>null then tail_append(main_p);
 temp_ptr:=lig_stack; lig_stack:=link(temp_ptr);
 free_node(temp_ptr,small_node_size);
 main_i:=char_info(main_f)(cur_l); ligature_present:=true;
@@ -20222,7 +20168,6 @@ if cur_r=false_bchar then cur_r:=non_char {this prevents spurious ligatures}
 
 @ Even though comparatively few characters have a lig/kern program, several
 of the instructions here count as part of \TeX's inner loop, since a
-@^inner loop@>
 potentially long sequential search must be performed. For example, tests with
 Computer Modern Roman showed that about 40 per cent of all characters
 actually encountered in practice had a lig/kern program, and that about four
@@ -20232,7 +20177,6 @@ At the beginning of this code we have |main_i=char_info(main_f)(cur_l)|.
 
 @<If there's a ligature/kern command...@>=
 if char_tag(main_i)<>lig_tag then goto main_loop_wrapup;
-if cur_r=non_char then goto main_loop_wrapup;
 main_k:=lig_kern_start(main_f)(main_i); main_j:=font_info[main_k].qqqq;
 if skip_byte(main_j)<=stop_flag then goto main_lig_loop+2;
 main_k:=lig_kern_restart(main_f)(main_j);
@@ -20298,7 +20242,6 @@ main_k:=bchar_label[main_f]; goto main_lig_loop+1;
 end
 
 @ The occurrence of blank spaces is almost part of \TeX's inner loop,
-@^inner loop@>
 since we usually encounter about one space for every five non-blank characters.
 Therefore |main_control| gives second-highest priority to ordinary spaces.
 
@@ -20750,7 +20693,7 @@ constructions like `\.{\\setbox3=}' can be followed by a variety of
 different kinds of boxes, and we would like to encode such things in an
 efficient way.
 
-In other words, there are two problems: to represent the context of a box,
+In other words, there are two problems: To represent the context of a box,
 and to represent its type.
 
 The first problem is solved by putting a ``context code'' on the |save_stack|,
@@ -20767,8 +20710,8 @@ and `\.{\\xleaders}'.
 The second problem is solved by giving the command code |make_box| to all
 control sequences that produce a box, and by using the following |chr_code|
 values to distinguish between them: |box_code|, |copy_code|, |last_box_code|,
-|vsplit_code|, |vtop_code|, |vtop_code+vmode|, and |vtop_code+hmode|, where
-the latter two are used to denote \.{\\vbox} and \.{\\hbox}, respectively.
+|vsplit_code|, |vtop_code|, |vtop_code+vmode|, and |vtop_code+hmode|,
+where the latter two are used denote \.{\\vbox} and \.{\\hbox}, respectively.
 
 @d box_flag==@'10000000000 {context code for `\.{\\setbox0}'}
 @d ship_out_flag==box_flag+512 {context code for `\.{\\shipout}'}
@@ -20841,7 +20784,7 @@ vmode+hmove,hmode+vmove,mmode+vmove: begin t:=cur_chr;
 any_mode(leader_ship): scan_box(leader_flag-a_leaders+cur_chr);
 any_mode(make_box): begin_box(0);
 
-@ The global variable |cur_box| will point to a newly made box. If the box
+@ The global variable |cur_box| will point to a newly-made box. If the box
 is void, we will have |cur_box=null|. Otherwise we will have
 |type(cur_box)=hlist_node| or |vlist_node| or |rule_node|; the |rule_node|
 case can occur only with leaders.
@@ -20899,7 +20842,8 @@ else geq_define(box_base-box_flag-256+box_context,box_ref,cur_box)
 @ @<Append a new leader node ...@>=
 begin @<Get the next non-blank non-relax...@>;
 if ((cur_cmd=hskip)and(abs(mode)<>vmode))or@|
-   ((cur_cmd=vskip)and(abs(mode)=vmode)) then
+   ((cur_cmd=vskip)and(abs(mode)=vmode))or@|
+   ((cur_cmd=mskip)and(abs(mode)=mmode)) then
   begin append_glue; subtype(tail):=box_context-(leader_flag-a_leaders);
   leader_ptr(tail):=cur_box;
   end
@@ -21609,21 +21553,9 @@ vmode+endv,hmode+endv: do_endv;
 @ An |align_group| code is supposed to remain on the |save_stack|
 during an entire alignment, until |fin_align| removes it.
 
-A devious user might force an |endv| command to occur just about anywhere;
-we must defeat such hacks.
-
 @<Declare act...@>=
 procedure do_endv;
-begin base_ptr:=input_ptr; input_stack[base_ptr]:=cur_input;
-while (input_stack[base_ptr].index_field<>v_template) and
-      (input_stack[base_ptr].loc_field=null) and
-      (input_stack[base_ptr].state_field=token_list) do decr(base_ptr);
-if (input_stack[base_ptr].index_field<>v_template) or
-      (input_stack[base_ptr].loc_field<>null) or
-      (input_stack[base_ptr].state_field<>token_list) then
-  fatal_error("(interwoven alignment preambles are not allowed)");
-@.interwoven alignment preambles...@>
- if cur_group=align_group then
+begin if cur_group=align_group then
   begin end_graf;
   if fin_col then fin_row;
   end
@@ -21746,7 +21678,7 @@ else  begin line_break(display_widow_penalty);@/
     plus two ems; or set |w:=max_dimen| if the non-blank information
     on that line is affected by stretching or shrinking@>;
   end;
-{now we are in vertical mode, working on the list that will contain the display}
+{Now we are in vertical mode, working on the list that will contain the display}
 @<Calculate the length, |l|, and the shift amount, |s|, of the display lines@>;
 push_math(math_shift_group); mode:=mmode;
 eq_word_define(int_base+cur_fam_code,-1);@/
@@ -22905,7 +22837,6 @@ shorthand_def: begin n:=cur_chr; get_r_token; p:=cur_cs; define(p,relax,256);
 @ @<Assignments@>=
 read_to_cs: begin scan_int; n:=cur_val;
   if not scan_keyword("to") then
-@.to@>
     begin print_err("Missing `to' inserted");
 @.Missing `to'...@>
     help2("You should have said `\read<number> to \cs'.")@/
@@ -22972,8 +22903,7 @@ assign_glue,assign_mu_glue: begin p:=cur_chr; n:=cur_cmd; scan_optional_equals;
   end;
 
 @ When a glue register or parameter becomes zero, it will always point to
-|zero_glue| because of the following procedure. (Exception: The tabskip
-glue isn't trapped while preambles are being scanned.)
+|zero_glue| because of the following procedure.
 
 @<Declare subprocedures for |prefixed_command|@>=
 procedure trap_zero_glue;
@@ -23064,7 +22994,6 @@ begin q:=cur_cmd;
 @<Compute the register location |l| and its type |p|; but |return| if invalid@>;
 if q=register then scan_optional_equals
 else if scan_keyword("by") then do_nothing; {optional `\.{by}'}
-@.by@>
 arith_error:=false;
 if q<multiply then @<Compute result of |register| or
     |advance|, put it in |cur_val|@>
@@ -23074,7 +23003,6 @@ if arith_error then
 @.Arithmetic overflow@>
   help2("I can't carry out that multiplication or division,")@/
     ("since the result is out of range.");
-  if p>=glue_val then delete_glue_ref(cur_val);
   error; return;
   end;
 if p<glue_val then word_define(l,cur_val)
@@ -23082,7 +23010,7 @@ else  begin trap_zero_glue; define(l,glue_ref,cur_val);
   end;
 exit: end;
 
-@ Here we use the fact that the consecutive codes |int_val..mu_val| and
+@ Here we use the fact that the consecutive codes |int_val...mu_val| and
 |assign_int..assign_mu_glue| correspond to each other nicely.
 
 @<Compute the register location |l| and its type |p|...@>=
@@ -23724,7 +23652,7 @@ so that the inverse relation between them is clear.
 The global variable |format_ident| is a string that is printed right
 after the |banner| line when \TeX\ is ready to start. For \.{INITEX} this
 string says simply `\.{(INITEX)}'; for other versions of \TeX\ it says,
-for example, `\.{(preloaded format=plain 1982.11.19)}', showing the year,
+for example, `\.{(preloaded format=plain 82.11.19)}', showing the year,
 month, and day that the format file was created. We have |format_ident=0|
 before \TeX's tables are loaded.
 
@@ -24105,7 +24033,7 @@ undump_int(kern_base[k]);
 undump_int(exten_base[k]);
 undump_int(param_base[k]);@/
 undump(min_halfword)(lo_mem_max)(font_glue[k]);@/
-undump(0)(fmem_ptr-1)(bchar_label[k]);
+undump(0)(font_mem_size)(bchar_label[k]);
 undump(min_quarterword)(non_char)(font_bchar[k]);
 undump(min_quarterword)(non_char)(font_false_bchar[k]);
 end
@@ -24163,7 +24091,7 @@ while j>0 do
 @!init trie_not_ready:=false @+tini
 
 @ We have already printed a lot of statistics, so we set |tracing_stats:=0|
-to prevent them from appearing again.
+to prevent them appearing again.
 
 @<Dump a couple more things and the closing check word@>=
 dump_int(interaction); dump_int(format_ident); dump_int(69069);
@@ -24178,7 +24106,7 @@ if (x<>69069)or eof(fmt_file) then goto bad_fmt
 @ @<Create the |format_ident|...@>=
 selector:=new_string;
 print(" (preloaded format="); print(job_name); print_char(" ");
-print_int(year); print_char(".");
+print_int(year mod 100); print_char(".");
 print_int(month); print_char("."); print_int(day); print_char(")");
 if interaction=batch_mode then selector:=log_only
 else selector:=term_and_log;
@@ -24357,8 +24285,6 @@ label exit;
 var c:small_number; {0 for \.{\\end}, 1 for \.{\\dump}}
 begin c:=cur_chr;
 if job_name=0 then open_log_file;
-while input_ptr>0 do
-  if state=token_list then end_token_list@+else end_file_reading;
 while open_parens>0 do
   begin print(" )"); decr(open_parens);
   end;
@@ -24376,8 +24302,7 @@ while cond_ptr<>null do
     end;
   print(" was incomplete)");
   if_line:=if_line_field(cond_ptr);
-  cur_if:=subtype(cond_ptr); temp_ptr:=cond_ptr;
-  cond_ptr:=link(cond_ptr); free_node(temp_ptr,if_node_size);
+  cur_if:=subtype(cond_ptr); cond_ptr:=link(cond_ptr);
   end;
 if history<>spotless then
  if ((history=warning_issued)or(interaction<error_stop_mode)) then
@@ -24388,10 +24313,7 @@ if history<>spotless then
   selector:=term_and_log;
   end;
 if c=1 then
-  begin @!init for c:=top_mark_code to split_bot_mark_code do
-    if cur_mark[c]<>null then delete_token_ref(cur_mark[c]);
-  if last_glue<>max_halfword then delete_glue_ref(last_glue);
-  store_fmt_file; return;@+tini@/
+  begin @!init store_fmt_file; return;@+tini@/
   print_nl("(\dump is performed only by INITEX)"); return;
 @:dump_}{\.{\\dump...only by INITEX}@>
   end;
