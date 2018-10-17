@@ -32,7 +32,7 @@
 
 #include <kpathsea/c-ctype.h>
 #include <kpathsea/c-pathch.h>
-#include <kpathsea/tex-make.h>
+#include <kpathsea/tex-file.h>
 
 /* For `struct tm'.  */
 #include <time.h>
@@ -73,6 +73,8 @@ main (ac, av)
   dump_default_var = dump_default;
   dump_default_length = strlen (dump_default + 1);
 
+  kpse_set_program_name(av[0], NULL);
+
 #ifndef INI
   if (readyalready != 314159)
     {
@@ -98,7 +100,7 @@ main (ac, av)
     boolean use_maketexmf = MAKE_TEX_MF_BY_DEFAULT
                             || getenv ("USE_MAKETEXMF")
                             || getenv ("MAKETEXMF");
-    KPSE_MAKE_SPEC_ENABLED (kpse_make_specs[kpse_mf_format]) = use_maketexmf;
+    kpse_format_info[kpse_mf_format].program_enabled_p = use_maketexmf;
   }
 #endif /* MF */
 #ifdef TeX
@@ -109,8 +111,8 @@ main (ac, av)
     boolean use_maketextfm = MAKE_TEX_TFM_BY_DEFAULT
                              || getenv ("USE_MAKETEXTFM")
                              || getenv ("MAKETEXTFM");
-    KPSE_MAKE_SPEC_ENABLED (kpse_make_specs[kpse_tex_format]) = use_maketextex;
-    KPSE_MAKE_SPEC_ENABLED (kpse_make_specs[kpse_tfm_format]) = use_maketextfm;
+    kpse_format_info[kpse_tex_format].program_enabled_p = use_maketextex;
+    kpse_format_info[kpse_tfm_format].program_enabled_p = use_maketextfm;
   }
 #endif /* TeX */
 

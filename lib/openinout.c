@@ -124,11 +124,25 @@ static boolean
 make_tex_file (format)
     kpse_file_format_type format;
 {
+  static boolean kpathsea_dpi_set = 0;
+  static boolean maketex_base_dpi_set = 0;
+
   string found;
   /* Since & is a no-op when applied to an array, we must put the
      address of the filename in a variable.  */
   string name = nameoffile;
   
+  if (!kpathsea_dpi_set) {
+    if (!getenv ("KPATHSEA_DPI"))
+	xputenv_int ("KPATHSEA_DPI", 300);
+    kpathsea_dpi_set = 1;
+  }
+  if (!maketex_base_dpi_set) {
+    if (!getenv ("MAKETEX_BASE_DPI"))
+      xputenv_int ("MAKETEX_BASE_DPI", 300);
+    maketex_base_dpi_set = 1;
+  }
+ 
   make_c_string (&name);
   found = kpse_make_tex (format, name);
   make_pascal_string (&name);

@@ -5,8 +5,8 @@ all:
 	gcc -DHAVE_CONFIG_H -I. -g  -c getopt.c
 	gcc -DHAVE_CONFIG_H -I. -g  -c getopt1.c
 	gcc -DHAVE_CONFIG_H -I. -g  -c inputint.c
-	gcc -DHAVE_CONFIG_H -I. -I../web2c-6.1 -g  -c main.c
-	gcc -DHAVE_CONFIG_H -I. -I../web2c-6.1 -g  -c ourpaths.c
+	gcc -DHAVE_CONFIG_H -I. -g  -c main.c
+	gcc -DHAVE_CONFIG_H -I. -g  -c ourpaths.c
 	gcc -DHAVE_CONFIG_H -I. -g  -c strpascal.c
 	gcc -DHAVE_CONFIG_H -I. -g  -c uexit.c
 	gcc -DHAVE_CONFIG_H -I. -g  -c version.c

@@ -27,6 +27,7 @@ main (ac, av)
 {
   argc = ac;
   gargv = av;
+  kpse_set_program_name(av[0], NULL);
   main_body ();
   return EXIT_SUCCESS;
 }
