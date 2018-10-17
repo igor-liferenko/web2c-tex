@@ -6,6 +6,11 @@ the final goal is to make everything work with -lkpathsea instead of kpathsea.a
 
 check this: diff -u lib/texmfmem.h texmfmem.h|colordiff
 
+++++++++++
+
+see if changes in web2c-6.1/web2c/README were implemented and if yes,
+revert them
+
 =====================================================================
 
 make so that terminal output from test.tex will not be broken
