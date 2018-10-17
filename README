@@ -28,6 +28,11 @@ The generated code assumes that the type `short' has at least the range
 ----------------------------
 
 This is how to compile web2c-6.1:
+
+run ./configure, make (and make install?) in kpathsea/
+
+run ./configure in web2c/
+
 in web2c/web2c/Makefile add -lfl after $(libs) in "web2c:"
 
 in web2c/Makefile change to this:
@@ -44,3 +49,5 @@ in tex/Makefile change to this:
 program = initex virtex
 
 in splitup.c put "in = stdin" inside main()
+
+run "make" in web2c/
