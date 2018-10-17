@@ -2,10 +2,9 @@
 
 #include "config.h"
 
+#include <kpathsea/kpathsea.h>
 #include <kpathsea/cnf.h>
-#include <kpathsea/default.h>
 #include <kpathsea/expand.h>
-#include <kpathsea/fontmap.h>
 #include <kpathsea/paths.h>
 #include <kpathsea/pathsearch.h>
 #include <kpathsea/tex-file.h>
