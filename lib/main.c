@@ -38,7 +38,7 @@ main (ac, av)
    N is beyond the end of the command line, abort.  */
 
 void
-argv P2C(int, n,  string, buf)
+argv (int n,  string buf)
 {
   if (n >= argc)
     {

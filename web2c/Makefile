@@ -7,10 +7,10 @@ all:
 	gcc -I./../lib -I../web2c-6.1 -g  -c y.tab.c
 	flex web2c.lex
 	gcc -I./../lib -I../web2c-6.1 -g  -c lex.yy.c
-	gcc -o web2c -g   web2c.o y.tab.o lex.yy.o ../lib/lib.a ../web2c-6.1/kpathsea/kpathsea.a  -lfl
+	gcc -o web2c -g   web2c.o y.tab.o lex.yy.o ../lib/lib.a -lkpathsea  -lfl
 	gcc -I./../lib -g  -c fixwrites.c
-	gcc -o fixwrites -g   fixwrites.o ../lib/lib.a ../web2c-6.1/kpathsea/kpathsea.a 
+	gcc -o fixwrites -g   fixwrites.o ../lib/lib.a -lkpathsea
 	gcc -I./../lib -I../web2c-6.1 -g  -c splitup.c
-	gcc -o splitup -g   splitup.o ../lib/lib.a ../web2c-6.1/kpathsea/kpathsea.a 
+	gcc -o splitup -g   splitup.o ../lib/lib.a -lkpathsea
 	gcc -I./../lib -g  -c regfix.c
-	gcc -o regfix -g   regfix.o ../lib/lib.a ../web2c-6.1/kpathsea/kpathsea.a 
+	gcc -o regfix -g   regfix.o ../lib/lib.a -lkpathsea 

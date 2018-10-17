@@ -165,7 +165,7 @@ topenin ()
 /* All our interrupt handler has to do is set TeX's or Metafont's global
    variable `interrupt'; then they will do everything needed.  */
 
-static RETSIGTYPE
+static void
 catch_interrupt (arg)
     int arg;
 {
@@ -211,7 +211,7 @@ get_date_and_time (minutes, day, month, year)
       sigaction (SIGINT, &oa, (struct sigaction *) 0);
 
 #else /* no SA_INTERRUPT */
-    RETSIGTYPE (*old_handler) ();
+    void (*old_handler) ();
     
     old_handler = signal (SIGINT, catch_interrupt);
     if (old_handler != SIG_DFL)
@@ -271,7 +271,7 @@ input_line (f)
 
 /* This string specifies what the `e' option does in response to an
    error message.  */ 
-static char *edit_value = EDITOR;
+static char *edit_value = "vi +%d %s";
 
 /* This procedure is due to sjc@s1-c.  TeX (or Metafont) calls it when
    the user types `e' in response to an error, invoking a text editor on
