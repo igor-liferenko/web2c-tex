@@ -127,7 +127,7 @@ start_of_TEX@t\hskip-2pt@>, end_of_TEX@t\hskip-2pt@>,@,final_end;
   {string of length |file_name_size|; tells where the string pool appears}
 @y
 @<Constants...@>=
-@!mem_max=262140; {greatest index in \TeX's internal |mem| array;
+@!mem_max=30000; {greatest index in \TeX's internal |mem| array;
   must be strictly less than |max_halfword|;
   must be equal to |mem_top| in \.{INITEX}, otherwise |>=mem_top|}
 @!mem_min=0; {smallest index in \TeX's internal |mem| array;
@@ -166,9 +166,6 @@ start_of_TEX@t\hskip-2pt@>, end_of_TEX@t\hskip-2pt@>,@,final_end;
 @!pool_name='tex.pool';
   {string of length |file_name_size|; the string pool name}
 @.TeXformats@>
-@!mem_top=262140; {largest index in the |mem| array dumped by \.{INITEX};
-  must be substantially larger than |mem_bot|,
-  equal to |mem_max| in \.{INITEX}, else not greater than |mem_max|}
 @z
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -194,6 +191,9 @@ start_of_TEX@t\hskip-2pt@>, end_of_TEX@t\hskip-2pt@>,@,final_end;
 @y
 @d mem_bot=0 {smallest index in the |mem| array dumped by \.{INITEX};
   must not be less than |mem_min|}
+@d mem_top==30000 {largest index in the |mem| array dumped by \.{INITEX};
+  must be substantially larger than |mem_bot|
+  and not greater than |mem_max|}
 @d font_base=0 {smallest internal font number; must not be less
   than |min_quarterword|}
 @d hash_size=9500 {maximum number of control sequences; it should be at most
