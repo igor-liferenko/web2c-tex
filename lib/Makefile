@@ -10,7 +10,7 @@ all:
 	gcc -DHAVE_CONFIG_H -I. -g  -c strpascal.c
 	gcc -DHAVE_CONFIG_H -I. -g  -c uexit.c
 	gcc -DHAVE_CONFIG_H -I. -g  -c version.c
-	gcc -DHAVE_CONFIG_H -I. -I../web2c-6.1 -g  -c xfopen-pas.c
+	gcc -DHAVE_CONFIG_H -I. -g  -c xfopen-pas.c
 	gcc -DHAVE_CONFIG_H -I. -g  -c zround.c
 	rm -f lib.a
 	ar cq lib.a alloca.o eofeoln.o fprintreal.o getopt.o getopt1.o inputint.o main.o ourpaths.o strpascal.o uexit.o version.o xfopen-pas.o zround.o
