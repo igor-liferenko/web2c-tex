@@ -19,4 +19,4 @@ The following changes must be output by commented diff in Makefile:
 ---------------------------------------------------------
 
 This is the plan:
-make it work for web2c-6.1, and then using tex.ch-diff (from 3.1415 to 3.14159) and likewise one by one up to 3.14159265, making it work after each new version - pick just necessary changes from each corresponding web2c version; also see NEWS from each web2c version
+do git diff 0544c7bba8cf0501d7eaaf6efb0b84056c2fdac5..e874f280fb7ca3903ec29b6dc7bc3ba2b0b32847 tex.ch and restore what is necessary for compilation, or use git bisect
