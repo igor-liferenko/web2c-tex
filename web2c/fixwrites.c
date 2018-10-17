@@ -1,34 +1,38 @@
 /* fixwrites -- convert Pascal write/writeln's into fprintf's or putc's.
    Originally by Tim Morgan, October 10, 1987.  */
 
-#include <w2c/config.h>
-#include <kpathsea/c-pathmx.h>
+#include "config.h"
+
+int argc;
+char **gargv;
 
 char buf[BUFSIZ], filename[PATH_MAX], args[100];
 char *file, *argp, *as, *cmd;
 
 int tex = false;
 
+
+
 /* Replace the last (should be only) newline in S with a null.  */
 
-static void
-remove_newline (string s)
+void
+remove_newline (s)
+     char *s;
 {
   char *temp = strrchr (s, '\n');
   if (temp == NULL)
     {
       fprintf (stderr, "Lost newline somehow.\n");
-      /* This is so the convert script can delete the output file on error.  */
-      puts ("@error@");
-      exit (1);
+      uexit (1);
     }
 
   *temp = 0;
 }
 
 
-static char *
-insert_long (string cp)
+char *
+insert_long (cp)
+     char *cp;
 {
   char tbuf[BUFSIZ];
   register int i;
@@ -42,8 +46,9 @@ insert_long (string cp)
 }
 
 
-static void
-join (string cp)
+void
+join (cp)
+     char *cp;
 {
   char temp[BUFSIZ], *tp;
 
@@ -59,8 +64,9 @@ join (string cp)
 }
 
 
-static void
-do_blanks (int indent)
+void
+do_blanks (indent)
+     int indent;
 {
   register int i;
 
@@ -72,10 +78,13 @@ do_blanks (int indent)
 }
 
 
-/* Return true if we have a whole write/writeln statement.  We determine
-   this by matching parens, ignoring those within strings.  */
-static int
-whole (string cp)
+/*
+ * Return true if we have a whole write/writeln statement.  We determine
+ * this by matching parens, ignoring those within strings.
+ */
+int
+whole (cp)
+     register char *cp;
 {
   register int depth = 0;
 
@@ -108,8 +117,9 @@ whole (string cp)
 
 /* Skips to the next , or ), skipping over balanced paren pairs.  */
 
-static char *
-skip_balanced (string cp)
+char *
+skip_balanced (cp)
+     char *cp;
 {
   register int depth = 0;
 
@@ -132,8 +142,10 @@ skip_balanced (string cp)
 
 /* Return true if c appears, except inside a quoted string */
 
-static int
-bare (string cp,  char c)
+int
+bare (cp, c)
+  char *cp;
+  char c;
 {
   for (; *cp && *cp != c; ++cp)
     {
@@ -158,50 +170,27 @@ bare (string cp,  char c)
   return *cp;
 }
 
-
-/* xchr[...] is supposed to be replaced by Xchr(...)  when characters
-   take more than a single octet each, as is the case in Aleph.  Now
-   there are several occurrences of xchr[...[...]...], which are
-   translated into Xchr(...[...)...], and the compiler dies on syntax
-   errors.  Ensures that it is the matching bracket that is replaced,
-   not the first one.  */
-
-static char *
-advance_cp (char *cp, int lefts)
-{
-  char *cp1;
-  char *cp2;
-
-  cp1 = strchr (cp + 1, ']');
-  cp2 = strchr (cp + 1, '[');
-  if (cp2 && cp2 < cp1)
-    return advance_cp (cp2, lefts + 1);
-  if (lefts == 1)
-    return cp1;
-  return advance_cp (cp1, lefts - 1);
-}
-
-#ifdef WIN32
-#include <io.h>
-#include <fcntl.h>
-#endif
 
 int
-main (int argc,  string *argv)
+main (argc, argv)
+    int argc;
+    char *argv[];
 {
   register char *cp;
   int blanks_done, indent, i;
-  const char *program_name = "";
+  char *program_name = "";
 
-#ifdef WIN32
-  setmode(fileno(stdout), _O_BINARY);
-#endif
   for (i = 1; i < argc; i++)
     {
-      if (STREQ(argv[i],"-t"))
-	tex = true;
-      else
-	program_name = argv[i];
+      switch (argv[i][1])
+	{
+	case 't':
+	  tex = true;
+	  break;
+
+	default:
+	  program_name = argv[i];
+	}
     }
 
   while (fgets (buf, BUFSIZ, stdin))
@@ -211,7 +200,7 @@ main (int argc,  string *argv)
 
       for (cp = buf; *cp; ++cp) ;
 
-      while (cp != buf && *--cp == ' ') ;
+      while (*--cp == ' ') ;
 
       while (*cp == '.')
 	{
@@ -259,7 +248,7 @@ main (int argc,  string *argv)
 	  if (sscanf (cp, "read ( input , %s )", variable_name) != 1)
             {
   	      fprintf (stderr, "sscanf failed\n");
-              exit (1);
+              uexit (1);
             }
 	  printf ("%s = getint();\n", variable_name);
 	  continue;
@@ -324,14 +313,11 @@ main (int argc,  string *argv)
       /* Some writes start with a variable, instead of a file. */
       if (*(cp + 1) == '"' || *(cp + 1) == '\''
           || strncmp (cp + 1, "buffer", 6) == 0
-          || strncmp (cp + 1, "xchr", 4) == 0
-          || strncmp (cp + 1, "k ,", 3) == 0
-          || strncmp (cp + 1, "s ,", 3) == 0
           || strncmp (cp + 1, "dig", 3) == 0
-          || strncmp (cp + 1, "HEX", 3) == 0
+          || strncmp (cp + 1, "xchr", 4) == 0
           || strncmp (cp + 1, "versionstring", 13) == 0
-          || strncmp (cp + 1, "kpathseaversionstring", 21) == 0
-         )
+          || strncmp (cp + 1, "k ,", 3) == 0
+          || strncmp (cp + 1, "s ,", 3) == 0)
 	strcpy (filename, "stdout");
       else
 	{
@@ -352,11 +338,6 @@ main (int argc,  string *argv)
       while (*cp != ')')
 	{
 	  if (*cp == '\'' || strncmp (cp, "xchr", 4) == 0
-              || (strncmp (cp ,"HEX", 3) == 0
-                  && (STREQ (program_name, "ofm2opl")
-                      || STREQ (program_name, "opl2ofm")
-                      || STREQ (program_name, "ovp2ovf")
-                      || STREQ (program_name, "ovf2ovp")))
 	      || strncmp (cp, "ASCII04", 7) == 0
 	      || strncmp (cp, "ASCII1", 6) == 0
 	      || strncmp (cp, "ASCIIall", 8) == 0              
@@ -364,11 +345,7 @@ main (int argc,  string *argv)
 	      || strncmp (cp, "nameoffile", 10) == 0
 	      || (strncmp (cp, "buffer", 6) == 0
                   && (STREQ (program_name, "vptovf")
-                      || STREQ (program_name, "pltotf")
-                      || STREQ (program_name, "ppltotf")
-                      || STREQ (program_name, "uppltotf")
-                      || STREQ (program_name, "ovp2ovf")
-                      || STREQ (program_name, "opl2ofm")))
+                      || STREQ (program_name, "pltotf")))
               || (((strncmp (cp, "buf", 3) == 0
 		    || strncmp (cp, "xdig", 4) == 0
 		    || strncmp (cp, "xext", 4) == 0
@@ -383,7 +360,7 @@ main (int argc,  string *argv)
 		  *cp = 'X';
 		  cp = strchr (cp, '[');
 		  *cp = '(';
-		  cp = advance_cp(cp,1);
+		  cp = strchr (cp, ']');
 		  *cp++ = ')';
 		}
 	      else if (*cp == '\'')
@@ -399,28 +376,13 @@ main (int argc,  string *argv)
 		  ++cp;		/* allow \" in string */
 	    }
 
-          /* More kludges -- recognize some things as strings and use %s:
-             - versionstring
-             - poolname
-             - formatengine
-             - dumpname */
-          else if (strncmp (cp, "versionstring", 13) == 0
-                   || strncmp (cp, "poolname", 8) == 0
-                   || strncmp (cp, "formatengine", 12) == 0
-                   || strncmp (cp, "dumpname", 8) == 0)
+          /* More kludge -- versionstring is a string, not a number, so
+             we have to use %s.  */
+          else if (strncmp (cp, "versionstring", 13) == 0)
             {
               *as++ = '%';
               *as++ = 's';
             }
-
-	  /* And yet another kludge, to handle stringcast (<whatever>) */
-          else if (strncmp (cp, "stringcast", 10) == 0
-                   || strncmp (cp, "conststringcast", 15) == 0)
-	    {
-	      *as++ = '%';
-	      *as++ = 's';
-	      cp = skip_balanced (cp);  /* Skip cast expression */
-	    }
 
           else
 	    {
@@ -450,18 +412,10 @@ main (int argc,  string *argv)
 	  *as = '\0';
 	  printf ("putc (%s, %s);\n", argp, filename);
 	}
-      else if (strcmp (args, "%c\\n") == 0)
-	{
-	  for (as = argp; *as; ++as) ;
-	  while (*--as != ')') ;
-	  *as = '\0';
-	  printf ("{ putc (%s, %s);  ", argp, filename);
-	  printf ("putc ( '\\n', %s); }\n", filename);
-	}
-      else if (strcmp (args, "%s") == 0)
-        printf ("Fputs (%s, %s\n", filename, argp);
+      else if (STREQ (args, "%s"))
+        printf ("Fputs(%s, %s\n", filename, argp);
       else
-        printf ("fprintf (%s, \"%s\", %s\n", filename, args, argp);
+        printf ("fprintf(%s, \"%s\", %s\n", filename, args, argp);
     }
 
   return EXIT_SUCCESS;

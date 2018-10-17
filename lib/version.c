@@ -1,6 +1,6 @@
-#include <w2c/c-auto.h>
+/* This string is appended to all the banners.  */
+#ifndef VERSION_STRING
+#define VERSION_STRING " (C version 6.1)"
+#endif
 
-/* This string is appended to all the banners and used in --version.  */
-/* Public domain. */
-
-const char *versionstring = WEB2CVERSION;
+char *versionstring = VERSION_STRING;

@@ -1,11 +1,9 @@
-/* web2c.h: general includes for the Web2c program itself.  Public domain.  */
+/* web2c.h: general includes for the `web2c' program itself.  */
 
-#include <w2c/config.h>
+#include "config.h"
 
 #define ex_32 2
 #define ex_real 3
-
-#undef max
 #define max(a,b) ((a>b)?a:b)
 
 extern int indent;
@@ -25,7 +23,7 @@ extern char next_temp[];
 extern long last_i_num;
 extern int ii, l_s;
 extern long lower_bound, upper_bound;
-extern FILE *out;
+extern FILE *std;
 extern int pf_count;
 
 /* A symbol table entry.  */
@@ -52,21 +50,10 @@ extern struct sym_entry sym_table[];
 extern int next_sym_free, next_string_free;
 extern int mark_sym_free, mark_string_free;
 
-extern void find_next_temp (void);
-extern void normal (void);
-extern void new_line (void);
-extern void my_output (const_string);
-extern void semicolon (void);
-extern void remove_locals (void);
-extern void mark (void);
-extern void initialize (void);
-extern int add_to_table (string);
-extern int search_table (const_string);
-extern int yyerror (const_string);
+/* configure figures out how to declare the yytext variable.  */
+DECLARE_YYTEXT
 
-extern void get_string_literal (char*);
-extern void get_single_char (char*);
-extern void get_result_type (char*);
-extern void get_return_type (char*);
-
-extern int yylex(void), yyparse(void);
+extern void find_next_temp(), normal(), new_line(), indent_line(), my_output();
+extern void semicolon(), remove_locals(), mark(), initialize();
+extern int add_to_table(), search_table(), yyerror(), yylex(), yyparse();
+extern void *alloca();

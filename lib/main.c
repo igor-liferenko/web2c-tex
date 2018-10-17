@@ -1,45 +1,49 @@
-/* main.c -- the main program for everything but TeX & MF.  */
-/* Public domain. */
+/* main.c -- the usual main program.  */
 
-#include <w2c/config.h>
-#include "lib.h"
+#include "config.h"
 
-/* These variables are referenced from the change files.  */
-char **argv;
+
+/* ridderbusch.pad@nixdorf.com says this is necessary.  */
+#ifdef ATARI_ST
+int _stksize = -1L;
+#endif
+
+
+/* The command line is stored under `gargv', since Pascal has usurped `argv' 
+   for a procedure.  These variables are referenced from the Pascal, so
+   we can't make them static.  */
+char **gargv;
 int argc;
 
+
 /* The entry point for all the programs except TeX and Metafont, which
-   have more to do.  We just have to set up the command line.  web2c
-   transforms Pascal's main block into a procedure `main_body'.  */
+   have more to do.  We just have to set up the command line.  Pascal's
+   main block is transformed into the procedure `main_body'.  */
+
 int
-main (int  ac,  string* av)
+main (ac, av)
+    int ac;
+    char **av;
 {
-#ifdef __EMX__
-  _wildcard (&ac, &av);
-  _response (&ac, &av);
-#endif
-
-#ifdef WIN32
-  _setmaxstdio(2048);
-#endif
-
   argc = ac;
-  argv = av;
-  mainbody ();
+  gargv = av;
+  main_body ();
   return EXIT_SUCCESS;
 }
 
 
-/* Return the Nth (counted as in C) argument from the command line.  */
+/* Read the Nth argument from the command line and return it in BUF as a
+   Pascal string, i.e., starting at index 1 and ending with a space.  If
+   N is beyond the end of the command line, abort.  */
 
-string 
-cmdline (int n)
+void
+argv P2C(int, n,  string, buf)
 {
   if (n >= argc)
-    { /* This error message should never happen, because the callers
-         should always check they've got the arguments they expect.  */
-      fprintf (stderr, "%s: Oops; not enough arguments.\n", argv[0]);
+    {
+      fprintf (stderr, "%s: Not enough arguments.\n", gargv[0]);
       uexit (1);
     }
-  return argv[n];
+  strcpy (buf + 1, gargv[n]);
+  strcat (buf + 1, " ");
 }

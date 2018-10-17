@@ -1,11 +1,13 @@
 /* fprintreal.c: print the real number R in the Pascal format N:M on the
-   file F.  Public domain. */
+   file F.  */
 
-#include <w2c/config.h>
-#include "lib.h"
+#include "config.h"
 
 void
-fprintreal (FILE *f, double r, int n, int m)
+fprintreal (f, r, n, m)
+  FILE *f;
+  double r;
+  int n, m;
 {
   char fmt[50];  /* Surely enough, since N and M won't be more than 25
                     digits each!  */

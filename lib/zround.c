@@ -1,11 +1,10 @@
-/* zround.c: round R to the nearest whole number.  This is supposed to
-   implement the predefined Pascal round function.  Public domain. */
+/* zround.c: round R to the nearest whole number.  */
 
-#include <w2c/config.h>
-#include "lib.h"
+#include "config.h"
 
 integer
-zround (double r)
+zround (r)
+    double r;
 {
   integer i;
 
@@ -20,23 +19,15 @@ zround (double r)
 	$\hbox{} $\hfill 
 	\filbreak
 	\eject
-    
-     djb@silverton.berkeley.edu points out we should testing against
-     TeX's largest or smallest integer (32 bits), not the machine's.  So
-     we might as well use a floating-point constant, and avoid potential
-     compiler bugs (also noted by djb, on BSDI).  */
-  if (r > 2147483647.0)
-    i = 2147483647;
-  /* should be ...8, but atof bugs are too common */
-  else if (r < -2147483647.0)
-    i = -2147483647;
-  /* Admittedly some compilers don't follow the ANSI rules of casting
-     meaning truncating toward zero; but it doesn't matter enough to do
-     anything more complicated here.  */
+  */
+  if (r > INTEGER_MAX)
+    i = INTEGER_MAX;
+  else if (r < INTEGER_MIN)
+    i = INTEGER_MIN;
   else if (r >= 0.0)
-    i = (integer)(r + 0.5);
+    i = r + 0.5;
   else
-    i = (integer)(r - 0.5);
+    i = r - 0.5;
 
   return i;
 }

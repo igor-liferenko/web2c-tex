@@ -1,19 +1,55 @@
-# ftp://tug.ctan.org/pub/tex/historic/systems/web2c/
-# http://tug.ctan.org/tex-archive/systems/knuth/local/tex/initex.ch
-# https://bencane.com/2011/09/22/kill-creating-a-core-dump/
 all:
 	make -C web2c
-	tie -c initex-final.ch tex.web tex.ch initex.ch
-	tangle tex initex-final
-	mv tex.p initex.p
-	web2c/convert initex
-	tie -c tex-final.ch tex.web tex.ch
-	@#diff -u0 initex-final.ch tex-final.ch
-	tangle tex tex-final
-	web2c/convert tex # creates tex0.c, texini.c, texcoerce.h and texd.h (texcoerce.h is used in texd.h)
-	gcc -DHAVE_CONFIG_H -I. -I./w2c -Wimplicit -Wreturn-type -g -O2 -c -o tex0.o tex0.c # texd.h is used here
-	gcc -DHAVE_CONFIG_H -I. -I./w2c -Wimplicit -Wreturn-type -g -O2 -c -o texini.o texini.c # texd.h is used here
-	gcc -DHAVE_CONFIG_H -I. -I./w2c -Wimplicit -Wreturn-type -g -O2 -c -o texextra.o texextra.c # texd.h is used here
-	make -C lib # creates lib.a
-	gcc -Wimplicit -Wreturn-type -g -O2 -o virtex texextra.o texini.o tex0.o lib/lib.a -lkpathsea -lm
-	mv virtex /usr/local/bin/
+	make -C lib
+	rm -f iextra.c
+	ln -s lib/texmf.c iextra.c
+	rm -f ctex.ch
+	cp tex.ch ctex.ch
+	tangle tex.web ctex.ch
+	/bin/sh ./convert
+	touch texd.h
+	gcc -DTeX -Ilib -Iweb2c-6.1 -DINITEX -DINI -g  -c iextra.c
+	/bin/sh ./convert
+	touch texd.h
+	rm -f initex.c
+	ln -s itex.c initex.c
+	gcc -DTeX -Ilib -Iweb2c-6.1 -DINITEX -g  -c initex.c
+	rm -f openinout.c
+	ln -s lib/openinout.c openinout.c
+	gcc -DTeX -Ilib -Iweb2c-6.1 -g  -c openinout.c
+	/bin/sh ./convert
+	touch texd.h
+	gcc -DTeX -Ilib -Iweb2c-6.1 -g  -c tex0.c
+	/bin/sh ./convert
+	touch texd.h
+	gcc -DTeX -Ilib -Iweb2c-6.1 -g  -c tex1.c
+	/bin/sh ./convert
+	touch texd.h
+	gcc -DTeX -Ilib -Iweb2c-6.1 -g  -c tex2.c
+	/bin/sh ./convert
+	touch texd.h
+	gcc -DTeX -Ilib -Iweb2c-6.1 -g  -c tex3.c
+	/bin/sh ./convert
+	touch texd.h
+	gcc -DTeX -Ilib -Iweb2c-6.1 -g  -c tex4.c
+	/bin/sh ./convert
+	touch texd.h
+	gcc -DTeX -Ilib -Iweb2c-6.1 -g  -c tex5.c
+	/bin/sh ./convert
+	touch texd.h
+	gcc -DTeX -Ilib -Iweb2c-6.1 -g  -c tex6.c
+	/bin/sh ./convert
+	touch texd.h
+	gcc -DTeX -Ilib -Iweb2c-6.1 -g  -c tex7.c
+	/bin/sh ./convert
+	touch texd.h
+	gcc -DTeX -Ilib -Iweb2c-6.1 -g  -c tex8.c
+	/bin/sh ./convert
+	touch texd.h
+	gcc -DTeX -Ilib -Iweb2c-6.1 -g  -c tex9.c
+	gcc -o initex -g   iextra.o initex.o openinout.o tex0.o tex1.o tex2.o tex3.o tex4.o tex5.o tex6.o tex7.o tex8.o tex9.o  lib/lib.a web2c-6.1/kpathsea/kpathsea.a
+	rm -f vextra.c
+	ln -s lib/texmf.c vextra.c
+	gcc -DTeX -Ilib -Iweb2c-6.1 -g  -c vextra.c
+	gcc -DTeX -Ilib -Iweb2c-6.1 -g  -c itex.c
+	gcc -o virtex -g   vextra.o itex.o openinout.o tex0.o tex1.o tex2.o tex3.o tex4.o tex5.o tex6.o tex7.o tex8.o tex9.o  lib/lib.a web2c-6.1/kpathsea/kpathsea.a
