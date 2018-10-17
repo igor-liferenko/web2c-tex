@@ -145,7 +145,7 @@ start_of_TEX@t\hskip-2pt@>, end_of_TEX@t\hskip-2pt@>,@,final_end;
 @!stack_size=300; {maximum number of simultaneous input sources}
 @!max_in_open=15; {maximum number of input files and error insertions that
   can be going on simultaneously}
-@!font_max=255; {maximum internal font number; must not exceed |max_quarterword|
+@!font_max=127; {maximum internal font number; must not exceed |max_quarterword|
   and must be at most |font_base+256|}
 @!font_mem_size=100000; {number of words of |font_info| for all fonts}
 @!param_size=60; {maximum number of simultaneous macro parameters}
