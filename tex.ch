@@ -126,8 +126,6 @@ start_of_TEX@t\hskip-2pt@>, end_of_TEX@t\hskip-2pt@>,@,final_end;
 @!pool_name='TeXformats:TEX.POOL                     ';
   {string of length |file_name_size|; tells where the string pool appears}
 @y
-@d file_name_size == PATH_MAX
-
 @<Constants...@>=
 @!mem_max=262140; {greatest index in \TeX's internal |mem| array;
   must be strictly less than |max_halfword|;
@@ -160,19 +158,14 @@ start_of_TEX@t\hskip-2pt@>, end_of_TEX@t\hskip-2pt@>,@,final_end;
   length of \TeX's own strings, which is currently about 23000}
 @!save_size=4000; {space for saving values outside of current group; must be
   at most |max_halfword|}
-@!trie_size=30000; {space for hyphenation patterns; should be larger for
-  \.{INITEX} than it is in production versions of \TeX.  This much is
-  needed for English, German, and Portuguese.}
-@!trie_op_size=751; {space for ``opcodes'' in the hyphenation patterns;
-  best if relatively prime to 313, 361, and 1009, according to {\tt
-  rocky@watson.ibm.com}.}
-@!neg_trie_op_size=-751; {for lower |trie_op_hash| array bound;
-  must be equal to |-trie_op_size|.}
-@!min_trie_op=0; {first possible trie op code for any language}
-@!max_trie_op=500; {largest possible trie op code for any language}
+@!trie_size=8000; {space for hyphenation patterns; should be larger for
+  \.{INITEX} than it is in production versions of \TeX}
+@!trie_op_size=500; {space for ``opcodes'' in the hyphenation patterns}
 @!dvi_buf_size=16384; {size of the output buffer; must be a multiple of 8}
-@!pool_name=TEX_POOL_NAME; {name comes from \.{site.h}.}
-  {string of length |file_name_size|; tells where the string pool appears}
+@!file_name_size=1024; {file names shouldn't be longer than this}
+@!pool_name='tex.pool';
+  {string of length |file_name_size|; the string pool name}
+@.TeXformats@>
 @!mem_top=262140; {largest index in the |mem| array dumped by \.{INITEX};
   must be substantially larger than |mem_bot|,
   equal to |mem_max| in \.{INITEX}, else not greater than |mem_max|}
