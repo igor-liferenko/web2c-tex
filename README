@@ -18,9 +18,6 @@ The following changes must be output by commented diff in Makefile:
 
 ---------------------------------------------------------
 
-This is the plan:
-make it work for web2c-6.1, and then using tex82.bug and articles "TeX tuneup 2008" and "TeX tuneup 2014"update one by one
-
 The generated code assumes that the type `short' has at least the range
 -32768..32767, and that `unsigned short' has at least the range
 0..65535.

@@ -1,8 +1,6 @@
-now after "./configure" and "make" in web2c-6.1/kpathsea/, "make" succeeds - find out what is missing
-(see -I*web2c-6.1 in all Makefiles and "grep kpathsea" there)
-the final goal is to make everything work with -lkpathsea instead of kpathsea.a
+Update to current tex.web using tex82.bug and articles "TeX tuneup 2008" and "TeX tuneup 2014"update one by one
 
-+++++++++
++++++++++++
 
 check this:
 diff -u lib/texmfmem.h texmfmem.h|colordiff
