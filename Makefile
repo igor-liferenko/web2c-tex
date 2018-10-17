@@ -1,6 +1,6 @@
 all:
-	make -C web2c
 	make -C lib
+	make -C web2c
 	rm -f iextra.c
 	ln -s lib/texmf.c iextra.c
 	rm -f ctex.ch
