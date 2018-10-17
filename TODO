@@ -4,7 +4,9 @@ the final goal is to make everything work with -lkpathsea instead of kpathsea.a
 
 +++++++++
 
-check this: diff -u lib/texmfmem.h texmfmem.h|colordiff
+check this:
+diff -u lib/texmfmem.h texmfmem.h|colordiff
+diff -u lib/cpascal.h cpascal.h|colordiff
 
 ++++++++++
 
