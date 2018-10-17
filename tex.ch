@@ -196,10 +196,10 @@ start_of_TEX@t\hskip-2pt@>, end_of_TEX@t\hskip-2pt@>,@,final_end;
   and not greater than |mem_max|}
 @d font_base=0 {smallest internal font number; must not be less
   than |min_quarterword|}
-@d hash_size=9500 {maximum number of control sequences; it should be at most
+@d hash_size=2100 {maximum number of control sequences; it should be at most
   about |(mem_max-mem_min)/10|}
-@d hash_prime=7919 {a prime number equal to about 85\pct! of |hash_size|}
-@d hyph_size=607 {another prime; the number of \.{\\hyphenation} exceptions}
+@d hash_prime=1777 {a prime number equal to about 85\pct! of |hash_size|}
+@d hyph_size=307 {another prime; the number of \.{\\hyphenation} exceptions}
 @z
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
