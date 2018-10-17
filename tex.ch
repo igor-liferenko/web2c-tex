@@ -215,8 +215,8 @@ start_of_TEX@t\hskip-2pt@>, end_of_TEX@t\hskip-2pt@>,@,final_end;
 @!min_trie_op=0; {first possible trie op code for any language}
 @!max_trie_op=500; {largest possible trie op code for any language}
 @!dvi_buf_size=16384; {size of the output buffer; must be a multiple of 8}
-@!pool_name=TEX_POOL_NAME; {name comes from \.{site.h}.}
-  {string of length |file_name_size|; tells where the string pool appears}
+@!pool_name='tex.pool';
+  {string of length |file_name_size|; the string pool name}
 @!mem_top=262140; {largest index in the |mem| array dumped by \.{INITEX};
   must be substantially larger than |mem_bot|,
   equal to |mem_max| in \.{INITEX}, else not greater than |mem_max|}

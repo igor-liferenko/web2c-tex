@@ -13,7 +13,7 @@ all:
 	touch texd.h
 	rm -f initex.c
 	ln -s itex.c initex.c
-	gcc -DTeX -Ilib -Iweb2c-6.1 -DINITEX -g  -c initex.c
+	gcc -DTeX -Ilib -DINITEX -g  -c initex.c
 	rm -f openinout.c
 	ln -s lib/openinout.c openinout.c
 	gcc -DTeX -Ilib -g  -c openinout.c
