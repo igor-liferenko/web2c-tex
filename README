@@ -25,3 +25,21 @@ do git diff 2f2d02dd48d91203691c351ba44c094ce68109de..e874f280fb7ca3903ec29b6dc7
 The generated code assumes that the type `short' has at least the range
 -32768..32767, and that `unsigned short' has at least the range
 0..65535.
+
+----------------------------
+
+This is how to compile web2c-6.1:
+in web2c/web2c/Makefile add -lfl after $(libs) in "web2c:"
+
+in web2c/Makefile change to this:
+
+progdirs = tex
+alldirs = $(progdirs) lib web2c
+and rm "cd web; $(MAKE) $(makeargs) tangle" from do-tangle:
+
+in web2c/ do this:
+ln -s /usr/bin/tangle web/tangle
+
+in tex/Makefile change to this:
+
+program = initex virtex
