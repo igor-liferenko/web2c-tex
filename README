@@ -19,4 +19,4 @@ The following changes must be output by commented diff in Makefile:
 ---------------------------------------------------------
 
 This is the plan:
-do git diff 0544c7bba8cf0501d7eaaf6efb0b84056c2fdac5..e874f280fb7ca3903ec29b6dc7bc3ba2b0b32847 tex.ch and restore what is necessary for compilation, or use git bisect
+do git diff 2f2d02dd48d91203691c351ba44c094ce68109de..e874f280fb7ca3903ec29b6dc7bc3ba2b0b32847 tex.ch and restore what is necessary for compilation, or use git bisect

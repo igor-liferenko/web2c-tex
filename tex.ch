@@ -43,26 +43,6 @@ we still have to declare the symbolic names.
 @z
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% [1.7] debug..gubed, stat..tats
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-@x
-@d debug==@{ {change this to `$\\{debug}\equiv\null$' when debugging}
-@d gubed==@t@>@} {change this to `$\\{gubed}\equiv\null$' when debugging}
-@y
-@d debug==@{ {the trip test will use debugging}
-@d gubed==@t@>@}
-@z
-@x
-@d stat==@{ {change this to `$\\{stat}\equiv\null$' when gathering
-  usage statistics}
-@d tats==@t@>@} {change this to `$\\{tats}\equiv\null$' when gathering
-  usage statistics}
-@y
-@d stat==
-@d tats==
-@z
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % [1.8] init..tini
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 @x
