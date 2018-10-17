@@ -1,69 +1,69 @@
-% tex.ch for C compilation with web2c, derived from various other change files.
-% By Tim Morgan, UC Irvine ICS Department, and many others.
-%
-% Modification history:
-% (05/28/86) ETM Started with TeX 2.0
-% (06/03/87) ETM Brought up to TeX 2.2
-% (09/26/87) ETM Brought up to TeX 2.3
-% (10/01/87) ETM Brought up to TeX 2.5
-% (12/21/87) ETM Brought up to TeX 2.7
-% (01/14/88) ETM Brought up to TeX 2.9
-% (02/20/88) PAM Revised format and module numbers
-% (03/01/88) ETM Eliminated some unused variables and unnecesary tests
-% (05/09/88) ETM Added yet another casting bug fix
-% (06/21/88) ETM Brought up to TeX version 2.93
-% (12/11/88) ETM Brought up to TeX version 2.94
-% (01/12/89) PAM Brought up to TeX version 2.95
-% (02/14/89) ETM Brought up to TeX version 2.96
-% (03/10/89) ETM Brought up to TeX version 2.98
-% (07/06/89) ETM Brought up to TeX version 2.991
-% (11/30/89) KB  To version 2.992 (8-bit).
-% (01/10/90) SR  To version 2.993.
-% (03/27/90) KY  To version 3.0.
-% (more recent changes in ChangeLog)
-% 
-% The module numbers in this change file refer to the published text in
-% TeX: The Program, Volume B of Computers&Typesetting.
+@x [0.0] l.83 - WEAVE: print changes only.
+  \def\?##1]{\hbox to 1in{\hfil##1.\ }}
+  }
+@y 83
+  \def\?##1]{\hbox{Changes to \hbox to 1em{\hfil##1}.\ }}
+  }
+\let\maybe=\iffalse
+@z
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% [1.4] program header
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-@x
+@x [1.4] l.233 - program header
 Actually the heading shown here is not quite normal: The |program| line
 does not mention any |output| file, because \ph\ would ask the \TeX\ user
 to specify a file name if |output| were specified here.
 @:PASCAL H}{\ph@>
 @^system dependencies@>
+@y
+@z
 
-@d mtype==t@&y@&p@&e {this is a \.{WEB} coding trick:}
-@f mtype==type {`\&{mtype}' will be equivalent to `\&{type}'}
-@f type==true {but `|type|' will not be treated as a reserved word}
-
-@p @t\4@>@<Compiler directives@>@/
+@x [1.4] l.243 - labels in outer block not needed
 program TEX; {all file names are defined dynamically}
 label @<Labels in the outer block@>@/
 @y
-
-@d mtype==t@&y@&p@&e {this is a \.{WEB} coding trick:}
-@f mtype==type {`\&{mtype}' will be equivalent to `\&{type}'}
-@f type==true {but `|type|' will not be treated as a reserved word}
-
-@p @t\4@>@<Compiler directives@>@/
 program TEX; {all file names are defined dynamically}
 @z
 
-@x
+@x [1.6] l.267 - labels in outer block not needed
+@ Three labels must be declared in the main program, so we give them
+symbolic names.
+
+@d start_of_TEX=1 {go here when \TeX's variables are initialized}
+@d end_of_TEX=9998 {go here to close files and terminate gracefully}
+@d final_end=9999 {this label marks the ending of the program}
+
 @<Labels in the out...@>=
 start_of_TEX@t\hskip-2pt@>, end_of_TEX@t\hskip-2pt@>,@,final_end;
   {key control points}
 @y
-@<Labels in the outer block@>=
-start_of_TEX@t\hskip-2pt@>, end_of_TEX@t\hskip-2pt@>,@,final_end;
-  {key control points}
+@ For Web2c, labels are not declared in the main program, but
+we still have to declare the symbolic names.
+
+@d start_of_TEX=1 {go here when \TeX's variables are initialized}
+@d final_end=9999 {this label marks the ending of the program}
 @z
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% [1.8] Same, for `init..tini'.
+% [1.7] debug..gubed, stat..tats
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+@x
+@d debug==@{ {change this to `$\\{debug}\equiv\null$' when debugging}
+@d gubed==@t@>@} {change this to `$\\{gubed}\equiv\null$' when debugging}
+@y
+@d debug==@{ {the trip test will use debugging}
+@d gubed==@t@>@}
+@z
+@x
+@d stat==@{ {change this to `$\\{stat}\equiv\null$' when gathering
+  usage statistics}
+@d tats==@t@>@} {change this to `$\\{tats}\equiv\null$' when gathering
+  usage statistics}
+@y
+@d stat==
+@d tats==
+@z
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% [1.8] init..tini
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 @x
 @d init== {change this to `$\\{init}\equiv\.{@@\{}$' in the production version}
@@ -73,20 +73,7 @@ start_of_TEX@t\hskip-2pt@>, end_of_TEX@t\hskip-2pt@>,@,final_end;
 @d tini==@t@>@}
 @z
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% [1.9] Turn off all compiler directives.
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-@x
-@{@&$C-,A+,D-@} {no range check, catch arithmetic overflow, no debug overhead}
-@!debug @{@&$C+,D+@}@+ gubed {but turn everything on when debugging}
-@y
-@z
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% [1.11] Compile-time constants: some enlarged, dvi_buf_size 16K for
-% BSD I/O, file_name_size is set from the system constant.
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-@x
+@x [1.11] l.375 - Compile-time constants: most removed for dynamic allocation.
 @<Constants...@>=
 @!mem_max=30000; {greatest index in \TeX's internal |mem| array;
   must be strictly less than |max_halfword|;
@@ -127,57 +114,87 @@ start_of_TEX@t\hskip-2pt@>, end_of_TEX@t\hskip-2pt@>,@,final_end;
 @!pool_name='TeXformats:TEX.POOL                     ';
   {string of length |file_name_size|; tells where the string pool appears}
 @y
+@d file_name_size == maxint
+@d ssup_error_line = 255
+@d ssup_max_strings == 2097151
+{Larger values than 65536 cause the arrays to consume much more memory.}
+@d ssup_trie_opcode == 65535
+@d ssup_trie_size == @"3FFFFF
+
+@d ssup_hyph_size == 65535 {Changing this requires changing (un)dumping!}
+@d iinf_hyphen_size == 610 {Must be not less than |hyph_prime|!}
+
+@d max_font_max=9000 {maximum number of internal fonts; this can be
+                      increased, but |hash_size+max_font_max|
+                      should not exceed 29000.}
+@d font_base=0 {smallest internal font number; must be
+                |>= min_quarterword|; do not change this without
+                modifying the dynamic definition of the font arrays.}
+
+
 @<Constants...@>=
-@!mem_max=30000; {greatest index in \TeX's internal |mem| array;
-  must be strictly less than |max_halfword|;
-  must be equal to |mem_top| in \.{INITEX}, otherwise |>=mem_top|}
-@!mem_min=0; {smallest index in \TeX's internal |mem| array;
-  must be |min_halfword| or more;
-  must be equal to |mem_bot| in \.{INITEX}, otherwise |<=mem_bot|}
-@!buf_size=3000; {maximum number of characters simultaneously present in
-  current lines of open files and in control sequences between
-  \.{\\csname} and \.{\\endcsname}; must not exceed |max_halfword|}
-@!error_line=79; {width of context lines on terminal error messages}
-@!half_error_line=50; {width of first lines of contexts in terminal
-  error messages; should be between 30 and |error_line-15|}
-@!max_print_line=79; {width of longest text lines output; should be at least 60}
-@!stack_size=300; {maximum number of simultaneous input sources}
-@!max_in_open=15; {maximum number of input files and error insertions that
-  can be going on simultaneously}
-@!font_max=127; {maximum internal font number; must not exceed |max_quarterword|
-  and must be at most |font_base+256|}
-@!font_mem_size=100000; {number of words of |font_info| for all fonts}
-@!param_size=60; {maximum number of simultaneous macro parameters}
-@!nest_size=40; {maximum number of semantic levels simultaneously active}
-@!max_strings=15000; {maximum number of strings; must not exceed |max_halfword|}
-@!string_vacancies=100000; {the minimum number of characters that should be
-  available for the user's control sequences and font names,
-  after \TeX's own error messages are stored}
-@!pool_size=124000; {maximum number of characters in strings, including all
-  error messages and help texts, and the names of all fonts and
-  control sequences; must exceed |string_vacancies| by the total
-  length of \TeX's own strings, which is currently about 23000}
-@!save_size=4000; {space for saving values outside of current group; must be
-  at most |max_halfword|}
-@!trie_size=8000; {space for hyphenation patterns; should be larger for
-  \.{INITEX} than it is in production versions of \TeX}
-@!trie_op_size=500; {space for ``opcodes'' in the hyphenation patterns}
-@!dvi_buf_size=16384; {size of the output buffer; must be a multiple of 8}
-@!file_name_size=1024; {file names shouldn't be longer than this}
-@!pool_name='tex.pool';
-  {string of length |file_name_size|; the string pool name}
-@.TeXformats@>
+@!hash_offset=514; {smallest index in hash array, i.e., |hash_base| }
+  {Use |hash_offset=0| for compilers which cannot decrement pointers.}
+@#
+@!inf_mem_bot = 0;
+@!sup_mem_bot = 1;
+
+@!inf_main_memory = 3000;
+@!sup_main_memory = 256000000;
+
+@!inf_trie_size = 8000;
+@!sup_trie_size = ssup_trie_size;
+
+@!inf_max_strings = 3000;
+@!sup_max_strings = ssup_max_strings;
+@!inf_strings_free = 100;
+@!sup_strings_free = sup_max_strings;
+
+@!inf_buf_size = 500;
+@!sup_buf_size = 30000000;
+
+@!inf_nest_size = 40;
+@!sup_nest_size = 4000;
+
+@!inf_max_in_open = 6;
+@!sup_max_in_open = 127;
+
+@!inf_param_size = 60;
+@!sup_param_size = 32767;
+
+@!inf_save_size = 600;
+@!sup_save_size = 80000;
+
+@!inf_stack_size = 200;
+@!sup_stack_size = 30000;
+
+@!inf_dvi_buf_size = 800;
+@!sup_dvi_buf_size = 65536;
+
+@!inf_font_mem_size = 20000;
+@!sup_font_mem_size = 147483647; {|integer|-limited, so 2 could be prepended?}
+
+@!sup_font_max = max_font_max;
+@!inf_font_max = 50; {could be smaller, but why?}
+
+@!inf_pool_size = 32000;
+@!sup_pool_size = 40000000;
+@!inf_pool_free = 1000;
+@!sup_pool_free = sup_pool_size;
+@!inf_string_vacancies = 8000;
+@!sup_string_vacancies = sup_pool_size - 23000;
+
+@!sup_hash_extra = sup_max_strings;
+@!inf_hash_extra = 0;
+
+@!sup_hyph_size = ssup_hyph_size;
+@!inf_hyph_size = iinf_hyphen_size; {Must be not less than |hyph_prime|!}
+
+@!inf_expand_depth = 10;
+@!sup_expand_depth = 10000000;
 @z
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% [1.12] Sensitive compile-time constants.  For C we change mem_base and
-% hi_mem_base to reflect our use of 0-origin vs pc's use of
-% negative-origin.  Despite the fact that it is a ``sensitive''
-% constant, we're going to make mem_top a #define in the C code for
-% readability and ease of modification (it's up above) -- it needs
-% to be changed for the trip test.
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-@x
+@x [1.12] l.427 - Constants that are WEB numeric macros.
 @d mem_bot=0 {smallest index in the |mem| array dumped by \.{INITEX};
   must not be less than |mem_min|}
 @d mem_top==30000 {largest index in the |mem| array dumped by \.{INITEX};
@@ -190,75 +207,50 @@ start_of_TEX@t\hskip-2pt@>, end_of_TEX@t\hskip-2pt@>,@,final_end;
 @d hash_prime=1777 {a prime number equal to about 85\pct! of |hash_size|}
 @d hyph_size=307 {another prime; the number of \.{\\hyphenation} exceptions}
 @y
-@d mem_bot=0 {smallest index in the |mem| array dumped by \.{INITEX};
-  must not be less than |mem_min|}
-@d mem_top==30000 {largest index in the |mem| array dumped by \.{INITEX};
-  must be substantially larger than |mem_bot|
-  and not greater than |mem_max|}
-@d font_base=0 {smallest internal font number; must not be less
-  than |min_quarterword|}
-@d hash_size=2100 {maximum number of control sequences; it should be at most
-  about |(mem_max-mem_min)/10|}
-@d hash_prime=1777 {a prime number equal to about 85\pct! of |hash_size|}
-@d hyph_size=307 {another prime; the number of \.{\\hyphenation} exceptions}
+@d hash_size=15000 {maximum number of control sequences; it should be at most
+  about |(mem_max-mem_min)/10|; see also |font_max|}
+@d hash_prime=8501 {a prime number equal to about 85\pct! of |hash_size|}
+@d hyph_prime=607 {another prime for hashing \.{\\hyphenation} exceptions;
+                if you change this, you should also change |iinf_hyphen_size|.}
 @z
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% [1.16] Use C macros for `incr' and `decr'.
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-@x
+@x [1.16] l.498 - Use C macros for `incr' and `decr'.
 @d incr(#) == #:=#+1 {increase a variable by unity}
 @d decr(#) == #:=#-1 {decrease a variable by unity}
 @y
 @z
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% [??] The text_char type is used as an array index into xord.  The
+% The text_char type is used as an array index into xord.  The
 % default type `char' produces signed integers, which are bad array
 % indices in C.
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-@x
+@x [2.19] l.565 - data type text_char is 8-bit ASCII_code
 @d text_char == char {the data type of characters in text files}
 @y
 @d text_char == ASCII_code {the data type of characters in text files}
 @z
 
+@x [2.20] l.579 - printable characters
+@!xchr: array [ASCII_code] of text_char;
+  {specifies conversion of output characters}
+@y
+xchr: array [ASCII_code] of text_char;
+   { specifies conversion of output characters }
+xprn: array [ASCII_code] of ASCII_code;
+   { non zero iff character is printable }
+@z
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% [2.23] Allow any character as input.
+% [2.23] allow any character that we can input to get in
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 @x
 for i:=0 to @'37 do xchr[i]:=' ';
 for i:=@'177 to @'377 do xchr[i]:=' ';
 @y
-for i:=0 to @'37 do xchr[i]:=chr(i);
-for i:=@'177 to @'377 do xchr[i]:=chr(i);
+for i:=0 to @'37 do xchr[i]:=i;
+for i:=@'177 to @'377 do xchr[i]:=i;
 @z
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% [3.25] Remove file types we don't need.
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-@x
-The program actually makes use also of a third kind of file, called a
-|word_file|, when dumping and reloading base information for its own
-initialization.  We shall define a word file later; but it will be possible
-for us to specify simple operations on word files before they are defined.
-
-@y
-I/O in C is done using standard I/O.  We will define the path numbers
-in an include file for C which are used in searching for files to be
-read.  We'll define all the file types in C also.
-@z
-
-@x
-@!alpha_file=packed file of text_char; {files that contain textual data}
-@!byte_file=packed file of eight_bits; {files that contain binary data}
-@y
-@z
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% [3.27] Do file opening in C.
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-@x
+@x [3.27] l.794 - Do file opening in C.
 @ The \ph\ compiler with which the present version of \TeX\ was prepared has
 extended the rules of \PASCAL\ in a very convenient way. To open file~|f|,
 we can write
@@ -318,10 +310,7 @@ end;
 @ All of the file opening functions are defined in C.
 @z
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% [3.28] Do file closing in C.
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-@x
+@x [3.28] l.850 - Do file closing in C.
 @ Files can be closed with the \ph\ routine `|close(f)|', which
 @:PASCAL H}{\ph@>
 @^system dependencies@>
@@ -348,10 +337,13 @@ end;
 @ And all the file closing routines as well.
 @z
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% [3.31] Do `input_ln' in C.
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-@x
+@x [3.30] l.888 - Array size of input buffer is determined at runtime.
+@!buffer:array[0..buf_size] of ASCII_code; {lines of characters being read}
+@y
+@!buffer:^ASCII_code; {lines of characters being read}
+@z
+
+@x [3.31] l.933 - Do `input_ln' in C.
 @p function input_ln(var f:alpha_file;@!bypass_eoln:boolean):boolean;
   {inputs the next line or returns |false|}
 var last_nonblank:0..buf_size; {|last| with trailing blanks removed}
@@ -376,22 +368,81 @@ end;
 We define |input_ln| in C, for efficiency.
 @z
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % [3.32] `term_in' and `term_out' are standard input and output.
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-@x
+% Declare the variables that used to be constants.
+@x [3.32] l.961 - `term_in' and `term_out' are standard input and output.
 @<Glob...@>=
 @!term_in:alpha_file; {the terminal as an input file}
 @!term_out:alpha_file; {the terminal as an output file}
 @y
 @d term_in==stdin {the terminal as an input file}
 @d term_out==stdout {the terminal as an output file}
+
+@<Glob...@>=
+@!init
+@!ini_version:boolean; {are we \.{INITEX}?}
+@!dump_option:boolean; {was the dump name option used?}
+tini@/
+@#
+@!dump_name:const_cstring; {format name for terminal display}
+@#
+@!bound_default:integer; {temporary for setup}
+@!bound_name:const_cstring; {temporary for setup}
+@#
+@!mem_bot:integer;{smallest index in the |mem| array dumped by \.{INITEX};
+  must not be less than |mem_min|}
+@!main_memory:integer; {total memory words allocated in initex}
+@!extra_mem_bot:integer; {|mem_min:=mem_bot-extra_mem_bot| except in \.{INITEX}}
+@!mem_min:integer; {smallest index in \TeX's internal |mem| array;
+  must be |min_halfword| or more;
+  must be equal to |mem_bot| in \.{INITEX}, otherwise |<=mem_bot|}
+@!mem_top:integer; {largest index in the |mem| array dumped by \.{INITEX};
+  must be substantially larger than |mem_bot|,
+  equal to |mem_max| in \.{INITEX}, else not greater than |mem_max|}
+@!extra_mem_top:integer; {|mem_max:=mem_top+extra_mem_top| except in \.{INITEX}}
+@!mem_max:integer; {greatest index in \TeX's internal |mem| array;
+  must be strictly less than |max_halfword|;
+  must be equal to |mem_top| in \.{INITEX}, otherwise |>=mem_top|}
+@!error_line:integer; {width of context lines on terminal error messages}
+@!half_error_line:integer; {width of first lines of contexts in terminal
+  error messages; should be between 30 and |error_line-15|}
+@!max_print_line:integer;
+  {width of longest text lines output; should be at least 60}
+@!max_strings:integer; {maximum number of strings; must not exceed |max_halfword|}
+@!strings_free:integer; {strings available after format loaded}
+@!string_vacancies:integer; {the minimum number of characters that should be
+  available for the user's control sequences and font names,
+  after \TeX's own error messages are stored}
+@!pool_size:integer; {maximum number of characters in strings, including all
+  error messages and help texts, and the names of all fonts and
+  control sequences; must exceed |string_vacancies| by the total
+  length of \TeX's own strings, which is currently about 23000}
+@!pool_free:integer;{pool space free after format loaded}
+@!font_mem_size:integer; {number of words of |font_info| for all fonts}
+@!font_max:integer; {maximum internal font number; ok to exceed |max_quarterword|
+  and must be at most |font_base|+|max_font_max|}
+@!font_k:integer; {loop variable for initialization}
+@!hyph_size:integer; {maximun number of hyphen exceptions}
+@!trie_size:integer; {space for hyphenation patterns; should be larger for
+  \.{INITEX} than it is in production versions of \TeX.  50000 is
+  needed for English, German, and Portuguese.}
+@!buf_size:integer; {maximum number of characters simultaneously present in
+  current lines of open files and in control sequences between
+  \.{\\csname} and \.{\\endcsname}; must not exceed |max_halfword|}
+@!stack_size:integer; {maximum number of simultaneous input sources}
+@!max_in_open:integer; {maximum number of input files and error insertions that
+  can be going on simultaneously}
+@!param_size:integer; {maximum number of simultaneous macro parameters}
+@!nest_size:integer; {maximum number of semantic levels simultaneously active}
+@!save_size:integer; {space for saving values outside of current group; must be
+  at most |max_halfword|}
+@!dvi_buf_size:integer; {size of the output buffer; must be a multiple of 8}
+@!expand_depth:integer; {limits recursive calls to the |expand| procedure}
+@!eight_bit_p:cinttype; {make all characters printable by default}
+@!quoted_filename:boolean; {current filename is quoted}
 @z
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% [3.33] We don't need to open terminal files.
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-@x
+@x [3.33] l.964 - We don't need to open terminal files.
 @ Here is how to open the terminal files
 in \ph. The `\.{/I}' switch suppresses the first |get|.
 @:PASCAL H}{\ph@>
@@ -407,10 +458,7 @@ any command line arguments the user has provided.  It's defined in C.
 @d t_open_out == {output already open for text output}
 @z
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% [3.34] Flushing output.
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-@x
+@x [3.34] l.982 - Flushing output to terminal files.
 these operations can be specified in \ph:
 @:PASCAL H}{\ph@>
 @^system dependencies@>
@@ -419,18 +467,57 @@ these operations can be specified in \ph:
 @d clear_terminal == break_in(term_in,true) {clear the terminal input buffer}
 @y
 these operations can be specified with {\mc UNIX}.  |update_terminal|
-does an |fflush| (via the macro |flush|). |clear_terminal| is redefined
+does an |fflush|. |clear_terminal| is redefined
 to do nothing, since the user should control the terminal.
 @^system dependencies@>
 
-@d update_terminal == flush (term_out)
+@d update_terminal == fflush (term_out)
 @d clear_terminal == do_nothing
 @z
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% [3.37] Reading the command line.
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-@x
+@x used in input_ln, which is implemented in C for efficiency
+@ We need a special routine to read the first line of \TeX\ input from
+the user's terminal. This line is different because it is read before we
+have opened the transcript file; there is sort of a ``chicken and
+egg'' problem here. If the user types `\.{\\input paper}' on the first
+line, or if some macro invoked by that line does such an \.{\\input},
+the transcript file will be named `\.{paper.log}'; but if no \.{\\input}
+commands are performed during the first line of terminal input, the transcript
+file will acquire its default name `\.{texput.log}'. (The transcript file
+will not contain error messages generated by the first line before the
+first \.{\\input} command.)
+@.texput@>
+
+The first line is even more special if we are lucky enough to have an operating
+system that treats \TeX\ differently from a run-of-the-mill \PASCAL\ object
+program. It's nice to let the user start running a \TeX\ job by typing
+a command line like `\.{tex paper}'; in such a case, \TeX\ will operate
+as if the first line of input were `\.{paper}', i.e., the first line will
+consist of the remainder of the command line, after the part that invoked
+\TeX.
+
+The first line is special also because it may be read before \TeX\ has
+input a format file. In such cases, normal error messages cannot yet
+be given. The following code uses concepts that will be explained later.
+(If the \PASCAL\ compiler does not support non-local |@!goto|\unskip, the
+@^system dependencies@>
+statement `|goto final_end|' should be replaced by something that
+quietly terminates the program.)
+
+@<Report overflow of the input buffer, and abort@>=
+if format_ident=0 then
+  begin write_ln(term_out,'Buffer size exceeded!'); goto final_end;
+@.Buffer size exceeded@>
+  end
+else begin cur_input.loc_field:=first; cur_input.limit_field:=last-1;
+  overflow("buffer size",buf_size);
+@:TeX capacity exceeded buffer size}{\quad buffer size@>
+  end
+
+@y
+@z
+
+@x [3.37] l.1055 - |init_terminal|, reading the command line.
 @ The following program does the required initialization
 without retrieving a possible command line.
 It should be clear how to modify this routine to deal with command lines,
@@ -440,145 +527,82 @@ if the system permits them.
 @p function init_terminal:boolean; {gets the terminal input started}
 label exit;
 begin t_open_in;
-loop@+begin wake_up_terminal; write(term_out,'**'); update_terminal;
-@.**@>
-  if not input_ln(term_in,true) then {this shouldn't happen}
-    begin write_ln(term_out);
-    write(term_out,'! End of file on the terminal... why?');
-@.End of file on the terminal@>
-    init_terminal:=false; return;
-    end;
-  loc:=first;
-  while (loc<last)and(buffer[loc]=" ") do incr(loc);
-  if loc<last then
-    begin init_terminal:=true;
-    return; {return unless the line was all blank}
-    end;
-  write_ln(term_out,'Please type the name of your input file.');
-  end;
-exit:end;
 @y
 @ The following program does the required initialization.
 Iff anything has been specified on the command line, then |t_open_in|
 will return with |last > first|.
 @^system dependencies@>
 
-@p
-function init_terminal:boolean; {gets the terminal input started}
+@p function init_terminal:boolean; {gets the terminal input started}
 label exit;
-begin
-    t_open_in;
-    if last > first then begin
-        loc := first;
-        while (loc < last) and (buffer[loc]=' ') do
-	    incr(loc);
-        if loc < last then begin
-            init_terminal := true;
-            goto exit;
-        end;
+begin t_open_in;
+if last > first then
+  begin loc := first;
+  while (loc < last) and (buffer[loc]=' ') do incr(loc);
+  if loc < last then
+    begin init_terminal := true; goto exit;
     end;
-    loop@+begin
-        wake_up_terminal; write(term_out, '**'); update_terminal;
-@.**@>
-        if not input_ln(term_in,true) then begin {this shouldn't happen}
-            write_ln(term_out);
-            write(term_out, '! End of file on the terminal... why?');
-@.End of file on the terminal@>
-            init_terminal:=false;
-	    return;
-        end;
-
-        loc:=first;
-        while (loc<last)and(buffer[loc]=" ") do
-            incr(loc);
-
-        if loc<last then begin
-           init_terminal:=true;
-           return; {return unless the line was all blank}
-        end;
-        write_ln(term_out, 'Please type the name of your input file.');
-    end;
-exit:
-end;
+  end;
 @z
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+@x [3.37] l.1068 - |init_terminal|, output missing newline.
+    write(term_out,'! End of file on the terminal... why?');
+@y
+    write_ln(term_out,'! End of file on the terminal... why?');
+@z
+
+@x [4.39] l.1131 - Dynamically size pool arrays.
+@!str_pool:packed array[pool_pointer] of packed_ASCII_code; {the characters}
+@!str_start : array[str_number] of pool_pointer; {the starting pointers}
+@y
+@!str_pool: ^packed_ASCII_code; {the characters}
+@!str_start : ^pool_pointer; {the starting pointers}
+@z
+
+@x [4.47] l.1237 - string recycling
+@p @!init function get_strings_started:boolean; {initializes the string pool,
+@y
+@p @t\4@>@<Declare additional routines for string recycling@>@/
+
+@!init function get_strings_started:boolean; {initializes the string pool,
+@z
+
 % [4.51] Open the pool file using a path, and can't do string
 % assignments directly.  (`strcpy' and `strlen' work here because
 % `pool_name' is a constant string, and thus ends in a null and doesn't
 % start with a space.)
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-@x
+@x [4.51] l.1314 - Open the pool file.
 name_of_file:=pool_name; {we needn't set |name_length|}
 if a_open_in(pool_file) then
 @y
-vstrcpy (name_of_file+1, pool_name); {copy the string}
-name_of_file[0] := ' ';
-name_of_file[strlen (pool_name) +1 ] := ' ';
 name_length := strlen (pool_name);
-if a_open_in (pool_file, TEX_POOL_PATH) then
+name_of_file := xmalloc_array (ASCII_code, name_length + 1);
+strcpy (stringcast(name_of_file+1), pool_name); {copy the string}
+if a_open_in (pool_file, kpse_texpool_format) then
 @z
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% [4.51,52,53] Make `TEX.POOL' lowercase in messages, and change how
-% it's read.
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-@x
-else  bad_pool('! I can''t read TEX.POOL.')
-@y
-else begin
-   {Like |bad_pool|, but must not close file if we never opened it}
-   wake_up_terminal; write_ln(term_out, '! I can''t read tex.pool.');
-   get_strings_started:= false; return;
-end
-@z
-@x
+@x [4.52] l.1326 - Make `TEX.POOL' lowercase, and change how it's read.
 begin if eof(pool_file) then bad_pool('! TEX.POOL has no check sum.');
 @.TEX.POOL has no check sum@>
 read(pool_file,m,n); {read two digits of string length}
 @y
-begin if eof(pool_file) then bad_pool('! tex.pool has no check sum.');
+begin if eof(pool_file) then bad_pool('! ', pool_name, ' has no check sum.');
 @.TEX.POOL has no check sum@>
 read(pool_file,m); read(pool_file,n); {read two digits of string length}
 @z
-@x
-    bad_pool('! TEX.POOL line doesn''t begin with two digits.');
+
+@x [6.73] l.1732 - Add unspecified_mode.
+@d error_stop_mode=3 {stops at every opportunity to interact}
 @y
-    bad_pool('! tex.pool line doesn''t begin with two digits.');
-@z
-@x
-  bad_pool('! TEX.POOL check sum doesn''t have nine digits.');
-@y
-  bad_pool('! tex.pool check sum doesn''t have nine digits.');
-@z
-@x
-done: if a<>@$ then bad_pool('! TEX.POOL doesn''t match; TANGLE me again.');
-@y
-done: if a<>@$ then bad_pool('! tex.pool doesn''t match; tangle me again.');
+@d error_stop_mode=3 {stops at every opportunity to interact}
+@d unspecified_mode=4 {extra value for command-line switch}
 @z
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% [5.61] Eliminate the misleading message ``(no format preloaded)''.
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-@x
-wterm(banner);
-if format_ident=0 then wterm_ln(' (no format preloaded)')
-else  begin slow_print(format_ident); print_ln;
-  end;
-@y
-wterm (banner);
-wterm (version_string);
-if format_ident>0 then slow_print(format_ident); 
-print_ln;
-@z
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % [6.81] Eliminate nonlocal goto, since C doesn't have them.
 % Plus, it's nicer just to do an exit with the appropriate status code
 % under Unix.  We call it `uexit' because there's a WEB symbol called
 % `exit' already.  We use a C macro to change `uexit' back to `exit'.
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-@x
+@x [6.81] l.1852 - Eliminate nonlocal goto, since C doesn't have them.
 @<Error hand...@>=
 procedure jump_out;
 begin goto end_of_TEX;
@@ -592,25 +616,23 @@ end;
    else
        uexit(0);
    end
+
 @<Error hand...@>=
-procedure jump_out;
+noreturn procedure jump_out;
 begin
 close_files_and_terminate;
 do_final_end;
 end;
 @z
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% [6.84] Implement the switch-to-editor option.
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-@x
+@x [6.84] l.1888 - Implement the switch-to-editor option.
 line ready to be edited. But such an extension requires some system
 wizardry, so the present implementation simply types out the name of the
 file that should be
 edited and the relevant line number.
 @^system dependencies@>
 
-There is a secret `\.D' option available when the debugging routines haven't 
+There is a secret `\.D' option available when the debugging routines haven't
 been commented~out.
 @^debugging@>
 @y
@@ -627,7 +649,8 @@ been commented~out.
 @^debugging@>
 @d edit_file==input_stack[base_ptr]
 @z
-@x
+
+@x [6.84] l.1903 - Implement the switch-to-editor option.
 "E": if base_ptr>0 then
   begin print_nl("You want to edit file ");
 @.You want to edit file x@>
@@ -636,60 +659,80 @@ been commented~out.
   interaction:=scroll_mode; jump_out;
 @y
 "E": if base_ptr>0 then
-    begin
-    edit_name_start:=str_start[edit_file.name_field];
+    begin edit_name_start:=str_start[edit_file.name_field];
     edit_name_length:=str_start[edit_file.name_field+1] -
-    		      str_start[edit_file.name_field];
+                      str_start[edit_file.name_field];
     edit_line:=line;
     jump_out;
 @z
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% [7.104] `remainder' is a library routine on some systems, so change
-% its name to avoid conflicts.
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-@x
-@<Glob...@>=
-@!arith_error:boolean; {has arithmetic overflow occurred recently?}
-@!remainder:scaled; {amount subtracted to get an exact division}
+FIXME: why is it needed ????????????????????????????????
+@x [6.93] l.2056 - Declare fatal_error as noreturn.
+procedure fatal_error(@!s:str_number); {prints |s|, and that's it}
 @y
-@d remainder == tex_remainder
-@<Glob...@>=
-@!arith_error:boolean; {has arithmetic overflow occurred recently?}
-@!remainder:scaled; {amount subtracted to get an exact division}
+noreturn procedure fatal_error(@!s:str_number); {prints |s|, and that's it}
 @z
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% [7.109] Define glue_ratio in C.
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-@x
+FIXME: why is it needed ????????????????????????????????
+@x [6.94] l.2065 - Declare overflow as noreturn.
+procedure overflow(@!s:str_number;@!n:integer); {stop due to finiteness}
+@y
+noreturn procedure overflow(@!s:str_number;@!n:integer); {stop due to finiteness}
+@z
+
+FIXME: why is it needed ????????????????????????????????
+@x [6.95] l.2084 - Declare confusion as noreturn.
+procedure confusion(@!s:str_number);
+@y
+noreturn procedure confusion(@!s:str_number);
+@z
+
+% [7.104] `remainder' is a library routine on some systems, so change
+% its name to avoid conflicts.
+@x [7.104] l.2227 - avoid name conflicts with lib routine remainder()
+|remainder|, holds the remainder after a division.
+
+@<Glob...@>=
+@y
+|remainder|, holds the remainder after a division.
+
+@d remainder==tex_remainder
+
+@<Glob...@>=
+@z
+
+@x [7.109] l.2352 - Define glue_ratio in C.
 @!glue_ratio=real; {one-word representation of a glue expansion factor}
 @y
 @z
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % [8.110] Make it easy to change constants.  Do not increase
-% max_quarterword without changing the memoryword structure in
-% `texmfmem.h'.
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-@x
-@d min_quarterword=0 {smallest allowable value in a |quarterword|}
-@d max_quarterword=255 {largest allowable value in a |quarterword|}
+% max_quarterword without changing the memoryword structure in `texmfmem.h'.
+@x [8.110] l.2422 - increase |max_halfword|
 @d min_halfword==0 {smallest allowable value in a |halfword|}
 @d max_halfword==65535 {largest allowable value in a |halfword|}
-@y
-@d min_quarterword=0 {smallest allowable value in a |quarterword|}
-@d max_quarterword=255 {largest allowable value in a |quarterword|}
-@d min_halfword==0 {smallest allowable value in a |halfword|}
-@d max_halfword==262143 {largest allowable value in a |halfword|}
+@y 2424
+@d min_halfword==-@"FFFFFFF {smallest allowable value in a |halfword|}
+@d max_halfword==@"FFFFFFF {largest allowable value in a |halfword|}
 @z
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% [8.112] Efficiency.
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-@x
-The inner loop of \TeX\ will run faster with respect to compilers
-that don't optimize expressions like `|x+0|' and `|x-0|', if these
+@x [8.111] l.2435 - min_halfword and max_halfword
+if (mem_min<min_halfword)or(mem_max>=max_halfword)or@|
+  (mem_bot-mem_min>max_halfword+1) then bad:=14;
+@y
+if (mem_bot-sup_main_memory<min_halfword)or@|
+  (mem_top+sup_main_memory>=max_halfword) then bad:=14;
+@z
+
+@x [8.111] l.2437 - max_font_max
+if (font_base<min_quarterword)or(font_max>max_quarterword) then bad:=15;
+if font_max>font_base+256 then bad:=16;
+@y
+if (max_font_max<min_halfword)or(max_font_max>max_halfword) then bad:=15;
+if font_max>font_base+max_font_max then bad:=16;
+@z
+
+@x [8.112] l.2450 - Efficiency.
 macros are simplified in the obvious way when |min_quarterword=0|.
 @^inner loop@>@^system dependencies@>
 
@@ -702,11 +745,14 @@ macros are simplified in the obvious way when |min_quarterword=0|.
 @d ho(#)==#-min_halfword
   {to take a sixteen-bit item from a halfword}
 @y
-The inner loop of \TeX\ will run faster with respect to compilers
-that don't optimize expressions like `|x+0|' and `|x-0|', if these
 macros are simplified in the obvious way when |min_quarterword=0|.
 So they have been simplified here in the obvious way.
 @^inner loop@>@^system dependencies@>
+
+The \.{WEB} source for \TeX\ defines |hi(#)==#+min_halfword| which can be
+simplified when |min_halfword=0|.  The Web2C implemetation of \TeX\ can use
+|hi(#)==#| together with |min_halfword<0| as long as |max_halfword| is
+sufficiently large.
 
 @d qi(#)==# {to put an |eight_bits| item into a quarterword}
 @d qo(#)==# {to take an |eight_bits| item from a quarterword}
@@ -714,12 +760,9 @@ So they have been simplified here in the obvious way.
 @d ho(#)==# {to take a sixteen-bit item from a halfword}
 @z
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % [8.113] We've put the memory structure into the include file
-% `texmf.h', since it's too hard to translate automatically.  Also,
-% remove the `word_file' type.
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-@x
+% `texmf.h', since it's too hard to translate automatically.
+@x [8.113] l.2453 - data structures for main memory
 @!quarterword = min_quarterword..max_quarterword; {1/4 of a word}
 @!halfword=min_halfword..max_halfword; {1/2 of a word}
 @!two_choices = 1..2; {used when there are two variants in a record}
@@ -743,65 +786,49 @@ So they have been simplified here in the obvious way.
   3: (@!hh:two_halves);
   4: (@!qqqq:four_quarters);
   end;
-@!word_file = file of memory_word;
 @y
-@!quarterword=min_quarterword..max_quarterword;
-@!halfword=min_halfword..max_halfword;
+@!quarterword = min_quarterword..max_quarterword;
+@!halfword = min_halfword..max_halfword;
 @!two_choices = 1..2; {used when there are two variants in a record}
 @!four_choices = 1..4; {used when there are four variants in a record}
 @=#include "texmfmem.h";@>
 @z
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % [9.116] Change `mem' to `zmem', so we can define mem to be a register
 % pointer to the memory array for speed.
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-@x
+@x [9.116] l.2545 - definition of main memory array
 @!mem : array[mem_min..mem_max] of memory_word; {the big dynamic storage area}
 @y
-@!zmem : array[mem_min..mem_max] of memory_word; {the big dynamic storage area}
+@!yzmem : ^memory_word; {the big dynamic storage area}
+@!zmem : ^memory_word; {the big dynamic storage area}
 @z
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% [9.127] Fix casting problem in C.
-% There are several of these.  They come from the rules C uses for
-% comparing signed and unsigned quantities.  Just doing the comparison
-% can result in incorrect evaluation wrt the way Pascal would do it.
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-@x
-if r>p+1 then @<Allocate from the top of node |p| and |goto found|@>;
-@y
-if r>toint(p+1) then @<Allocate from the top of node |p| and |goto found|@>;
-@z
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % [11.165] Fix the word `free' so that it doesn't conflict with the
 % standard C library routine of the same name.
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-@x
-been included. (You may want to decrease the size of |mem| while you
-@^debugging@>
+@x [11.165] l.3364 - avoid conflict with lib function free()
 are debugging.)
 @y
-been included. (You may want to decrease the size of |mem| while you
-@^debugging@>
 are debugging.)
 
 @d free==free_arr
 @z
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% [12.174,176] Eliminate some unsigned comparisons to zero.
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-@x
-        begin if (font(p)<font_base)or(font(p)>font_max) then
-          print_char("*")
+@x [11.165] l.3367 - dummy |free| and |was_free| arrays
+@!debug @!free: packed array [mem_min..mem_max] of boolean; {free cells}
+@t\hskip10pt@>@!was_free: packed array [mem_min..mem_max] of boolean;
 @y
-        begin if (font(p)>font_max) then
-          print_char("*")
+ {The debug memory arrays have not been mallocated yet.}
+@!debug @!free: packed array [0..9] of boolean; {free cells}
+@t\hskip10pt@>@!was_free: packed array [0..9] of boolean;
 @z
 
-@x
+@x [12.174] l.3526 - Eliminate unsigned comparisons to zero.
+        begin if (font(p)<font_base)or(font(p)>font_max) then
+@y
+        begin if (font(p)>font_max) then
+@z
+
+@x [12.176] l.3563 - Eliminate unsigned comparisons to zero.
 @p procedure print_font_and_char(@!p:integer); {prints |char_node| data}
 begin if p>mem_end then print_esc("CLOBBERED.")
 else  begin if (font(p)<font_base)or(font(p)>font_max) then print_char("*")
@@ -811,27 +838,35 @@ begin if p>mem_end then print_esc("CLOBBERED.")
 else  begin if (font(p)>font_max) then print_char("*")
 @z
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% [12.186] Don't worry about strange floating point values.
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-@x
-  if glue_sign(p)=shrinking then print("- ");
-  if abs(mem[p+glue_offset].int)<@'4000000 then print("?.?")
-  else if abs(g)>float_constant(20000) then
+@x [16.213] l.4321 - texarray
+@!nest:array[0..nest_size] of list_state_record;
 @y
-  if glue_sign(p)=shrinking then print("- ");
-  { The Unix |pc| folks removed this restriction with a remark that
-    invalid bit patterns were vanishingly improbable, so we follow
-    their example without really understanding it.
-  |if abs(mem[p+glue_offset].int)<@'4000000 then print('?.?')|
-  |else| }
-  if fabs(g)>float_constant(20000) then
+@!nest:^list_state_record;
 @z
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% [17.241] Do `fix_date_and_time' in C.
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-@x
+@x [16.215] l.4344 - remove mem[] reference from initialize.
+prev_graf:=0; shown_mode:=0;
+@<Start a new current page@>;
+@y
+prev_graf:=0; shown_mode:=0;
+@/{The following piece of code is a copy of module 991:}
+page_contents:=empty; page_tail:=page_head; {|link(page_head):=null;|}@/
+last_glue:=max_halfword; last_penalty:=0; last_kern:=0;
+page_depth:=0; page_max_depth:=0;
+@z
+
+@x [17.236] l.4954
+@d int_pars=55 {total number of integer parameters}
+@y
+@d tex_int_pars=55 {total number of \TeX's integer parameters}
+@#
+@d web2c_int_base=tex_int_pars {base for web2c's integer parameters}
+@d web2c_int_pars=web2c_int_base {total number of web2c's integer parameters}
+@#
+@d int_pars=web2c_int_pars {total number of integer parameters}
+@z
+
+@x [17.241] l.5219 - Do `fix_date_and_time' in C.
 @ The following procedure, which is called just before \TeX\ initializes its
 input and output, establishes the initial values of the date and time.
 @^system dependencies@>
@@ -858,105 +893,98 @@ is conditionally compiled in the C code.
 @d fix_date_and_time==date_and_time(time,day,month,year)
 @z
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% [17.253] Change eqtb to zeqtb.
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-@x
+@x [17.253] l.5435 - Change eqtb to zeqtb.
 @!eqtb:array[active_base..eqtb_size] of memory_word;
 @y
-@!zeqtb:array[active_base..eqtb_size] of memory_word;
+@!zeqtb:^memory_word;
 @z
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% [18.262] Remove more unsigned comparisons to zero.
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-@x
+@x [18.262] l.5584 - Remove more unsigned comparisons to zero.
 else if (text(p)<0)or(text(p)>=str_ptr) then print_esc("NONEXISTENT.")
 @y
 else if (text(p)>=str_ptr) then print_esc("NONEXISTENT.")
 @z
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% [29.513] Area and extension rules for filenames.
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-@x
-@ The file names we shall deal with for illustrative purposes have the
-following structure:  If the name contains `\.>' or `\.:', the file area
-consists of all characters up to and including the final such character;
-otherwise the file area is null.  If the remaining file name contains
-`\..', the file extension consists of all such characters from the first
-remaining `\..' to the end, otherwise the file extension is null.
-@^system dependencies@>
-
-We can scan such file names easily by using two global variables that keep track
-of the occurrences of area and extension delimiters:
-
-@<Glob...@>=
-@!area_delimiter:pool_pointer; {the most recent `\.>' or `\.:', if any}
-@!ext_delimiter:pool_pointer; {the relevant `\..', if any}
+@x [19.271] l.5872 - texarray
+@!save_stack : array[0..save_size] of memory_word;
 @y
-@ The file names we shall deal with for illustrative purposes have the
-following structure:  If the name contains `\./', the file area
-consists of all characters up to and including the final such character;
-otherwise the file area is null.  If the remaining file name contains
-`\..', the file extension consists of all such characters from the last
-`\..' to the end, otherwise the file extension is null.
-@^system dependencies@>
-
-We can scan such file names easily by using two global variables that keep
-track of the occurrences of area and extension delimiters:
-
-@<Glob...@>=
-@!area_delimiter:pool_pointer; {the most recent `\./', if any}
-@!ext_delimiter:pool_pointer; {the most recent `\..', if any}
+@!save_stack : ^memory_word;
 @z
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% [29.514] TeX area directories.
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-@x
-@d TEX_area=="TeXinputs:"
-@.TeXinputs@>
-@d TEX_font_area=="TeXfonts:"
-@.TeXfonts@>
+@x [22.301] l.6432 - texarray
+@!input_stack : array[0..stack_size] of in_state_record;
 @y
-In C, the default paths are specified in a separate
-file, \.{site.h}.  The file opening procedures do path searching
-based either on those default paths, or on paths given by the user
-in environment variables.
+@!input_stack : ^in_state_record;
+@z
+
+@x [22.304] l.6536 - texarray
+@!input_file : array[1..max_in_open] of alpha_file;
+@!line : integer; {current line number in the current source file}
+@!line_stack : array[1..max_in_open] of integer;
+@y
+@!input_file : ^alpha_file;
+@!line : integer; {current line number in the current source file}
+@!line_stack : ^integer;
+@z
+
+@x [22.308] l.6701 - texarray
+@!param_stack:array [0..param_size] of pointer;
+  {token list pointers for parameters}
+@y
+@!param_stack: ^pointer;
+  {token list pointers for parameters}
+@z
+
+@x [25.366] expansion depth check
+The |expand| subroutine is used when |cur_cmd>max_command|. It removes a
+@y
+@ Sometimes, recursive calls to the following |expand| routine may
+cause exhaustion of the run-time calling stack, resulting in
+forced execution stops by the operating system. To diminish the chance
+of this happening, a counter is used to keep track of the recursion
+depth, in conjunction with a constant called |expand_depth|.
+
+This does not catch all possible infinite recursion loops, just the ones
+that exhaust the application calling stack. The actual maximum value of
+|expand_depth| is outside of our control, but the initial setting of
+|10000| should be enough to prevent problems.
+@^system dependencies@>
+
+@<Global...@>=
+expand_depth_count:integer;
+
+@ @<Set init...@>=
+expand_depth_count:=0;
+
+@ The |expand| subroutine is used when |cur_cmd>max_command|. It removes a
 @z
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % [29.516] more_name
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 @x
-else  begin str_room(1); append_char(c); {contribute |c| to the current string}
   if (c=">")or(c=":") then
-    begin area_delimiter:=cur_length; ext_delimiter:=0;
-    end
-  else if (c=".")and(ext_delimiter=0) then ext_delimiter:=cur_length;
 @y
-else  begin str_room(1); append_char(c); {contribute |c| to the current string}
-  if (c="/") then
-    begin area_delimiter:=cur_length; ext_delimiter:=0;
-    end
-  else if c="." then ext_delimiter:=cur_length;
+  if c="/" then
 @z
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % [29.519] In pack_file_name, leave room for the extra null we append at
-% the end of a filename in make_c_string.
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-@x
-if k<=file_name_size then name_length:=k@+else name_length:=file_name_size;
+% the end of a filename.
+@x [29.519] l.10047 - pack_file_name, leave room for the extra null
+begin k:=0;
 @y
-if k<file_name_size then name_length:=k@+else name_length:=file_name_size-1;
+begin k:=0;
+if name_of_file then libc_free (name_of_file);
+name_of_file:= xmalloc_array (ASCII_code, length(a)+length(n)+length(e)+1);
 @z
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% [29.520] The default format.
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-@x
+@x [29.519] l.10051 - pack_file_name, append the extra null
+for k:=name_length+1 to file_name_size do name_of_file[k]:=' ';
+@y
+name_of_file[name_length+1]:=0;
+@z
+
+@x [29.520] l.10060 - filenames: default format.
 @d format_default_length=20 {length of the |TEX_format_default| string}
 @d format_area_length=11 {length of its area part}
 @d format_ext_length=4 {length of its `\.{.fmt}' part}
@@ -969,102 +997,91 @@ length will be set in the main program.
 @d format_ext_length=4 {length of its `\.{.fmt}' part}
 @z
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% [29.521] Where `plain.fmt' is.
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-@x
+@x [29.521] l.10066 - filenames: default format, where `plain.fmt' is.
 @!TEX_format_default:packed array[1..format_default_length] of char;
 
 @ @<Set init...@>=
 TEX_format_default:='TeXformats:plain.fmt';
 @y
 @!format_default_length: integer;
-@!TEX_format_default: c_char_pointer;
+@!TEX_format_default: cstring;
 
 @ We set the name of the default format file and the length of that name
 in C, instead of Pascal, since we want them to depend on the name of the
 program.
 @z
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% [29.523] Change to pack_buffered_name as with pack_file_name.
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-@x
+@x [29.523] l.10095 - Change to pack_buffered_name as with pack_file_name.
+for j:=1 to n do append_to_name(xord[TEX_format_default[j]]);
+for j:=a to b do append_to_name(buffer[j]);
+for j:=format_default_length-format_ext_length+1 to format_default_length do
+  append_to_name(xord[TEX_format_default[j]]);
 if k<=file_name_size then name_length:=k@+else name_length:=file_name_size;
+for k:=name_length+1 to file_name_size do name_of_file[k]:=' ';
 @y
-if k<file_name_size then name_length:=k@+else name_length:=file_name_size-1;
+if name_of_file then libc_free (name_of_file);
+name_of_file := xmalloc_array (ASCII_code, n+(b-a+1)+format_ext_length+1);
+for j:=1 to n do append_to_name(xord[ucharcast(TEX_format_default[j])]);
+for j:=a to b do append_to_name(buffer[j]);
+for j:=format_default_length-format_ext_length+1 to format_default_length do
+  append_to_name(xord[ucharcast(TEX_format_default[j])]);
+if k<=file_name_size then name_length:=k@+else name_length:=file_name_size;
+name_of_file[name_length+1]:=0;
 @z
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% [29.524] Format file opening: only try once, with path searching.
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-@x
+@x [29.524] l.10118 - Format file opening: only try once, with path searching.
   pack_buffered_name(0,loc,j-1); {try first without the system file area}
   if w_open_in(fmt_file) then goto found;
   pack_buffered_name(format_area_length,loc,j-1);
     {now try the system format file area}
   if w_open_in(fmt_file) then goto found;
 @y
-  pack_buffered_name(0,loc,j-1);
+  pack_buffered_name(0,loc,j-1); {Kpathsea does everything}
   if w_open_in(fmt_file) then goto found;
 @z
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% (still [29.524]) replace `PLAIN' in error messages with `default'.
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-@x
-  wterm_ln('Sorry, I can''t find that format;',' will try PLAIN.');
+@x [29.525] l.10170 - make_name_string
+begin if (pool_ptr+name_length>pool_size)or(str_ptr=max_strings)or
 @y
-  wterm_ln('Sorry, I can''t find that format;',' will try the default.');
-@z
-@x
-  wterm_ln('I can''t find the PLAIN format file!');
-@.I can't find PLAIN...@>
-@y
-  wterm_ln('I can''t find the default format file!');
-@.I can't find default format...@>
+save_area_delimiter, save_ext_delimiter: pool_pointer;
+save_name_in_progress, save_stop_at_space: boolean;
+begin if (pool_ptr+name_length>pool_size)or(str_ptr=max_strings)or
 @z
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% [29.532] `logname' is declared in <unistd.h> on some systems.
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-@x
-ship out a box of stuff, we shall use the macro |ensure_dvi_open|.
+@x [29.530] l.10245 - prompt_file_name: prevent empty filenames.
+var k:0..buf_size; {index into |buffer|}
 @y
-ship out a box of stuff, we shall use the macro |ensure_dvi_open|.
+var k:0..buf_size; {index into |buffer|}
+@!saved_cur_name:str_number; {to catch empty terminal input}
+@!saved_cur_ext:str_number; {to catch empty terminal input}
+@!saved_cur_area:str_number; {to catch empty terminal input}
+@z
 
+@x [29.532] l.10263 - avoid conflict, `logname' in <unistd.h> on some systems.
+@d ensure_dvi_open==if output_file_name=0 then
+@y
 @d log_name == texmf_log_name
+@d ensure_dvi_open==if output_file_name=0 then
 @z
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% [29.536] Adjust for C string conventions.
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-@x
+@x [29.534] l.10285 - Adjust for C string conventions.
 @!months:packed array [1..36] of char; {abbreviations of month names}
 @y
-@!months:c_char_pointer;
+@!months:const_cstring;
 @z
 
-@x
-begin wlog(banner);
-slow_print(format_ident); print("  ");
-print_int(day); print_char(" ");
+@x [29.536] l.10327 - Adjust for C string conventions.
 months:='JANFEBMARAPRMAYJUNJULAUGSEPOCTNOVDEC';
 @y
-begin wlog (banner);
-wlog (version_string);
-slow_print(format_ident); print("  ");
-print_int(day); print_char(" ");
 months := ' JANFEBMARAPRMAYJUNJULAUGSEPOCTNOVDEC';
 @z
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % [29.537] Use a path when calling a_open_in to do a \input; also, try
 % to open the file with and without the `.tex' extension, regardless of
 % whether the file already has an extension.  This allows filenames like
 % `foo' and `foo.bar.tex', as well as `foo.tex' and `foo.bar'.
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-@x
+@x [29.537] l.10338 - start_input
+begin scan_file_name; {set |cur_name| to desired file name}
 if cur_ext="" then cur_ext:=".tex";
 pack_cur_name;
 loop@+  begin begin_file_reading; {set up |cur_file| and new level of input}
@@ -1074,94 +1091,191 @@ loop@+  begin begin_file_reading; {set up |cur_file| and new level of input}
     if a_open_in(cur_file) then goto done;
     end;
 @y
+var temp_str: str_number;
+begin scan_file_name; {set |cur_name| to desired file name}
 pack_cur_name;
 loop@+begin
   begin_file_reading; {set up |cur_file| and new level of input}
-  {If we have an extension try the current name first, to avoid looking
-   for names like |"article.sty.tex"|.}
-  if (cur_ext <> "") and a_open_in (cur_file, TEX_INPUT_PATH) then goto done;
-
-  {That failed. Next, append |".tex"| if (1)~it's not already there; and
-   (2)~it doesn't overflow |name_of_file|, and
-   (3)~it changes the actual file looked for (e.g., |"afourteenlongf"|
-   and |"afourteenlongf.tex"| are the same file under System V).
-   
-   We ignore the presence or absence of an extension, because we want to
-   allow input files like |"foo.bar.tex"|.}
-  if (cur_ext <> ".tex") and (name_length + 5 < file_name_size)
-     and (not extension_irrelevant_p (name_of_file, 'tex'))
-  then begin
-    name_of_file[name_length + 1] := ".";
-    name_of_file[name_length + 2] := "t";
-    name_of_file[name_length + 3] := "e";
-    name_of_file[name_length + 4] := "x";
-    name_length := name_length + 4;
-    if a_open_in (cur_file, TEX_INPUT_PATH) then goto done;
-    {If failed, take away our addition.}
-    name_length := name_length - 4;
-    name_of_file[name_length + 1] := " ";
-  end;
-  
-  {That failed too. If there was no extension, try the name just as it
-   was given, so we will find an input file |"foo"|. We do this after
-   trying with |".tex"| appended, because if someone is writing a
-   program |foo|, they might like to call their documentation
-   |"foo.tex"|, and we don't want to input the binary executable |foo|.}
-  if (cur_ext = "") and a_open_in (cur_file, TEX_INPUT_PATH) then goto done;
-  
-  {Couldn't find the file.  Possibly invoke an external program to
-   create it.  If that claims success, try one last open.}
-  if make_tex_tex and a_open_in (cur_file, TEX_INPUT_PATH) then goto done;
+  tex_input_type := 1; {Tell |open_input| we are \.{\\input}.}
+  {Kpathsea tries all the various ways to get the file.}
+  if kpse_in_name_ok(stringcast(name_of_file+1))
+     and a_open_in(cur_file, kpse_tex_format) then
+    goto done;
 @z
 
-% Knuth should fix this -- sometimes lines go over the |max_print_line|.
-% ... But now I don't remember what caused this, so I'll comment this
-% out until it happens again.
-% @x
-% if term_offset+length(name)>max_print_line-2 then print_ln
-% @y
-% if term_offset+length(name)>max_print_line-3 then print_ln
-% @z
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% [29.537] Get rid of return of filename to string pool.
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-@x
-if name=str_ptr-1 then {we can conserve string pool space now}
-  begin flush_string; name:=cur_name;
+@x [29.537] l.10350 - start_input: string recycling
+done: name:=a_make_name_string(cur_file);
+@y
+done: name:=a_make_name_string(cur_file);
+source_filename_stack[in_open]:=name;
+full_source_filename_stack[in_open]:=make_full_name_string;
+if name=str_ptr-1 then {we can try to conserve string pool space now}
+  begin temp_str:=search_string(name);
+  if temp_str>0 then
+    begin name:=temp_str; flush_string;
+    end;
   end;
+@z
+
+@x [30.548] l.10673 - texarray
+@!internal_font_number=font_base..font_max; {|font| in a |char_node|}
+@!font_index=0..font_mem_size; {index into |font_info|}
+@y
+@!internal_font_number=integer; {|font| in a |char_node|}
+@!font_index=integer; {index into |font_info|}
+@!nine_bits=min_quarterword..non_char;
+@z
+
+@x [30.549] l.10682 - texarray
+@!font_info:array[font_index] of memory_word;
+  {the big collection of font data}
+@!fmem_ptr:font_index; {first unused word of |font_info|}
+@!font_ptr:internal_font_number; {largest internal font number in use}
+@!font_check:array[internal_font_number] of four_quarters; {check sum}
+@!font_size:array[internal_font_number] of scaled; {``at'' size}
+@!font_dsize:array[internal_font_number] of scaled; {``design'' size}
+@!font_params:array[internal_font_number] of font_index; {how many font
+  parameters are present}
+@!font_name:array[internal_font_number] of str_number; {name of the font}
+@!font_area:array[internal_font_number] of str_number; {area of the font}
+@!font_bc:array[internal_font_number] of eight_bits;
+  {beginning (smallest) character code}
+@!font_ec:array[internal_font_number] of eight_bits;
+  {ending (largest) character code}
+@!font_glue:array[internal_font_number] of pointer;
+  {glue specification for interword space, |null| if not allocated}
+@!font_used:array[internal_font_number] of boolean;
+  {has a character from this font actually appeared in the output?}
+@!hyphen_char:array[internal_font_number] of integer;
+  {current \.{\\hyphenchar} values}
+@!skew_char:array[internal_font_number] of integer;
+  {current \.{\\skewchar} values}
+@!bchar_label:array[internal_font_number] of font_index;
+  {start of |lig_kern| program for left boundary character,
+  |non_address| if there is none}
+@!font_bchar:array[internal_font_number] of min_quarterword..non_char;
+  {right boundary character, |non_char| if there is none}
+@!font_false_bchar:array[internal_font_number] of min_quarterword..non_char;
+  {|font_bchar| if it doesn't exist in the font, otherwise |non_char|}
+@y
+@!font_info: ^fmemory_word;
+  {the big collection of font data}
+@!fmem_ptr:font_index; {first unused word of |font_info|}
+@!font_ptr:internal_font_number; {largest internal font number in use}
+@!font_check: ^four_quarters; {check sum}
+@!font_size: ^scaled; {``at'' size}
+@!font_dsize: ^scaled; {``design'' size}
+@!font_params: ^font_index; {how many font
+  parameters are present}
+@!font_name: ^str_number; {name of the font}
+@!font_area: ^str_number; {area of the font}
+@!font_bc: ^eight_bits;
+  {beginning (smallest) character code}
+@!font_ec: ^eight_bits;
+  {ending (largest) character code}
+@!font_glue: ^pointer;
+  {glue specification for interword space, |null| if not allocated}
+@!font_used: ^boolean;
+  {has a character from this font actually appeared in the output?}
+@!hyphen_char: ^integer;
+  {current \.{\\hyphenchar} values}
+@!skew_char: ^integer;
+  {current \.{\\skewchar} values}
+@!bchar_label: ^font_index;
+  {start of |lig_kern| program for left boundary character,
+  |non_address| if there is none}
+@!font_bchar: ^nine_bits;
+  {right boundary character, |non_char| if there is none}
+@!font_false_bchar: ^nine_bits;
+  {|font_bchar| if it doesn't exist in the font, otherwise |non_char|}
+@z
+
+@x [30.550] l.10723 - texarray
+@!char_base:array[internal_font_number] of integer;
+  {base addresses for |char_info|}
+@!width_base:array[internal_font_number] of integer;
+  {base addresses for widths}
+@!height_base:array[internal_font_number] of integer;
+  {base addresses for heights}
+@!depth_base:array[internal_font_number] of integer;
+  {base addresses for depths}
+@!italic_base:array[internal_font_number] of integer;
+  {base addresses for italic corrections}
+@!lig_kern_base:array[internal_font_number] of integer;
+  {base addresses for ligature/kerning programs}
+@!kern_base:array[internal_font_number] of integer;
+  {base addresses for kerns}
+@!exten_base:array[internal_font_number] of integer;
+  {base addresses for extensible recipes}
+@!param_base:array[internal_font_number] of integer;
+  {base addresses for font parameters}
+@y
+@!char_base: ^integer;
+  {base addresses for |char_info|}
+@!width_base: ^integer;
+  {base addresses for widths}
+@!height_base: ^integer;
+  {base addresses for heights}
+@!depth_base: ^integer;
+  {base addresses for depths}
+@!italic_base: ^integer;
+  {base addresses for italic corrections}
+@!lig_kern_base: ^integer;
+  {base addresses for ligature/kerning programs}
+@!kern_base: ^integer;
+  {base addresses for kerns}
+@!exten_base: ^integer;
+  {base addresses for extensible recipes}
+@!param_base: ^integer;
+  {base addresses for font parameters}
+@z
+
+@x [30.551] l.10743 - texarray
+for k:=font_base to font_max do font_used[k]:=false;
 @y
 @z
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% [30.563] Don't use font_area's in TFM opening, and invoke an external
-% program if the first open fails.
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-@x
-file_opened:=false;
+@x [30.552] l.10749 - texarray
+font_ptr:=null_font; fmem_ptr:=7;
+font_name[null_font]:="nullfont"; font_area[null_font]:="";
+hyphen_char[null_font]:="-"; skew_char[null_font]:=-1;
+bchar_label[null_font]:=non_address;
+font_bchar[null_font]:=non_char; font_false_bchar[null_font]:=non_char;
+font_bc[null_font]:=1; font_ec[null_font]:=0;
+font_size[null_font]:=0; font_dsize[null_font]:=0;
+char_base[null_font]:=0; width_base[null_font]:=0;
+height_base[null_font]:=0; depth_base[null_font]:=0;
+italic_base[null_font]:=0; lig_kern_base[null_font]:=0;
+kern_base[null_font]:=0; exten_base[null_font]:=0;
+font_glue[null_font]:=null; font_params[null_font]:=7;
+param_base[null_font]:=-1;
+for k:=0 to 6 do font_info[k].sc:=0;
+@y
+@z
+
+@x [30.560] l.10898 - Check lengths
+@!file_opened:boolean; {was |tfm_file| successfully opened?}
+@y
+@!name_too_long:boolean; {|nom| or |aire| exceeds 255 bytes?}
+@!file_opened:boolean; {was |tfm_file| successfully opened?}
+@z
+
+@x [30.563] l.10961 - Check lengths, don't use TEX_font_area.
 if aire="" then pack_file_name(nom,TEX_font_area,".tfm")
 else pack_file_name(nom,aire,".tfm");
-if not b_open_in(tfm_file) then abort;
-file_opened:=true
 @y
-file_opened := false;
-pack_file_name (nom, aire, ".tfm");
-if not b_open_in(tfm_file) then begin
-  if make_tex_tfm then begin
-    if not b_open_in(tfm_file) then abort;
-  end else
-    abort;
-end;
-file_opened:=true
+name_too_long:=(length(nom)>255)or(length(aire)>255);
+if name_too_long then abort;
+{|kpse_find_file| will append the |".tfm"|, and avoid searching the disk
+ before the font alias files as well.}
+pack_file_name(nom,aire,"");
 @z
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % [30.564] Reading the tfm file.  As a special case, whenever we open a
 % tfm file, we read its first byte into `tfm_temp' right away.  TeX
 % looks at `fbyte' before calling `fget', so it ends up seeing every
 % byte.  This is Pascal-like I/O.
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-@x
+@x [30.564] l.10956 - reading the tfm file, define fget & fbyte
 @d fget==get(tfm_file)
 @d fbyte==tfm_file^
 @y
@@ -1169,792 +1283,628 @@ file_opened:=true
 @d fbyte==tfm_temp
 @z
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% [32.597] We only want `eof' on the TFM file to be true if we
+% [30.575] We only want `eof' on the TFM file to be true if we
 % previously had EOF, not if we're at EOF now.  This is like `feof', and
 % unlike our implementation of `eof' elsewhere.
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-@x
+@x [30.575] l.11180 - Reading the tfm file, replace eof() by feof().
 if eof(tfm_file) then abort;
 @y
 if feof(tfm_file) then abort;
 @z
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% [32.597] write_dvi
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-@x
+@x [32.595] l.11860 - texarray
+@!dvi_buf:array[dvi_index] of eight_bits; {buffer for \.{DVI} output}
+@!half_buf:dvi_index; {half of |dvi_buf_size|}
+@!dvi_limit:dvi_index; {end of the current half buffer}
+@!dvi_ptr:dvi_index; {the next available buffer address}
+@y
+@!dvi_buf:^eight_bits; {buffer for \.{DVI} output}
+@!half_buf:integer; {half of |dvi_buf_size|}
+@!dvi_limit:integer; {end of the current half buffer}
+@!dvi_ptr:integer; {the next available buffer address}
+@z
+
+@x [32.597] l.11886 - write_dvi done in C.
 @p procedure write_dvi(@!a,@!b:dvi_index);
 var k:dvi_index;
 begin for k:=a to b do write(dvi_file,dvi_buf[k]);
 end;
 @y
 In C, we use a macro to call |fwrite| or |write| directly, writing all
-the bytes to be written in one shot.  Much better even than writing four
+the bytes in one shot.  Much better even than writing four
 bytes at a time.
 @z
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% [38.859] Fix a casting/expression evaluation problem.
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-@x
-if abs(fit_class-fitness(r))>1 then d:=d+adj_demerits;
+@x [32.617] l.12280 - Use output_comment if the user set it. Assume it's short enough.
+  old_setting:=selector; selector:=new_string;
 @y
-if abs(toint(fit_class)-toint(fitness(r)))>1 then d:=d+adj_demerits;
-@z
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% [39.875] Another casting problem.
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-@x
-repeat if type(r)<>delta_node then
-  begin line_diff:=line_number(r)-best_line;
-@y
-repeat if type(r)<>delta_node then
-  begin line_diff:=toint(line_number(r))-toint(best_line);
-@z
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% [42.920,921,923,924] Allow larger hyphenation tries.
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-@x
-Comparatively few different number sequences $n_0\ldots n_k$ actually occur,
-since most of the |n|'s are generally zero. Therefore the number sequences
-are encoded in such a way that |trie_op|$(z_k)$ is only one byte long.
-If |trie_op(@t$z_k$@>)<>min_quarterword|, when $p_1\ldots p_k$ has matched
-the letters in |hc[(l-k+1)..l@,]| of language |t|,
-we perform all of the required operations
-for this pattern by carrying out the following little program: Set
-|v:=trie_op(@t$z_k$@>)|. Then set |v:=v+op_start[t]|,
-|hyf[l-hyf_distance[v]]:=@tmax@>(hyf[l-hyf_distance[v]], hyf_num[v])|,
-and |v:=hyf_next[v]|; repeat, if necessary, until |v=min_quarterword|.
-@y
-The theory that comparatively few different number sequences $n_0\ldots n_k$
-actually occur, since most of the |n|'s are generally zero, seems to fail
-at least for the large German hyphenation patterns.
-Therefore the number sequences cannot any longer be encoded in such a way
-that |trie_op|$(z_k)$ is only one byte long.
-We have introduced a new constant |max_trie_op| for the maximum allowable
-hyphenation operation code value; |max_trie_op| might be different for
-\TeX\ and \.{INITEX} and must not exceed |max_halfword|.
-An opcode will occupy a halfword if |max_trie_op| exceeds |max_quarterword|
-or a quarterword otherwise.
-@^system dependencies@>
-If |trie_op(@t$z_k$@>)<>min_trie_op|, when $p_1\ldots p_k$ has matched
-the letters in |hc[(l-k+1)..l@,]| of language |t|,
-we perform all of the required operations
-for this pattern by carrying out the following little program: Set
-|v:=trie_op(@t$z_k$@>)|. Then set |v:=v+op_start[t]|,
-|hyf[l-hyf_distance[v]]:=@tmax@>(hyf[l-hyf_distance[v]], hyf_num[v])|,
-and |v:=hyf_next[v]|; repeat, if necessary, until |v=min_trie_op|.
-@z
-@x
-@!trie_pointer=0..trie_size; {an index into |trie|}
-@y
-@!trie_opcode=min_trie_op..max_trie_op;  {a trie opcode}
-@!trie_pointer=0..trie_size; {an index into |trie|}
-@z
-@x
-@ @d trie_link(#)==trie[#].rh {``downward'' link in a trie}
-@d trie_char(#)==trie[#].b1 {character matched at this trie location}
-@d trie_op(#)==trie[#].b0 {program for hyphenation at this trie location}
-@y
-@ For more than 255 trie op codes, the three fields |trie_link|, |trie_char|,
-and |trie_op| will no longer fit into one memory word; thus using web2c
-we define |trie| as three array instead of an array of records.
-The variant will be implented by reusing the opcode field later on with
-another macro.
-@d trie_link(#)==trie_trl[#] {``downward'' link in a trie}
-@d trie_char(#)==trie_trc[#] {character matched at this trie location}
-@d trie_op(#)==trie_tro[#] {program for hyphenation at this trie location}
-@z
-@x
-@!trie:array[trie_pointer] of two_halves; {|trie_link|, |trie_char|, |trie_op|}
-@y
-@!trie_trl:array[trie_pointer] of halfword; {|trie_link|}
-@!trie_tro:array[trie_pointer] of halfword; {|trie_op| and |trie_link|}
-@!trie_trc:array[trie_pointer] of quarterword; {|trie_char|}
-@z
-@x
-@!hyf_next:array[1..trie_op_size] of quarterword; {continuation code}
-@y
-@!hyf_next:array[1..trie_op_size] of trie_opcode; {continuation code}
-@z
-@x
-    begin if trie_op(z)<>min_quarterword then
-@y
-    begin if trie_op(z)<>min_trie_op then
-@z
-@x
-until v=min_quarterword;
-@y
-until v=min_trie_op;
-@z
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% [43.943] Larger tries, also in documentation parts.
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-@x
-|hyf_next[@t$v^\prime$@>]=min_quarterword|.
-@y
-|hyf_next[@t$v^\prime$@>]=min_trie_op|.
-@z
-@x
-$$\hbox{|@t$v^\prime$@>:=new_trie_op(0,1,min_quarterword)|,\qquad
-@y
-$$\hbox{|@t$v^\prime$@>:=new_trie_op(0,1,min_trie_op)|,\qquad
-@z
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% [43.943] web2c can't parse negative lower bounds in arrays.  Sorry.
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-@x
-@!init@! trie_op_hash:array[-trie_op_size..trie_op_size] of 0..trie_op_size;
-@y
-@!init@! trie_op_hash:array[neg_trie_op_size..trie_op_size] of 0..trie_op_size;
-@z
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% [43.943,944] Larger hyphenation tries.
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-@x
-@!trie_used:array[ASCII_code] of quarterword;
-@y
-@!trie_used:array[ASCII_code] of trie_opcode;
-@z
-@x
-@!trie_op_val:array[1..trie_op_size] of quarterword;
-@y
-@!trie_op_val:array[1..trie_op_size] of trie_opcode;
-@z
-@x
-tini
-@y
-tini@;
-@!max_op_used:trie_opcode; {largest opcode used for any language}
-@!small_op:boolean; {flag used while dumping or undumping}
-@z
-@x
-|new_trie_op| could return |min_quarterword| (thereby simply ignoring
-@y
-|new_trie_op| could return |min_trie_op| (thereby simply ignoring
-@z
-@x
-function new_trie_op(@!d,@!n:small_number;@!v:quarterword):quarterword;
-label exit;
-var h:-trie_op_size..trie_op_size; {trial hash location}
-@!u:quarterword; {trial op code}
-@y
-function new_trie_op(@!d,@!n:small_number;@!v:trie_opcode):trie_opcode;
-label exit;
-var h:neg_trie_op_size..trie_op_size; {trial hash location}
-@!u:trie_opcode; {trial op code}
-@z
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% [43.944] Another casting problem, and use |neg_trie_op_size|.
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-@x
-begin h:=abs(n+313*d+361*v+1009*cur_lang) mod (trie_op_size+trie_op_size)
-  - trie_op_size;
-@y
-begin h:=abs(toint(n)+313*toint(d)+361*toint(v)+1009*toint(cur_lang))
-  mod (trie_op_size - neg_trie_op_size)
-  + neg_trie_op_size;
-@z
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% [43.944,945,946] And larger tries again.
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-@x
-    if u=max_quarterword then
-      overflow("pattern memory ops per language",
-        max_quarterword-min_quarterword);
-    incr(trie_op_ptr); incr(u); trie_used[cur_lang]:=u;
-@y
-    if u=max_trie_op then
-      overflow("pattern memory ops per language",
-      max_trie_op-min_trie_op);
-    incr(trie_op_ptr); incr(u); trie_used[cur_lang]:=u;
-    if u>max_op_used then max_op_used:=u;
-@z
-@x
-op_start[0]:=-min_quarterword;
-@y
-op_start[0]:=-min_trie_op;
-@z
-@x
-for k:=0 to 255 do trie_used[k]:=min_quarterword;
-@y
-for k:=0 to 255 do trie_used[k]:=min_trie_op;
-@z
-@x
-trie_op_ptr:=0;
-@y
-max_op_used:=min_trie_op;
-trie_op_ptr:=0;
-@z
-@x
-@t\hskip10pt@>@!trie_o:packed array[trie_pointer] of quarterword;
-@y
-@t\hskip10pt@>@!trie_o:packed array[trie_pointer] of trie_opcode;
-@z
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% [43.947] A casting problem.
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-@x
-begin h:=abs(trie_c[p]+1009*trie_o[p]+@|
-    2718*trie_l[p]+3142*trie_r[p]) mod trie_size;
-@y
-begin h:=abs(toint(trie_c[p])+1009*toint(trie_o[p])+@|
-    2718*toint(trie_l[p])+3142*toint(trie_r[p])) mod trie_size;
-@z
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% [43.950,958,960,963] Larger tries.
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-@x
-@d trie_back(#)==trie[#].lh {backward links in |trie| holes}
-@y
-@d trie_back(#)==trie_tro[#] {use the opcode field now for backward links}
-@z
-@x
-@<Move the data into |trie|@>=
-h.rh:=0; h.b0:=min_quarterword; h.b1:=min_quarterword; {|trie_link:=0|,
-  |trie_op:=min_quarterword|, |trie_char:=qi(0)|}
-if trie_root=0 then {no patterns were given}
-  begin for r:=0 to 256 do trie[r]:=h;
-@y
-@d clear_trie == {clear |trie[r]|}
-  begin trie_link(r):=0;
-  trie_op(r):=min_trie_op;
-  trie_char(r):=min_quarterword; {|trie_char:=qi(0)|}
+if output_comment then
+  begin l:=strlen(output_comment); dvi_out(l);
+  for s:=0 to l-1 do dvi_out(output_comment[s]);
   end
-@<Move the data into |trie|@>=
-if trie_root=0 then {no patterns were given}
-  begin for r:=0 to 256 do clear_trie;
+else begin {the default code is unchanged}
+  old_setting:=selector; selector:=new_string;
 @z
-@x
-  repeat s:=trie_link(r); trie[r]:=h; r:=s;
+
+@x [32.617] l.12288 - Use output_comment if the user set it.
+  end
 @y
-  repeat s:=trie_link(r); clear_trie; r:=s;
+end;
+  end
 @z
-@x
-@!v:quarterword; {trie op code}
+
+@x [32.645] l.12780 - use print_file_name
+  print_nl("Output written on "); slow_print(output_file_name);
 @y
-@!v:trie_opcode; {trie op code}
+  print_nl("Output written on "); print_file_name(0, output_file_name, 0);
 @z
-@x
-if trie_o[q]<>min_quarterword then
+
+% undo Knuth's change because
+%   a) the string is already replaced in |scan_file_name| and therefore
+%   b) the wrong string will get flushed!!!
+%
+@x [49.1257] l.23328 unused variable
+@!flushable_string:str_number; {string not yet referenced}
 @y
-if trie_o[q]<>min_trie_op then
 @z
-@x
-trie_c[p]:=si(c); trie_o[p]:=min_quarterword;
-@y
-trie_c[p]:=si(c); trie_o[p]:=min_trie_op;
-@z
-@x
-l:=k; v:=min_quarterword;
-@y
-l:=k; v:=min_trie_op;
-@z
-@x
-@!h:two_halves; {template used to zero out |trie|'s holes}
+@x [49.1260] l.23383 new_font: string recycling -- already done
+flushable_string:=str_ptr-1;
 @y
 @z
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% [49.1275] Same stuff as for \input, this time for \openin. There seems
-% to be no reasonable way to make this into a subroutine ...
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-@x
+% If you don't want to remove code with the following two changes,
+% please replace the former change by
+%
+% @x
+% flushable_string:=str_ptr-1;
+% @y
+% if cur_name=str_ptr-1 then
+%   flushable_string:=str_ptr-1
+% else
+%   flushable_string:=str_ptr;  {number of a non-existing}
+% @z
+%
+% otherwise the wrong string will get removed by |flush_string|!!
+%
+@x [49.1260] l.23386 new_font: string recycling -- already done
+    begin if cur_name=flushable_string then
+      begin flush_string; cur_name:=font_name[f];
+      end;
+    if s>0 then
+@y
+    begin if s>0 then
+@z
+
+@x [49.1275] l.23441 - Same stuff as for \input, this time for \openin.
   if cur_ext="" then cur_ext:=".tex";
   pack_cur_name;
   if a_open_in(read_file[n]) then read_open[n]:=just_open;
 @y
   pack_cur_name;
-  if (cur_ext <> "") and a_open_in (read_file[n], TEX_INPUT_PATH)
-  then read_open[n] := just_open
-
-  else if (cur_ext <> ".tex") and (name_length + 5 < file_name_size)
-     and (not extension_irrelevant_p (name_of_file, 'tex'))
-  then begin
-    name_of_file[name_length + 1] := ".";
-    name_of_file[name_length + 2] := "t";
-    name_of_file[name_length + 3] := "e";
-    name_of_file[name_length + 4] := "x";
-    name_length := name_length + 4;
-    if a_open_in (read_file[n], TEX_INPUT_PATH)
-    then read_open[n] := just_open
-
-    else begin
-      name_length := name_length - 4;
-      name_of_file[name_length + 1] := " ";
-      if (cur_ext = "") and a_open_in (read_file[n], TEX_INPUT_PATH)
-      then read_open[n] := just_open
-  
-      else if make_tex_tex and a_open_in (read_file[n], TEX_INPUT_PATH)
-      then read_open[n] := just_open;
-    end;
-  end;
+  tex_input_type:=0; {Tell |open_input| we are \.{\\openin}.}
+  if kpse_in_name_ok(stringcast(name_of_file+1))
+     and a_open_in(read_file[n], kpse_tex_format) then
+    read_open[n]:=just_open;
 @z
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% [50.1302] Eliminate now-unused variable `w' in `store_fmt_file'.
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-@x
-@!x: integer; {something to dump}
+% Eliminate now-unused variable `w' in `store_fmt_file'.
+% Add format_engine.
+@x [50.1302] l.23690 - store_fmt_file
 @!w: four_quarters; {four ASCII codes}
 @y
-@!x: integer; {something to dump}
+@!format_engine: ^text_char;
 @z
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% [50.1303] Ditto, for `load_fmt_file'.
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-@x
-@!x: integer; {something undumped}
+% Eliminate now-unused variable `w' in `load_fmt_file'.
+% Add format_engine.
+% Add dummies for undumping |xord|, |xchr|, and |xprn| into the void.
+@x [50.1303] l.23722 - load_fmt_file
 @!w: four_quarters; {four ASCII codes}
 @y
-@!x: integer; {something undumped}
+@!format_engine: ^text_char;
+@!dummy_xord: ASCII_code;
+@!dummy_xchr: text_char;
+@!dummy_xprn: ASCII_code;
 @z
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% [50.??] Do reading and writing of `fmt_file' in C.
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-@x
+@x [50.1305] l.23751 - Do dumping and undumping of fmt files in C.
 @d dump_wd(#)==begin fmt_file^:=#; put(fmt_file);@+end
 @d dump_int(#)==begin fmt_file^.int:=#; put(fmt_file);@+end
 @d dump_hh(#)==begin fmt_file^.hh:=#; put(fmt_file);@+end
 @d dump_qqqq(#)==begin fmt_file^.qqqq:=#; put(fmt_file);@+end
 @y
 @z
-
-@x
+@x [1306]
 @d undump_wd(#)==begin get(fmt_file); #:=fmt_file^;@+end
 @d undump_int(#)==begin get(fmt_file); #:=fmt_file^.int;@+end
 @d undump_hh(#)==begin get(fmt_file); #:=fmt_file^.hh;@+end
 @d undump_qqqq(#)==begin get(fmt_file); #:=fmt_file^.qqqq;@+end
 @y
 @z
+@x [still 1306] debug format file
+@d undump_size_end_end(#)==too_small(#)@+else undump_end_end
+@y
+@d format_debug_end(#)==
+    write_ln (stderr, ' = ', #);
+  end;
+@d format_debug(#)==
+  if debug_format_file then begin
+    write (stderr, 'fmtdebug:', #);
+    format_debug_end
+@d undump_size_end_end(#)==
+  too_small(#)@+else format_debug (#)(x); undump_end_end
+@z
 
-@x
+@x [50,1307] l.23779 - texarray
+dump_int(@$);@/
+@y
+dump_int(@"57325458);  {Web2C \TeX's magic constant: "W2TX"}
+{Align engine to 4 bytes with one or more trailing NUL}
+x:=strlen(engine_name);
+format_engine:=xmalloc_array(text_char,x+4);
+strcpy(stringcast(format_engine), engine_name);
+for k:=x to x+3 do format_engine[k]:=0;
+x:=x+4-(x mod 4);
+dump_int(x);dump_things(format_engine[0], x);
+libc_free(format_engine);@/
+dump_int(@$);@/
+@<Dump |xord|, |xchr|, and |xprn|@>;
+dump_int(max_halfword);@/
+dump_int(hash_high);
+@z
+
+%%%%%%%% dynamic hyph_size
+@x 23784 m.1307
+dump_int(hyph_size)
+@y  23784
+dump_int(hyph_prime)
+@z
+
+@x [50.1308] l.23793 - texarray
 x:=fmt_file^.int;
+if x<>@$ then goto bad_fmt; {check that strings are the same}
 @y
-undump_int(x);		{This reads the first word of the \.{.fmt} file}
+@+Init
+libc_free(font_info); libc_free(str_pool); libc_free(str_start);
+libc_free(yhash); libc_free(zeqtb); libc_free(yzmem);
+@+Tini
+undump_int(x);
+format_debug('format magic number')(x);
+if x<>@"57325458 then goto bad_fmt; {not a format file}
+undump_int(x);
+format_debug('engine name size')(x);
+if (x<0) or (x>256) then goto bad_fmt; {corrupted format file}
+format_engine:=xmalloc_array(text_char, x);
+undump_things(format_engine[0], x);
+format_engine[x-1]:=0; {force string termination, just in case}
+if strcmp(engine_name, stringcast(format_engine)) then
+  begin wake_up_terminal;
+  wterm_ln('---! ', stringcast(name_of_file+1), ' was written by ', format_engine);
+  libc_free(format_engine);
+  goto bad_fmt;
+end;
+libc_free(format_engine);
+undump_int(x);
+format_debug('string pool checksum')(x);
+if x<>@$ then begin {check that strings are the same}
+  wake_up_terminal;
+  wterm_ln('---! ', stringcast(name_of_file+1),
+           ' made by different executable version');
+  goto bad_fmt;
+end;
+@<Undump |xord|, |xchr|, and |xprn|@>;
+undump_int(x);
+if x<>max_halfword then goto bad_fmt; {check |max_halfword|}
+undump_int(hash_high);
+  if (hash_high<0)or(hash_high>sup_hash_extra) then goto bad_fmt;
+  if hash_extra<hash_high then hash_extra:=hash_high;
+  eqtb_top:=eqtb_size+hash_extra;
+  if hash_extra=0 then hash_top:=undefined_control_sequence else
+        hash_top:=eqtb_top;
+  yhash:=xmalloc_array(two_halves,1+hash_top-hash_offset);
+  hash:=yhash - hash_offset;
+  next(hash_base):=0; text(hash_base):=0;
+  for x:=hash_base+1 to hash_top do hash[x]:=hash[hash_base];
+  zeqtb:=xmalloc_array (memory_word,eqtb_top+1);
+  eqtb:=zeqtb;
+
+  eq_type(undefined_control_sequence):=undefined_cs;
+  equiv(undefined_control_sequence):=null;
+  eq_level(undefined_control_sequence):=level_zero;
+  for x:=eqtb_size+1 to eqtb_top do
+    eqtb[x]:=eqtb[undefined_control_sequence];
 @z
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% [??] Make dumping/undumping more efficient.
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-@x
-for k:=0 to str_ptr do dump_int(str_start[k]);
-k:=0;
-while k+4<pool_ptr do
-  begin dump_four_ASCII; k:=k+4;
-  end;
-k:=pool_ptr-4; dump_four_ASCII;
+@x [50.1308] l.23795 - texarray
+undump_int(x);
+if x<>mem_bot then goto bad_fmt;
+undump_int(x);
+if x<>mem_top then goto bad_fmt;
 @y
-dump_things(str_start[0], str_ptr+1);
-dump_things(str_pool[0], pool_ptr);
+undump_int(x); format_debug ('mem_bot')(x);
+if x<>mem_bot then goto bad_fmt;
+undump_int(mem_top); format_debug ('mem_top')(mem_top);
+if mem_bot+1100>mem_top then goto bad_fmt;
+
+
+head:=contrib_head; tail:=contrib_head;
+     page_tail:=page_head;  {page initialization}
+
+mem_min := mem_bot - extra_mem_bot;
+mem_max := mem_top + extra_mem_top;
+
+yzmem:=xmalloc_array (memory_word, mem_max - mem_min + 1);
+zmem := yzmem - mem_min;   {this pointer arithmetic fails with some compilers}
+mem := zmem;
 @z
 
-@x
-for k:=0 to str_ptr do undump(0)(pool_ptr)(str_start[k]);
-k:=0;
-while k+4<pool_ptr do
-  begin undump_four_ASCII; k:=k+4;
-  end;
-k:=pool_ptr-4; undump_four_ASCII;
-@y
-undump_things(str_start[0], str_ptr+1);
-undump_things(str_pool[0], pool_ptr);
+%%%%%%%% dynamic hyph_size
+@x 23804 m.1308
+if x<>hyph_size then goto bad_fmt
+@y  23804
+if x<>hyph_prime then goto bad_fmt
 @z
 
-@x
-repeat for k:=p to q+1 do dump_wd(mem[k]);
-x:=x+q+2-p; var_used:=var_used+q-p;
-p:=q+node_size(q); q:=rlink(q);
-until q=rover;
-var_used:=var_used+lo_mem_max-p; dyn_used:=mem_end+1-hi_mem_min;@/
-for k:=p to lo_mem_max do dump_wd(mem[k]);
-x:=x+lo_mem_max+1-p;
-dump_int(hi_mem_min); dump_int(avail);
-for k:=hi_mem_min to mem_end do dump_wd(mem[k]);
-@y
-repeat
- dump_things(mem[p], q+2-p);
-x:=x+q+2-p; var_used:=var_used+q-p;
-p:=q+node_size(q); q:=rlink(q);
-until q=rover;
-var_used:=var_used+lo_mem_max-p; dyn_used:=mem_end+1-hi_mem_min;@/
-dump_things(mem[p], lo_mem_max+1-p);
-x:=x+lo_mem_max+1-p;
-dump_int(hi_mem_min); dump_int(avail);
-dump_things(mem[hi_mem_min], mem_end+1-hi_mem_min);
-@z
-
-@x
-repeat for k:=p to q+1 do undump_wd(mem[k]);
-p:=q+node_size(q);
-if (p>lo_mem_max)or((q>=rlink(q))and(rlink(q)<>rover)) then goto bad_fmt;
-q:=rlink(q);
-until q=rover;
-for k:=p to lo_mem_max do undump_wd(mem[k]);
-@y
-repeat
-  undump_things(mem[p], q+2-p);
-p:=q+node_size(q);
-if (p>lo_mem_max)or((q>=rlink(q))and(rlink(q)<>rover)) then goto bad_fmt;
-q:=rlink(q);
-until q=rover;
-undump_things(mem[p], lo_mem_max+1-p);
-@z
-
-@x
-for k:=hi_mem_min to mem_end do undump_wd(mem[k]);
-@y
-undump_things(mem[hi_mem_min], mem_end+1-hi_mem_min);
-@z
-
-@x
-while k<l do
-  begin dump_wd(eqtb[k]); incr(k);
-  end;
-@y
-dump_things(eqtb[k], l-k);
-@z
-
-@x
-while k<l do
-  begin dump_wd(eqtb[k]); incr(k);
-  end;
-@y
-dump_things(eqtb[k], l-k);
-@z
-
-@x
-for j:=k to k+x-1 do undump_wd(eqtb[j]);
-@y
-undump_things(eqtb[k], x);
-@z
-
-@x
-for p:=hash_used+1 to undefined_control_sequence-1 do dump_hh(hash[p]);
-@y
-dump_things(hash[hash_used+1], undefined_control_sequence-1-hash_used);
-@z
-
-@x
-for p:=hash_used+1 to undefined_control_sequence-1 do undump_hh(hash[p]);
-@y
-undump_things(hash[hash_used+1], undefined_control_sequence-1-hash_used);
-@z
-
-@x
-for k:=0 to fmem_ptr-1 do dump_wd(font_info[k]);
-dump_int(font_ptr);
-for k:=null_font to font_ptr do
-  @<Dump the array info for internal font number |k|@>;
-@y
-@<Dump the array info for internal font number |k|@>;
-@z
-
-@x
+@x [50.1321] l.23994 - texarray
+undump_size(7)(font_mem_size)('font mem size')(fmem_ptr);
 for k:=0 to fmem_ptr-1 do undump_wd(font_info[k]);
 undump_size(font_base)(font_max)('font max')(font_ptr);
 for k:=null_font to font_ptr do
   @<Undump the array info for internal font number |k|@>
 @y
+undump_size(7)(sup_font_mem_size)('font mem size')(fmem_ptr);
+if fmem_ptr>font_mem_size then font_mem_size:=fmem_ptr;
+font_info:=xmalloc_array(fmemory_word, font_mem_size);
+undump_things(font_info[0], fmem_ptr);@/
+undump_size(font_base)(font_base+max_font_max)('font max')(font_ptr);
+{This undumps all of the font info, despite the name.}
 @<Undump the array info for internal font number |k|@>;
 @z
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% [50.1322] Writing font info (almost at end of dump stuff).
-% Knuth's code writes all the information relevant to a single font
-% in the same section of the fmt file.  But it's a lot faster to
-% write the arrays of information out, one whole array at a time.
-% So that's the way we handle dumping and undumping font info.
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-@x
-@ @<Dump the array info for internal font number |k|@>=
-begin dump_qqqq(font_check[k]);
-dump_int(font_size[k]);
-dump_int(font_dsize[k]);
-dump_int(font_params[k]);@/
-dump_int(hyphen_char[k]);
-dump_int(skew_char[k]);@/
-dump_int(font_name[k]);
-dump_int(font_area[k]);@/
-dump_int(font_bc[k]);
-dump_int(font_ec[k]);@/
-dump_int(char_base[k]);
-dump_int(width_base[k]);
-dump_int(height_base[k]);@/
-dump_int(depth_base[k]);
-dump_int(italic_base[k]);
-dump_int(lig_kern_base[k]);@/
-dump_int(kern_base[k]);
-dump_int(exten_base[k]);
-dump_int(param_base[k]);@/
-dump_int(font_glue[k]);@/
-dump_int(bchar_label[k]);
-dump_int(font_bchar[k]);
-dump_int(font_false_bchar[k]);@/
-print_nl("\font"); print_esc(font_id_text(k)); print_char("=");
-print_file_name(font_name[k],font_area[k],"");
-if font_size[k]<>font_dsize[k] then
-  begin print(" at "); print_scaled(font_size[k]); print("pt");
-  end;
-end
-@y
-@ @<Dump the array info for internal font number |k|@>=
-begin dump_things(font_info[0], fmem_ptr);
-dump_int(font_ptr);
-dump_things(font_check[null_font], font_ptr+1-null_font);
-dump_things(font_size[null_font], font_ptr+1-null_font);
-dump_things(font_dsize[null_font], font_ptr+1-null_font);
-dump_things(font_params[null_font], font_ptr+1-null_font);
-dump_things(hyphen_char[null_font], font_ptr+1-null_font);
-dump_things(skew_char[null_font], font_ptr+1-null_font);
-dump_things(font_name[null_font], font_ptr+1-null_font);
-dump_things(font_area[null_font], font_ptr+1-null_font);
-dump_things(font_bc[null_font], font_ptr+1-null_font);
-dump_things(font_ec[null_font], font_ptr+1-null_font);
-dump_things(char_base[null_font], font_ptr+1-null_font);
-dump_things(width_base[null_font], font_ptr+1-null_font);
-dump_things(height_base[null_font], font_ptr+1-null_font);
-dump_things(depth_base[null_font], font_ptr+1-null_font);
-dump_things(italic_base[null_font], font_ptr+1-null_font);
-dump_things(lig_kern_base[null_font], font_ptr+1-null_font);
-dump_things(kern_base[null_font], font_ptr+1-null_font);
-dump_things(exten_base[null_font], font_ptr+1-null_font);
-dump_things(param_base[null_font], font_ptr+1-null_font);
-dump_things(font_glue[null_font], font_ptr+1-null_font);
-dump_things(bchar_label[null_font], font_ptr+1-null_font);
-dump_things(font_bchar[null_font], font_ptr+1-null_font);
-dump_things(font_false_bchar[null_font], font_ptr+1-null_font);
-for k:=null_font to font_ptr do begin
-  print_nl("\font"); print_esc(font_id_text(k)); print_char("=");
-  print_file_name(font_name[k],font_area[k],"");
-  if font_size[k]<>font_dsize[k] then begin
-    print(" at "); print_scaled(font_size[k]); print("pt");
-  end;
-end;
-end
-@z
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% [50.1322] Reading font info for C (nearly done with undump stuff).
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-@x
-@ @<Undump the array info for internal font number |k|@>=
-begin undump_qqqq(font_check[k]);@/
-undump_int(font_size[k]);
-undump_int(font_dsize[k]);
-undump(min_halfword)(max_halfword)(font_params[k]);@/
-undump_int(hyphen_char[k]);
-undump_int(skew_char[k]);@/
-undump(0)(str_ptr)(font_name[k]);
-undump(0)(str_ptr)(font_area[k]);@/
-undump(0)(255)(font_bc[k]);
-undump(0)(255)(font_ec[k]);@/
-undump_int(char_base[k]);
-undump_int(width_base[k]);
-undump_int(height_base[k]);@/
-undump_int(depth_base[k]);
-undump_int(italic_base[k]);
-undump_int(lig_kern_base[k]);@/
-undump_int(kern_base[k]);
-undump_int(exten_base[k]);
-undump_int(param_base[k]);@/
-undump(min_halfword)(lo_mem_max)(font_glue[k]);@/
-undump(0)(fmem_ptr-1)(bchar_label[k]);
-undump(min_quarterword)(non_char)(font_bchar[k]);
-undump(min_quarterword)(non_char)(font_false_bchar[k]);
-end
-@y
-@  The way this is done in C makes the reference to
-the internal font number meaningless, but putting the code
-here preserves the association with the WEB modules.
-
-@<Undump the array info for internal font number |k|@>=
-begin undump_things(font_info[0], fmem_ptr);
-undump_size(font_base)(font_max)('font max')(font_ptr);
-undump_things(font_check[null_font], font_ptr+1-null_font);
-undump_things(font_size[null_font], font_ptr+1-null_font);
-undump_things(font_dsize[null_font], font_ptr+1-null_font);
-undump_things(font_params[null_font], font_ptr+1-null_font);
-undump_things(hyphen_char[null_font], font_ptr+1-null_font);
-undump_things(skew_char[null_font], font_ptr+1-null_font);
-undump_things(font_name[null_font], font_ptr+1-null_font);
-undump_things(font_area[null_font], font_ptr+1-null_font);
-undump_things(font_bc[null_font], font_ptr+1-null_font);
-undump_things(font_ec[null_font], font_ptr+1-null_font);
-undump_things(char_base[null_font], font_ptr+1-null_font);
-undump_things(width_base[null_font], font_ptr+1-null_font);
-undump_things(height_base[null_font], font_ptr+1-null_font);
-undump_things(depth_base[null_font], font_ptr+1-null_font);
-undump_things(italic_base[null_font], font_ptr+1-null_font);
-undump_things(lig_kern_base[null_font], font_ptr+1-null_font);
-undump_things(kern_base[null_font], font_ptr+1-null_font);
-undump_things(exten_base[null_font], font_ptr+1-null_font);
-undump_things(param_base[null_font], font_ptr+1-null_font);
-undump_things(font_glue[null_font], font_ptr+1-null_font);
-undump_things(bchar_label[null_font], font_ptr+1-null_font);
-undump_things(font_bchar[null_font], font_ptr+1-null_font);
-undump_things(font_false_bchar[null_font], font_ptr+1-null_font);
-end
-@z
-
-% The hyphenation patterns.
-% 
-@x
-for k:=0 to trie_max do dump_hh(trie[k]);
-dump_int(trie_op_ptr);
-for k:=1 to trie_op_ptr do
-  begin dump_int(hyf_distance[k]);
-  dump_int(hyf_num[k]);
-  dump_int(hyf_next[k]);
-  end;
-@y
-dump_things(trie_trl[0], trie_max+1);
-dump_things(trie_tro[0], trie_max+1);
-dump_things(trie_trc[0], trie_max+1);
-dump_int(trie_op_ptr);
-dump_things(hyf_distance[1], trie_op_ptr);
-dump_things(hyf_num[1], trie_op_ptr);
-dump_things(hyf_next[1], trie_op_ptr);
-@z
-
-@x
-for k:=0 to j do undump_hh(trie[k]);
-undump_size(0)(trie_op_size)('trie op size')(j); @+init trie_op_ptr:=j;@+tini
-for k:=1 to j do
-  begin undump(0)(63)(hyf_distance[k]); {a |small_number|}
-  undump(0)(63)(hyf_num[k]);
-  undump(min_quarterword)(max_quarterword)(hyf_next[k]);
-  end;
-@y
-undump_things(trie_trl[0], j+1);
-undump_things(trie_tro[0], j+1);
-undump_things(trie_trc[0], j+1);
-undump_size(0)(trie_op_size)('trie op size')(j); @+init trie_op_ptr:=j;@+tini
-undump_things(hyf_distance[1], j);
-undump_things(hyf_num[1], j);
-undump_things(hyf_next[1], j);
-@z
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% [50.1327] As with TFM files, `eof' here means `have we previously
-% encountered the end-of-file', not `are we at the end of the file'.
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-@x
+@x [50.1327] l.24172 - Test for end-of-file already done by undump.
 if (x<>69069)or eof(fmt_file) then goto bad_fmt
 @y
-if (x<>69069)or feof(fmt_file) then goto bad_fmt
+if x<>69069 then goto bad_fmt
 @z
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% [50.1328] Eliminate possibly wrong word `preloaded' from format_idents.
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-@x
-print(" (preloaded format="); print(job_name); print_char(" ");
-@y
-print(" (format="); print(job_name); print_char(" ");
-@z
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% [51.1332] `uexit' argument depends on `history'; add call to
-% set_paths; make the main program a procedure, so that uses of `eqtb'
-% will work.
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-@x
+@x [51.1332] l.24203 - make the main program a procedure, for eqtb hack.
 @p begin @!{|start_here|}
 @y
-@p procedure tex_body;
+@d const_chk(#)==begin if # < inf@&# then # := inf@&# else
+                         if # > sup@&# then # := sup@&# end
+
+{|setup_bound_var| stuff duplicated in \.{mf.ch}.}
+@d setup_bound_var(#)==bound_default:=#; setup_bound_var_end
+@d setup_bound_var_end(#)==bound_name:=#; setup_bound_var_end_end
+@d setup_bound_var_end_end(#)==
+  setup_bound_variable(addressof(#), bound_name, bound_default)
+
+@p procedure main_body;
 begin @!{|start_here|}
+
+{Bounds that may be set from the configuration file. We want the user to
+ be able to specify the names with underscores, but \.{TANGLE} removes
+ underscores, so we're stuck giving the names twice, once as a string,
+ once as the identifier. How ugly.}
+  setup_bound_var (0)('mem_bot')(mem_bot);
+  setup_bound_var (250000)('main_memory')(main_memory);
+    {|memory_word|s for |mem| in \.{INITEX}}
+  setup_bound_var (0)('extra_mem_top')(extra_mem_top);
+    {increase high mem in \.{VIRTEX}}
+  setup_bound_var (0)('extra_mem_bot')(extra_mem_bot);
+    {increase low mem in \.{VIRTEX}}
+  setup_bound_var (200000)('pool_size')(pool_size);
+  setup_bound_var (75000)('string_vacancies')(string_vacancies);
+  setup_bound_var (5000)('pool_free')(pool_free); {min pool avail after fmt}
+  setup_bound_var (15000)('max_strings')(max_strings);
+  setup_bound_var (100)('strings_free')(strings_free);
+  setup_bound_var (100000)('font_mem_size')(font_mem_size);
+  setup_bound_var (500)('font_max')(font_max);
+  setup_bound_var (20000)('trie_size')(trie_size);
+    {if |ssup_trie_size| increases, recompile}
+  setup_bound_var (659)('hyph_size')(hyph_size);
+  setup_bound_var (3000)('buf_size')(buf_size);
+  setup_bound_var (50)('nest_size')(nest_size);
+  setup_bound_var (15)('max_in_open')(max_in_open);
+  setup_bound_var (60)('param_size')(param_size);
+  setup_bound_var (4000)('save_size')(save_size);
+  setup_bound_var (300)('stack_size')(stack_size);
+  setup_bound_var (16384)('dvi_buf_size')(dvi_buf_size);
+  setup_bound_var (79)('error_line')(error_line);
+  setup_bound_var (50)('half_error_line')(half_error_line);
+  setup_bound_var (79)('max_print_line')(max_print_line);
+  setup_bound_var (0)('hash_extra')(hash_extra);
+  setup_bound_var (10000)('expand_depth')(expand_depth);
+
+  const_chk (mem_bot);
+  const_chk (main_memory);
+@+Init
+  extra_mem_top := 0;
+  extra_mem_bot := 0;
+@+Tini
+  if extra_mem_bot>sup_main_memory then extra_mem_bot:=sup_main_memory;
+  if extra_mem_top>sup_main_memory then extra_mem_top:=sup_main_memory;
+  {|mem_top| is an index, |main_memory| a size}
+  mem_top := mem_bot + main_memory -1;
+  mem_min := mem_bot;
+  mem_max := mem_top;
+
+  {Check other constants against their sup and inf.}
+  const_chk (trie_size);
+  const_chk (hyph_size);
+  const_chk (buf_size);
+  const_chk (nest_size);
+  const_chk (max_in_open);
+  const_chk (param_size);
+  const_chk (save_size);
+  const_chk (stack_size);
+  const_chk (dvi_buf_size);
+  const_chk (pool_size);
+  const_chk (string_vacancies);
+  const_chk (pool_free);
+  const_chk (max_strings);
+  const_chk (strings_free);
+  const_chk (font_mem_size);
+  const_chk (font_max);
+  const_chk (hash_extra);
+  if error_line > ssup_error_line then error_line := ssup_error_line;
+
+  {array memory allocation}
+  buffer:=xmalloc_array (ASCII_code, buf_size);
+  nest:=xmalloc_array (list_state_record, nest_size);
+  save_stack:=xmalloc_array (memory_word, save_size);
+  input_stack:=xmalloc_array (in_state_record, stack_size);
+  input_file:=xmalloc_array (alpha_file, max_in_open);
+  line_stack:=xmalloc_array (integer, max_in_open);
+  source_filename_stack:=xmalloc_array (str_number, max_in_open);
+  full_source_filename_stack:=xmalloc_array (str_number, max_in_open);
+  param_stack:=xmalloc_array (halfword, param_size);
+  dvi_buf:=xmalloc_array (eight_bits, dvi_buf_size);
+  hyph_word :=xmalloc_array (str_number, hyph_size);
+  hyph_list :=xmalloc_array (halfword, hyph_size);
+  hyph_link :=xmalloc_array (hyph_pointer, hyph_size);
+@+Init
+  yzmem:=xmalloc_array (memory_word, mem_top - mem_bot + 1);
+  zmem := yzmem - mem_bot;   {Some compilers require |mem_bot=0|}
+  eqtb_top := eqtb_size+hash_extra;
+  if hash_extra=0 then hash_top:=undefined_control_sequence else
+        hash_top:=eqtb_top;
+  yhash:=xmalloc_array (two_halves,1+hash_top-hash_offset);
+  hash:=yhash - hash_offset;   {Some compilers require |hash_offset=0|}
+  next(hash_base):=0; text(hash_base):=0;
+  for hash_used:=hash_base+1 to hash_top do hash[hash_used]:=hash[hash_base];
+  zeqtb:=xmalloc_array (memory_word, eqtb_top);
+  eqtb:=zeqtb;
+
+  str_start:=xmalloc_array (pool_pointer, max_strings);
+  str_pool:=xmalloc_array (packed_ASCII_code, pool_size);
+  font_info:=xmalloc_array (fmemory_word, font_mem_size);
+@+Tini
 @z
 
-@x
-t_open_out; {open the terminal for output}
+@x [51.1332] l.24215 - INI = VIR, so pool init needs runtime test
+@!init if not get_strings_started then goto final_end;
+init_prim; {call |primitive| for each primitive}
+init_str_ptr:=str_ptr; init_pool_ptr:=pool_ptr; fix_date_and_time;
+tini@/
 @y
-t_open_out; {open the terminal for output}
-{get default file paths from the environment}
-set_paths (TEX_FORMAT_PATH_BIT + TEX_INPUT_PATH_BIT + TEX_POOL_PATH_BIT
-           + TFM_FILE_PATH_BIT);
+@!Init if not get_strings_started then goto final_end;
+init_prim; {call |primitive| for each primitive}
+init_str_ptr:=str_ptr; init_pool_ptr:=pool_ptr; fix_date_and_time;
+Tini@/
 @z
 
-@x
+@x [51.1332] l.24225 - main
 end_of_TEX: close_files_and_terminate;
 final_end: ready_already:=0;
 end.
 @y
 close_files_and_terminate;
 final_end: do_final_end;
-end {|tex_body|};
+end {|main_body|};
 @z
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% [51.1333] Print new line before termination; switch to editor if
-% necessary.
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-@x
+@x [51.1333] l.24254 - Print new line before termination; switch to editor if necessary.
     slow_print(log_name); print_char(".");
     end;
   end;
 @y
-    slow_print(log_name); print_char(".");
+    print_file_name(0, log_name, 0); print_char(".");
     end;
   end;
 print_ln;
 if (edit_name_start<>0) and (interaction>batch_mode) then
-    call_edit(str_pool,edit_name_start,edit_name_length,edit_line);
+  call_edit(str_pool,edit_name_start,edit_name_length,edit_line);
 @z
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+@x [51.1335] l.24335 - Only do dump if ini.
+  begin @!init for c:=top_mark_code to split_bot_mark_code do
+@y
+  begin @!Init for c:=top_mark_code to split_bot_mark_code do
+@z
+
+@x [51.1335] l.24337 - Only do dump if ini.
+  store_fmt_file; return;@+tini@/
+@y
+  store_fmt_file; return;@+Tini@/
+@z
+
+@x [51.1337] l.24366 - Dynamic arrays size.
+  w_close(fmt_file);
+@y
+  w_close(fmt_file);
+  eqtb:=zeqtb;
+@z
+
+@x [51.1337] l.24371 - Allocate hyphenation tries, do char translation
+fix_date_and_time;@/
+@y
+fix_date_and_time;@/
+
+@!init
+if trie_not_ready then begin {initex without format loaded}
+  trie_trl:=xmalloc_array (trie_pointer, trie_size);
+  trie_tro:=xmalloc_array (trie_pointer, trie_size);
+  trie_trc:=xmalloc_array (quarterword, trie_size);
+
+  trie_c:=xmalloc_array (packed_ASCII_code, trie_size);
+  trie_o:=xmalloc_array (trie_opcode, trie_size);
+  trie_l:=xmalloc_array (trie_pointer, trie_size);
+  trie_r:=xmalloc_array (trie_pointer, trie_size);
+  trie_hash:=xmalloc_array (trie_pointer, trie_size);
+  trie_taken:=xmalloc_array (boolean, trie_size);
+
+  trie_root:=0; trie_c[0]:=si(0); trie_ptr:=0;
+
+  {Allocate and initialize font arrays}
+  font_check:=xmalloc_array(four_quarters, font_max);
+  font_size:=xmalloc_array(scaled, font_max);
+  font_dsize:=xmalloc_array(scaled, font_max);
+  font_params:=xmalloc_array(font_index, font_max);
+  font_name:=xmalloc_array(str_number, font_max);
+  font_area:=xmalloc_array(str_number, font_max);
+  font_bc:=xmalloc_array(eight_bits, font_max);
+  font_ec:=xmalloc_array(eight_bits, font_max);
+  font_glue:=xmalloc_array(halfword, font_max);
+  hyphen_char:=xmalloc_array(integer, font_max);
+  skew_char:=xmalloc_array(integer, font_max);
+  bchar_label:=xmalloc_array(font_index, font_max);
+  font_bchar:=xmalloc_array(nine_bits, font_max);
+  font_false_bchar:=xmalloc_array(nine_bits, font_max);
+  char_base:=xmalloc_array(integer, font_max);
+  width_base:=xmalloc_array(integer, font_max);
+  height_base:=xmalloc_array(integer, font_max);
+  depth_base:=xmalloc_array(integer, font_max);
+  italic_base:=xmalloc_array(integer, font_max);
+  lig_kern_base:=xmalloc_array(integer, font_max);
+  kern_base:=xmalloc_array(integer, font_max);
+  exten_base:=xmalloc_array(integer, font_max);
+  param_base:=xmalloc_array(integer, font_max);
+
+  font_ptr:=null_font; fmem_ptr:=7;
+  font_name[null_font]:="nullfont"; font_area[null_font]:="";
+  hyphen_char[null_font]:="-"; skew_char[null_font]:=-1;
+  bchar_label[null_font]:=non_address;
+  font_bchar[null_font]:=non_char; font_false_bchar[null_font]:=non_char;
+  font_bc[null_font]:=1; font_ec[null_font]:=0;
+  font_size[null_font]:=0; font_dsize[null_font]:=0;
+  char_base[null_font]:=0; width_base[null_font]:=0;
+  height_base[null_font]:=0; depth_base[null_font]:=0;
+  italic_base[null_font]:=0; lig_kern_base[null_font]:=0;
+  kern_base[null_font]:=0; exten_base[null_font]:=0;
+  font_glue[null_font]:=null; font_params[null_font]:=7;
+  param_base[null_font]:=-1;
+  for font_k:=0 to 6 do font_info[font_k].sc:=0;
+  end;
+  tini@/
+
+  font_used:=xmalloc_array (boolean, font_max);
+  for font_k:=font_base to font_max do font_used[font_k]:=false;
+@z
+
 % [52.1338] Core-dump in debugging mode on 0 input.  Under Unix, it's
-% not possible to switch into the debugger while a program is running.
-% The best approximation is to do a core dump, then run the debugger on
-% it later.
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-@x
+% not possible to portably switch into the debugger while a program is
+% running.  The best approximation is to do a core dump, then run the
+% debugger on it later.
+@x [52.1338] l.24411 - Core-dump in debugging mode on 0 input.
     begin goto breakpoint;@\ {go to every label at least once}
     breakpoint: m:=0; @{'BREAKPOINT'@}@\
     end
 @y
-    dump_core {Do something to cause a core dump}
+    dump_core {do something to cause a core dump}
 @z
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% [54.1376] Add editor-switch variables to globals.
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-@x
-This section should be replaced, if necessary, by any special
-modifications of the program
-that are necessary to make \TeX\ work at a particular installation.
-It is usually best to design your change file so that all changes to
-previous sections preserve the section numbering; then everybody's version
-will be consistent with the published program. More extensive changes,
-which introduce new sections, can be inserted here; then only the index
-itself will get a new section number.
-@^system dependencies@>
+@x [52.1339] l.24429 - debug - print tfm info
+5: print_word(font_info[n]);
+@y 24397
+5: begin print_scaled(font_info[n].sc); print_char(" ");@/
+  print_int(font_info[n].qqqq.b0); print_char(":");@/
+  print_int(font_info[n].qqqq.b1); print_char(":");@/
+  print_int(font_info[n].qqqq.b2); print_char(":");@/
+  print_int(font_info[n].qqqq.b3);
+  end;
+@z
+
+@x [53.1370] l.24770 - \write18{foo}
+begin @<Expand macros in the token list
 @y
-Here is a temporary integer, used as a holder during reading and writing of
-TFM files, and a temporary |memory_word|, used in reading/writing format
-files.
-Also, the variables used to hold ``switch-to-editor'' information.
+@!d:integer; {number of characters in incomplete current string}
+@!clobbered:boolean; {system string is ok?}
+@!runsystem_ret:integer; {return value from |runsystem|}
+begin @<Expand macros in the token list
+@z
+
+@x [54.1376] l.24903 - Add editor-switch variables to globals.
+@* \[54] System-dependent changes.
+@y
+@* \[54/web2c] System-dependent changes for Web2c.
+Here are extra variables for Web2c.  (This numbering of the
+system-dependent section allows easy integration of Web2c and e-\TeX, etc.)
 @^<system dependencies@>
 
 @<Glob...@>=
-@!edit_name_start: pool_pointer;
-@!edit_name_length,@!edit_line,@!tfm_temp: integer;
+@!edit_name_start: pool_pointer; {where the filename to switch to starts}
+@!edit_name_length,@!edit_line: integer; {what line to start editing at}
 
 @ The |edit_name_start| will be set to point into |str_pool| somewhere after
 its beginning if \TeX\ is supposed to switch to an editor on exit.
 
 @<Set init...@>=
 edit_name_start:=0;
+
+@ These are used when we regenerate the representation of the first 256
+strings.
+
+@<Global...@> =
+@!save_str_ptr: str_number;
+@!save_pool_ptr: pool_pointer;
+@!shellenabledp: cinttype;
+@!restrictedshell: cinttype;
+@!output_comment: ^char;
+@!k,l: 0..255; {used by `Make the first 256 strings', etc.}
+
+@ When debugging a macro package, it can be useful to see the exact
+control sequence names in the format file.  For example, if ten new
+csnames appear, it's nice to know what they are, to help pinpoint where
+they came from.  (This isn't a truly ``basic'' printing procedure, but
+that's a convenient module in which to put it.)
+
+@<Basic printing procedures@> =
+procedure print_csnames (hstart:integer; hfinish:integer);
+var c,h:integer;
+begin
+  write_ln(stderr, 'fmtdebug:csnames from ', hstart, ' to ', hfinish, ':');
+  for h := hstart to hfinish do begin
+    if text(h) > 0 then begin {if have anything at this position}
+      for c := str_start[text(h)] to str_start[text(h) + 1] - 1
+      do begin
+        put_byte(str_pool[c], stderr); {print the characters}
+      end;
+      write_ln(stderr, '|');
+    end;
+  end;
+end;
+
+@ Are we printing extra info as we read the format file?
+
+@<Glob...@> =
+@!debug_format_file: boolean;
+
+@* \[54] System-dependent changes.
+@z
+
+@x [54.1379] l.24916 - extra routines
+@* \[55] Index.
+@y
+
+@ @<Declare action procedures for use by |main_control|@>=
+
+@ This function used to be in pdftex, but is useful in tex too.
+
+@p function get_nullstr: str_number;
+begin
+    get_nullstr := "";
+end;
+
+@* \[55] Index.
 @z
