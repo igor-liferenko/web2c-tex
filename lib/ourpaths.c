@@ -86,26 +86,9 @@ testreadaccess (name, path_index)
      an alias defined in a mapping file.  This duplicates most of
      `try_fontmap' in `kpathsea/tex-glyph.c', but the differences are
      substantial enough that it doesn't seem worth combining.  */
-  if (!found && (path_index == TFMFILEPATH || path_index == GFFILEPATH
-                 || path_index == PKFILEPATH))
+  if (!found && (path_index == TFMFILEPATH))
     {
-      string *mapped_names;
-      static hash_table_type fontmap = { NULL, 0 };
-      
-      /* Fault in the mapping if necessary.  */
-      if (fontmap.size == 0)
-        fontmap = map_create (path);
-      
-      /* Now look for our filename in the mapping.  */
-      mapped_names = map_lookup (fontmap, name);
-      if (mapped_names)
-        {
-          string mapped_name;
-          while ((mapped_name = *mapped_names++) && !found)
-            {
-              found = kpse_path_search (path, mapped_name, true);
-            }
-        }
+      // this can't happen
     }
 
   /* If we found it somewhere, save it.  */
