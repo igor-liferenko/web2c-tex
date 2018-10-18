@@ -117,20 +117,6 @@ procedure print_ln; {prints an end-of-line}
 @z
 
 
-% ATTENTION: This code may be different in various TeX distributions.
-
-@x [5.61] l.1556 - encTeX: the banner as a cecond line on the terminal
-if format_ident=0 then wterm_ln(' (no format preloaded)')
-else  begin slow_print(format_ident); print_ln;
-  end;
-@y
-if format_ident=0 then wterm_ln(' (no format preloaded)')
-else  begin slow_print(format_ident); print_ln;
-  end;
-wterm_ln (encTeX_banner);
-@z
-
-
 @x [5.71] encTeX - native buffer printing
 if last<>first then for k:=first to last-1 do print(buffer[k]);
 @y
