@@ -82,15 +82,6 @@ testreadaccess (name, path_index)
      having pktogf run MakeTeXPK, etc.  */
   found = kpse_path_search (path, name, true);
 
-  /* If we didn't find it, and we're looking for a font, maybe it's
-     an alias defined in a mapping file.  This duplicates most of
-     `try_fontmap' in `kpathsea/tex-glyph.c', but the differences are
-     substantial enough that it doesn't seem worth combining.  */
-  if (!found && (path_index == TFMFILEPATH))
-    {
-      // this can't happen
-    }
-
   /* If we found it somewhere, save it.  */
   if (found)
     strcpy (name, found);
