@@ -2,10 +2,6 @@ add enctex
 
 +++++++++++++
 
-Update to current tex.web using tex82.bug and articles "TeX tuneup 2008" and "TeX tuneup 2014"update one by one
-
-+++++++++++
-
 check this:
 diff -u lib/texmfmem.h texmfmem.h|colordiff
 diff -u lib/cpascal.h cpascal.h|colordiff
