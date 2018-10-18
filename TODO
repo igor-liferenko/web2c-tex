@@ -25,7 +25,7 @@ see commit cdc47caebbbb96234203e12fcc491e1b288de6c0 in mf/
 
 +++++++++
 
-see git diff 786419f80e3c6d7402aa8a2516b118c598775f22..bd3a108bd703e72ec38a9c9fe1bcccdd7e9376a4 for changes between web2c-7.5.4 and web2c-6.1 (add "--stat --diff-filter=A" option to see only added, "C" and "D" are for changed and deleted respectively)
+see git diff 786419f80e3c6d7402aa8a2516b118c598775f22..50bb37c3dc8afcb85dd5f5b21923527885e37816 for changes between web2c-7.5.4 and web2c-6.1 (add "--stat --diff-filter=A" option to see only added, "C" and "D" are for changed and deleted respectively)
 
 =====================================================================
 
