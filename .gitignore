@@ -9,7 +9,6 @@ itex.o
 openinout.c
 openinout.o
 tex.p
-tex.pool
 tex0.c
 tex0.o
 tex1.c

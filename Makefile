@@ -58,3 +58,4 @@ all:
 	gcc -DTeX -Ilib -g  -c itex.c
 	gcc -o virtex -g   vextra.o itex.o openinout.o tex0.o tex1.o tex2.o tex3.o tex4.o tex5.o tex6.o tex7.o tex8.o tex9.o  lib/lib.a -lkpathsea
 	mv virtex /usr/local/bin/
+	mv tex.pool /usr/local/share/texmf/web2c/
