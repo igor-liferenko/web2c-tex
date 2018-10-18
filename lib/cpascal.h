@@ -39,7 +39,7 @@
 #define flush(f)	(void) fflush (f)
 
 #define read(f, b)	((b) = getc (f))
-#define	readln(f)	{ register c; \
+#define	readln(f)	{ register int c; \
                           while ((c = getc (f)) != '\n' && c != EOF); }
 
 /* We hope this will be efficient than the `x = x - 1' that decr would
