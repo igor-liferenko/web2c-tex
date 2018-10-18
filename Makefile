@@ -60,12 +60,12 @@ all:
 	mv virtex /usr/local/bin/
 	mv tex.pool /usr/local/share/texmf/web2c/
 
-nohyph:
-	perl -ne 'print unless /righthyphenmin/../mubytein=1$$/' lhplain.ini >nohyph.ini
-	initex nohyph.ini >/dev/null
-	mv nohyph.fmt /usr/local/share/texmf/web2c/tex.fmt
-	texhash /usr/local/share/texmf >/dev/null
-hyph:
-	initex lhplain.ini
-	mv lhplain.fmt /usr/local/share/texmf/web2c/tex.fmt
-	texhash /usr/local/share/texmf >/dev/null
+fmt:
+	@perl -ne 'print if /plain/ or /hoffset/..eof' lhplain.ini >tex.ini
+	@initex tex.ini >/dev/null
+	@mv tex.fmt /usr/local/share/texmf/web2c/
+	@perl -ne 'print unless /^\s+\\xordcode/' lhplain.ini >ru.ini
+	@cat /usr/share/texlive/texmf-dist/tex/generic/ruhyphen/ruhyphal.tex | iconv -f koi8-r -t cp866 >ruhyphal.tex
+	@initex ru.ini >/dev/null
+	@mv ru.fmt /usr/local/share/texmf/web2c/
+	@texhash /usr/local/share/texmf >/dev/null
