@@ -2,9 +2,7 @@
    TeX, Metafont, and BibTeX.  */
 
 #include "config.h"
-#include <kpathsea/c-namemx.h>
-#include <kpathsea/c-pathch.h>
-#include <kpathsea/tex-make.h>
+#include <kpathsea/kpathsea.h>
 
 #ifdef BibTeX
 /* See comments in bibtex.ch for why we need these.  */

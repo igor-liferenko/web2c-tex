@@ -6,14 +6,7 @@
 
 #include "c-auto.h"
 
-/* The stuff from the path searching library.  */
-#include <kpathsea/config.h>
-
-/* Maximum length of an entire pathname. */
-#include <kpathsea/c-pathmx.h>
-
-/* How to open a binary file.  */
-#include <kpathsea/c-fopen.h>
+#include <kpathsea/kpathsea.h>
 
 /* Argument parsing.  */
 #include "getopt.h"
