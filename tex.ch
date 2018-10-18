@@ -529,7 +529,7 @@ begin
 @.**@>
         if not input_ln(term_in,true) then begin {this shouldn't happen}
             write_ln(term_out);
-            write(term_out, '! End of file on the terminal... why?');
+            write_ln(term_out, '! End of file on the terminal... why?');
 @.End of file on the terminal@>
             init_terminal:=false;
 	    return;
