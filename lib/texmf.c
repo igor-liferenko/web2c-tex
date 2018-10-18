@@ -271,7 +271,7 @@ input_line (f)
 
 /* This string specifies what the `e' option does in response to an
    error message.  */ 
-static char *edit_value = "vi +%d %s";
+static char *edit_value = NULL; /* set in environment */
 
 /* This procedure is due to sjc@s1-c.  TeX (or Metafont) calls it when
    the user types `e' in response to an error, invoking a text editor on
