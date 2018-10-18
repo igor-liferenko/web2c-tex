@@ -61,7 +61,7 @@ all:
 	mv tex.pool /usr/local/share/texmf/web2c/
 
 fmt:
-	@perl -ne 'print if /plain/ or /hoffset/..eof' lhplain.ini >tex.ini
+	@perl -ne 'print if /plain/ or /\\let\\\w{6,}=\\undefined/ or /hoffset/..eof' lhplain.ini >tex.ini
 	@initex tex.ini >/dev/null
 	@mv tex.fmt /usr/local/share/texmf/web2c/
 	@perl -ne 'print unless /^\s+\\xordcode/' lhplain.ini >ru.ini
