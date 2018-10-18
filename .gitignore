@@ -2,7 +2,6 @@ coerce.h
 ctex.ch
 iextra.c
 iextra.o
-initex
 initex.c
 initex.o
 itex.c
@@ -34,4 +33,3 @@ tex9.o
 texd.h
 vextra.c
 vextra.o
-virtex
