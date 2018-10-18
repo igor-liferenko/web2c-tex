@@ -1,5 +1,4 @@
 all:
-	gcc -g  -c alloca.c
 	gcc -DHAVE_CONFIG_H -I. -g  -c eofeoln.c
 	gcc -DHAVE_CONFIG_H -I. -g  -c fprintreal.c
 	gcc -DHAVE_CONFIG_H -I. -g  -c getopt.c
