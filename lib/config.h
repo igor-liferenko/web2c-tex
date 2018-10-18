@@ -4,6 +4,8 @@
 #ifndef CONFIG_H
 #define CONFIG_H
 
+#include "c-auto.h"
+
 /* The stuff from the path searching library.  */
 #include <kpathsea/config.h>
 
