@@ -32,3 +32,8 @@ tex9.o
 texd.h
 vextra.c
 vextra.o
+ruhyphal.tex
+ru.ini
+ru.log
+tex.ini
+tex.log
