@@ -12,7 +12,7 @@
 
 int argc;
 char **gargv;
-int read_line ();
+int my_read_line ();
 
 int filenumber = 0, ifdef_nesting = 0, lines_in_file = 0;
 char *output_name = "tex";
@@ -79,11 +79,11 @@ main (argc, argv)
 	if (!(temp = fopen(TEMPFILE, "w+")))
 	    FATAL_PERROR (TEMPFILE);
             
-	while (read_line()) {
+	while (my_read_line()) {
 	    (void) fputs(buffer, temp);
 	    if (buffer[0] == '}') break; /* End of procedure */
 	}
-	while (ifdef_nesting > 0 && read_line())
+	while (ifdef_nesting > 0 && my_read_line())
 	    (void) fputs(buffer, temp);
 	rewind(temp);
 
@@ -131,7 +131,7 @@ main (argc, argv)
  * so we know when it's safe to finish writing the current file.
  */
 int
-read_line()
+my_read_line()
 {
     if (fgets(buffer, sizeof(buffer), in) == NULL) return false;
     if (strncmp(buffer, "#ifdef", 6) == 0) {
