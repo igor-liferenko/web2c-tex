@@ -61,11 +61,11 @@ all:
 	mv tex.pool /usr/local/share/texmf/web2c/
 
 nohyph:
-	perl -ne 'print unless /righthyphenmin/../mubytein=1$/' lhplain.ini >nohyph.ini
+	perl -ne 'print unless /righthyphenmin/../mubytein=1$$/' lhplain.ini >nohyph.ini
 	initex nohyph.ini >/dev/null
 	mv nohyph.fmt /usr/local/share/texmf/web2c/tex.fmt
 	texhash /usr/local/share/texmf >/dev/null
 hyph:
-	initex lhplain.ini >/dev/null
+	initex lhplain.ini
 	mv lhplain.fmt /usr/local/share/texmf/web2c/tex.fmt
 	texhash /usr/local/share/texmf >/dev/null
