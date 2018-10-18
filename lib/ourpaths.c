@@ -3,11 +3,6 @@
 #include "config.h"
 
 #include <kpathsea/kpathsea.h>
-#include <kpathsea/cnf.h>
-#include <kpathsea/expand.h>
-#include <kpathsea/paths.h>
-#include <kpathsea/pathsearch.h>
-#include <kpathsea/tex-file.h>
 
 /* `path_dirs' is initialized in `setpaths', to a null-terminated array
    of directories to search for.  */
