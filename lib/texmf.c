@@ -30,9 +30,7 @@
 #define edit_var "MFEDIT"
 #endif /* not TeX */
 
-#include <kpathsea/c-ctype.h>
-#include <kpathsea/c-pathch.h>
-#include <kpathsea/tex-file.h>
+#include <kpathsea/kpathsea.h>
 
 /* For `struct tm'.  */
 #include <time.h>
