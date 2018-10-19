@@ -1,6 +1,5 @@
 check this:
 diff -u lib/texmfmem.h texmfmem.h|colordiff
-diff -u lib/cpascal.h cpascal.h|colordiff
 
 ++++++++++
 
