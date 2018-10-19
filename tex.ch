@@ -1843,7 +1843,7 @@ undump_things(kern_base[null_font], font_ptr+1-null_font);
 undump_things(exten_base[null_font], font_ptr+1-null_font);
 undump_things(param_base[null_font], font_ptr+1-null_font);
 undump_things(font_glue[null_font], font_ptr+1-null_font);
-undump_things(bchar_label[null_font], font_ptr+1-null_font);
+undump_things(bchar_label[null_font], font_ptr+1-null_font); { FIXME: how to sync this with last change in commit f3e3f27? }
 undump_things(font_bchar[null_font], font_ptr+1-null_font);
 undump_things(font_false_bchar[null_font], font_ptr+1-null_font);
 end
