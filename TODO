@@ -4,11 +4,6 @@ diff -u lib/cpascal.h cpascal.h|colordiff
 
 ++++++++++
 
-see if changes in web2c-6.1/web2c/README were implemented and if yes,
-revert them
-
-+++++++++
-
 see commit cdc47caebbbb96234203e12fcc491e1b288de6c0 in mf/
 
 +++++++++
