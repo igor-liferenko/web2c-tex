@@ -607,7 +607,6 @@ else  begin slow_print(format_ident); print_ln;
   end;
 @y
 wterm (banner);
-wterm (version_string);
 if format_ident>0 then slow_print(format_ident); 
 print_ln;
 @z
