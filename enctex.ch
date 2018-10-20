@@ -207,8 +207,6 @@ lists.
 
 See the \$332 and \$1221 for more code of encTeX.
 
-@d encTeX_banner == 'encTeX v. Jun. 2004, the reencoding enabled.'
-
 @<Basic printing...@>=
 procedure print_cs(@!p:integer); {prints a purported control sequence}
 var q: pointer;
@@ -706,18 +704,6 @@ if m=xord_code_base then scanned_result(xord[cur_val])(int_val)
 else if m=xchr_code_base then scanned_result(xchr[cur_val])(int_val)
 else if m=xprn_code_base then scanned_result(xprn[cur_val])(int_val)
 else if m=math_code_base then scanned_result(ho(math_code(cur_val)))(int_val)
-@z
-
-
-% ATTENTION: the banner can be coded differently in various distributions
-
-@x [29.536] l.10331 - encTeX banner to the log file
-print_two(time div 60); print_char(":"); print_two(time mod 60);
-end
-@y
-print_two(time div 60); print_char(":"); print_two(time mod 60);
-wlog_cr; wlog(encTeX_banner);
-end
 @z
 
 
