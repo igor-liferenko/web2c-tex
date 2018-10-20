@@ -1,3 +1,25 @@
+Try to apply changes from git lg eb648b144e20edc7d14bd11eab4be42a562e0ae2..9313fcb2a46c867b4f00bf60eb26623617572406 tex.ch - to make tex.ch as close to http://tug.ctan.org/tex-archive/systems/knuth/local/tex/initex.ch as possible
+
+++++++++++
+
+do not change init - tini to ifdef()-endif() - use initex.ch via "tie -c" which just undoes corresponding changes. The changes between initex.ch and tex.ch are the following:
+
+-@d init==
+-@d tini==
++@d init==@{
++@d tini==@t@>@}
+
+-@!mem_max=30000; {greatest index in \TeX's internal |mem| array;
++@!mem_max=32766; {greatest index in \TeX's internal |mem| array;
+
+-@!max_strings=3000; {maximum number of strings; must not exceed |max_halfword|}
++@!max_strings=6000; {maximum number of strings; must not exceed |max_halfword|}
+
+-@!trie_size=8000; {space for hyphenation patterns; should be larger for
++@!trie_size=6500; {space for hyphenation patterns; should be larger for
+
+++++++++++
+
 check this:
 diff -u lib/texmfmem.h texmfmem.h|colordiff
 

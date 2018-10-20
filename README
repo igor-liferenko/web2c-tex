@@ -1,0 +1,3 @@
+The generated code assumes that the type `short' has at least the range
+-32768..32767, and that `unsigned short' has at least the range
+0..65535.
