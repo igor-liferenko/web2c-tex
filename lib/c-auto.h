@@ -64,23 +64,6 @@
 #define X11WIN		/* X Version 11 */
 #endif
 
-/* Define these to true invoke MakeTeX{TeX,MF,TFM} scripts by default
-   when input files can't be found.  This is just the default; if
-   various envvars are set, the scripts will be invoked regardless.
-   
-   Sample MakeTeXTFM and MakeTeXMF scripts are included in the lib/
-   directory, for your hacking pleasure.  Suggestions for MakeTeXTeX
-   have included ftp, decompression, etc.  */
-#ifndef MAKE_TEX_TEX_BY_DEFAULT
-#define MAKE_TEX_TEX_BY_DEFAULT false
-#endif
-#ifndef MAKE_TEX_MF_BY_DEFAULT
-#define MAKE_TEX_MF_BY_DEFAULT false
-#endif
-#ifndef MAKE_TEX_TFM_BY_DEFAULT
-#define MAKE_TEX_TFM_BY_DEFAULT false
-#endif
-
 /* Default editor command string: `%d' expands to the line number where
    TeX or Metafont found an error and `%s' expands to the name of the
    file.  The environment variables TEXEDIT and MFEDIT override this.  */
