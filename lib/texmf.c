@@ -93,26 +93,8 @@ main (ac, av)
     }
 #endif /* not INI */
 
-#ifdef MF
-  {
-    boolean use_maketexmf = MAKE_TEX_MF_BY_DEFAULT
-                            || getenv ("USE_MAKETEXMF")
-                            || getenv ("MAKETEXMF");
-    kpse_format_info[kpse_mf_format].program_enabled_p = use_maketexmf;
-  }
-#endif /* MF */
-#ifdef TeX
-  {
-    boolean use_maketextex = MAKE_TEX_TEX_BY_DEFAULT
-                             || getenv ("USE_MAKETEXTEX")
-                             || getenv ("MAKETEXTEX");
-    boolean use_maketextfm = MAKE_TEX_TFM_BY_DEFAULT
-                             || getenv ("USE_MAKETEXTFM")
-                             || getenv ("MAKETEXTFM");
-    kpse_format_info[kpse_tex_format].program_enabled_p = use_maketextex;
-    kpse_format_info[kpse_tfm_format].program_enabled_p = use_maketextfm;
-  }
-#endif /* TeX */
+  kpse_format_info[kpse_tex_format].program_enabled_p = 0;
+  kpse_format_info[kpse_tfm_format].program_enabled_p = 0;
 
   main_program ();
 } 
