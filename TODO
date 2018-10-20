@@ -66,7 +66,7 @@ So, TeX need not know encTeX table to correctly format terminal output.
 =====================================
 
 To prove that enctex does not influence the output (to justify
-git diff 0b40e9f51892b51ba44b940b126c2b0591bbb050..a37b3f7aadca0f286794b36dc46fb08e829616b6 enctex.ch),
+commits 3892ec68a7a784557db0faa0e5a96eea548c034e and 17e10dfcf91b0460120e21db519b6cc6df959418),
 convert any document to cp866 encoding, compile the document
 via "tex \&test input-cp866.tex"
 (where test.fmt is compiled from modified lhplain.ini - convert
