@@ -93,8 +93,8 @@ main (ac, av)
     }
 #endif /* not INI */
 
-  kpse_format_info[kpse_tex_format].program_enabled_p = 0;
-  kpse_format_info[kpse_tfm_format].program_enabled_p = 0;
+  kpse_format_info[kpse_tex_format].program_enabled_p = false;
+  kpse_format_info[kpse_tfm_format].program_enabled_p = false;
 
   main_program ();
 } 
