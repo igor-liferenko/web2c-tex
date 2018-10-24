@@ -1,0 +1,10 @@
+buf_size=500
+max_in_open=6
+font_mem_size=20000
+max_strings=3000
+string_vacancies=8000
+pool_size=32000
+save_size=600
+trie_size=8000
+dvi_buf_size=800
+file_name_size=40
