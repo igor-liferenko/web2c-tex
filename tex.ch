@@ -171,10 +171,8 @@ start_of_TEX@t\hskip-2pt@>, end_of_TEX@t\hskip-2pt@>,@,final_end;
 @!pool_name='TeXformats:TEX.POOL                     ';
   {string of length |file_name_size|; tells where the string pool appears}
 @y
-@d file_name_size == PATH_MAX
-
 @<Constants...@>=
-@!mem_max=262140; {greatest index in \TeX's internal |mem| array;
+@!mem_max=30000; {greatest index in \TeX's internal |mem| array;
   must be strictly less than |max_halfword|;
   must be equal to |mem_top| in \.{INITEX}, otherwise |>=mem_top|}
 @!mem_min=0; {smallest index in \TeX's internal |mem| array;
@@ -190,7 +188,7 @@ start_of_TEX@t\hskip-2pt@>, end_of_TEX@t\hskip-2pt@>,@,final_end;
 @!stack_size=300; {maximum number of simultaneous input sources}
 @!max_in_open=15; {maximum number of input files and error insertions that
   can be going on simultaneously}
-@!font_max=255; {maximum internal font number; must not exceed |max_quarterword|
+@!font_max=127; {maximum internal font number; must not exceed |max_quarterword|
   and must be at most |font_base+256|}
 @!font_mem_size=100000; {number of words of |font_info| for all fonts}
 @!param_size=60; {maximum number of simultaneous macro parameters}
@@ -205,22 +203,16 @@ start_of_TEX@t\hskip-2pt@>, end_of_TEX@t\hskip-2pt@>,@,final_end;
   length of \TeX's own strings, which is currently about 23000}
 @!save_size=4000; {space for saving values outside of current group; must be
   at most |max_halfword|}
-@!trie_size=30000; {space for hyphenation patterns; should be larger for
-  \.{INITEX} than it is in production versions of \TeX.  This much is
-  needed for English, German, and Portuguese.}
-@!trie_op_size=751; {space for ``opcodes'' in the hyphenation patterns;
-  best if relatively prime to 313, 361, and 1009, according to {\tt
-  rocky@watson.ibm.com}.}
-@!neg_trie_op_size=-751; {for lower |trie_op_hash| array bound;
+@!trie_size=14000; {space for hyphenation patterns; should be larger for
+  \.{INITEX} than it is in production versions of \TeX}
+@!trie_op_size=500; {space for ``opcodes'' in the hyphenation patterns}
+@!neg_trie_op_size=-500; {for lower |trie_op_hash| array bound;
   must be equal to |-trie_op_size|.}
-@!min_trie_op=0; {first possible trie op code for any language}
-@!max_trie_op=500; {largest possible trie op code for any language}
 @!dvi_buf_size=16384; {size of the output buffer; must be a multiple of 8}
-@!pool_name=TEX_POOL_NAME; {name comes from \.{site.h}.}
-  {string of length |file_name_size|; tells where the string pool appears}
-@!mem_top=262140; {largest index in the |mem| array dumped by \.{INITEX};
-  must be substantially larger than |mem_bot|,
-  equal to |mem_max| in \.{INITEX}, else not greater than |mem_max|}
+@!file_name_size=1024; {file names shouldn't be longer than this}
+@!pool_name='tex.pool';
+  {string of length |file_name_size|; the string pool name}
+@.TeXformats@>
 @z
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -246,6 +238,9 @@ start_of_TEX@t\hskip-2pt@>, end_of_TEX@t\hskip-2pt@>,@,final_end;
 @y
 @d mem_bot=0 {smallest index in the |mem| array dumped by \.{INITEX};
   must not be less than |mem_min|}
+@d mem_top==30000 {largest index in the |mem| array dumped by \.{INITEX};
+  must be substantially larger than |mem_bot|
+  and not greater than |mem_max|}
 @d font_base=0 {smallest internal font number; must not be less
   than |min_quarterword|}
 @d hash_size=9500 {maximum number of control sequences; it should be at most
@@ -1255,97 +1250,6 @@ repeat if type(r)<>delta_node then
 @z
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% [42.920,921,923,924] Allow larger hyphenation tries.
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-@x
-Comparatively few different number sequences $n_0\ldots n_k$ actually occur,
-since most of the |n|'s are generally zero. Therefore the number sequences
-are encoded in such a way that |trie_op|$(z_k)$ is only one byte long.
-If |trie_op(@t$z_k$@>)<>min_quarterword|, when $p_1\ldots p_k$ has matched
-the letters in |hc[(l-k+1)..l@,]| of language |t|,
-we perform all of the required operations
-for this pattern by carrying out the following little program: Set
-|v:=trie_op(@t$z_k$@>)|. Then set |v:=v+op_start[t]|,
-|hyf[l-hyf_distance[v]]:=@tmax@>(hyf[l-hyf_distance[v]], hyf_num[v])|,
-and |v:=hyf_next[v]|; repeat, if necessary, until |v=min_quarterword|.
-@y
-The theory that comparatively few different number sequences $n_0\ldots n_k$
-actually occur, since most of the |n|'s are generally zero, seems to fail
-at least for the large German hyphenation patterns.
-Therefore the number sequences cannot any longer be encoded in such a way
-that |trie_op|$(z_k)$ is only one byte long.
-We have introduced a new constant |max_trie_op| for the maximum allowable
-hyphenation operation code value; |max_trie_op| might be different for
-\TeX\ and \.{INITEX} and must not exceed |max_halfword|.
-An opcode will occupy a halfword if |max_trie_op| exceeds |max_quarterword|
-or a quarterword otherwise.
-@^system dependencies@>
-If |trie_op(@t$z_k$@>)<>min_trie_op|, when $p_1\ldots p_k$ has matched
-the letters in |hc[(l-k+1)..l@,]| of language |t|,
-we perform all of the required operations
-for this pattern by carrying out the following little program: Set
-|v:=trie_op(@t$z_k$@>)|. Then set |v:=v+op_start[t]|,
-|hyf[l-hyf_distance[v]]:=@tmax@>(hyf[l-hyf_distance[v]], hyf_num[v])|,
-and |v:=hyf_next[v]|; repeat, if necessary, until |v=min_trie_op|.
-@z
-@x
-@!trie_pointer=0..trie_size; {an index into |trie|}
-@y
-@!trie_opcode=min_trie_op..max_trie_op;  {a trie opcode}
-@!trie_pointer=0..trie_size; {an index into |trie|}
-@z
-@x
-@ @d trie_link(#)==trie[#].rh {``downward'' link in a trie}
-@d trie_char(#)==trie[#].b1 {character matched at this trie location}
-@d trie_op(#)==trie[#].b0 {program for hyphenation at this trie location}
-@y
-@ For more than 255 trie op codes, the three fields |trie_link|, |trie_char|,
-and |trie_op| will no longer fit into one memory word; thus using web2c
-we define |trie| as three array instead of an array of records.
-The variant will be implented by reusing the opcode field later on with
-another macro.
-@d trie_link(#)==trie_trl[#] {``downward'' link in a trie}
-@d trie_char(#)==trie_trc[#] {character matched at this trie location}
-@d trie_op(#)==trie_tro[#] {program for hyphenation at this trie location}
-@z
-@x
-@!trie:array[trie_pointer] of two_halves; {|trie_link|, |trie_char|, |trie_op|}
-@y
-@!trie_trl:array[trie_pointer] of halfword; {|trie_link|}
-@!trie_tro:array[trie_pointer] of halfword; {|trie_op| and |trie_link|}
-@!trie_trc:array[trie_pointer] of quarterword; {|trie_char|}
-@z
-@x
-@!hyf_next:array[1..trie_op_size] of quarterword; {continuation code}
-@y
-@!hyf_next:array[1..trie_op_size] of trie_opcode; {continuation code}
-@z
-@x
-    begin if trie_op(z)<>min_quarterword then
-@y
-    begin if trie_op(z)<>min_trie_op then
-@z
-@x
-until v=min_quarterword;
-@y
-until v=min_trie_op;
-@z
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% [43.943] Larger tries, also in documentation parts.
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-@x
-|hyf_next[@t$v^\prime$@>]=min_quarterword|.
-@y
-|hyf_next[@t$v^\prime$@>]=min_trie_op|.
-@z
-@x
-$$\hbox{|@t$v^\prime$@>:=new_trie_op(0,1,min_quarterword)|,\qquad
-@y
-$$\hbox{|@t$v^\prime$@>:=new_trie_op(0,1,min_trie_op)|,\qquad
-@z
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % [43.943] web2c can't parse negative lower bounds in arrays.  Sorry.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 @x
@@ -1353,42 +1257,10 @@ $$\hbox{|@t$v^\prime$@>:=new_trie_op(0,1,min_trie_op)|,\qquad
 @y
 @!init@! trie_op_hash:array[neg_trie_op_size..trie_op_size] of 0..trie_op_size;
 @z
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% [43.943,944] Larger hyphenation tries.
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 @x
-@!trie_used:array[ASCII_code] of quarterword;
-@y
-@!trie_used:array[ASCII_code] of trie_opcode;
-@z
-@x
-@!trie_op_val:array[1..trie_op_size] of quarterword;
-@y
-@!trie_op_val:array[1..trie_op_size] of trie_opcode;
-@z
-@x
-tini
-@y
-tini@;
-@!max_op_used:trie_opcode; {largest opcode used for any language}
-@!small_op:boolean; {flag used while dumping or undumping}
-@z
-@x
-|new_trie_op| could return |min_quarterword| (thereby simply ignoring
-@y
-|new_trie_op| could return |min_trie_op| (thereby simply ignoring
-@z
-@x
-function new_trie_op(@!d,@!n:small_number;@!v:quarterword):quarterword;
-label exit;
 var h:-trie_op_size..trie_op_size; {trial hash location}
-@!u:quarterword; {trial op code}
 @y
-function new_trie_op(@!d,@!n:small_number;@!v:trie_opcode):trie_opcode;
-label exit;
 var h:neg_trie_op_size..trie_op_size; {trial hash location}
-@!u:trie_opcode; {trial op code}
 @z
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -1404,43 +1276,6 @@ begin h:=abs(toint(n)+313*toint(d)+361*toint(v)+1009*toint(cur_lang))
 @z
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% [43.944,945,946] And larger tries again.
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-@x
-    if u=max_quarterword then
-      overflow("pattern memory ops per language",
-        max_quarterword-min_quarterword);
-    incr(trie_op_ptr); incr(u); trie_used[cur_lang]:=u;
-@y
-    if u=max_trie_op then
-      overflow("pattern memory ops per language",
-      max_trie_op-min_trie_op);
-    incr(trie_op_ptr); incr(u); trie_used[cur_lang]:=u;
-    if u>max_op_used then max_op_used:=u;
-@z
-@x
-op_start[0]:=-min_quarterword;
-@y
-op_start[0]:=-min_trie_op;
-@z
-@x
-for k:=0 to 255 do trie_used[k]:=min_quarterword;
-@y
-for k:=0 to 255 do trie_used[k]:=min_trie_op;
-@z
-@x
-trie_op_ptr:=0;
-@y
-max_op_used:=min_trie_op;
-trie_op_ptr:=0;
-@z
-@x
-@t\hskip10pt@>@!trie_o:packed array[trie_pointer] of quarterword;
-@y
-@t\hskip10pt@>@!trie_o:packed array[trie_pointer] of trie_opcode;
-@z
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % [43.947] A casting problem.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 @x
@@ -1449,60 +1284,6 @@ begin h:=abs(trie_c[p]+1009*trie_o[p]+@|
 @y
 begin h:=abs(toint(trie_c[p])+1009*toint(trie_o[p])+@|
     2718*toint(trie_l[p])+3142*toint(trie_r[p])) mod trie_size;
-@z
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% [43.950,958,960,963] Larger tries.
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-@x
-@d trie_back(#)==trie[#].lh {backward links in |trie| holes}
-@y
-@d trie_back(#)==trie_tro[#] {use the opcode field now for backward links}
-@z
-@x
-@<Move the data into |trie|@>=
-h.rh:=0; h.b0:=min_quarterword; h.b1:=min_quarterword; {|trie_link:=0|,
-  |trie_op:=min_quarterword|, |trie_char:=qi(0)|}
-if trie_root=0 then {no patterns were given}
-  begin for r:=0 to 256 do trie[r]:=h;
-@y
-@d clear_trie == {clear |trie[r]|}
-  begin trie_link(r):=0;
-  trie_op(r):=min_trie_op;
-  trie_char(r):=min_quarterword; {|trie_char:=qi(0)|}
-  end
-@<Move the data into |trie|@>=
-if trie_root=0 then {no patterns were given}
-  begin for r:=0 to 256 do clear_trie;
-@z
-@x
-  repeat s:=trie_link(r); trie[r]:=h; r:=s;
-@y
-  repeat s:=trie_link(r); clear_trie; r:=s;
-@z
-@x
-@!v:quarterword; {trie op code}
-@y
-@!v:trie_opcode; {trie op code}
-@z
-@x
-if trie_o[q]<>min_quarterword then
-@y
-if trie_o[q]<>min_trie_op then
-@z
-@x
-trie_c[p]:=si(c); trie_o[p]:=min_quarterword;
-@y
-trie_c[p]:=si(c); trie_o[p]:=min_trie_op;
-@z
-@x
-l:=k; v:=min_quarterword;
-@y
-l:=k; v:=min_trie_op;
-@z
-@x
-@!h:two_halves; {template used to zero out |trie|'s holes}
-@y
 @z
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -1860,9 +1641,7 @@ for k:=1 to trie_op_ptr do
   dump_int(hyf_next[k]);
   end;
 @y
-dump_things(trie_trl[0], trie_max+1);
-dump_things(trie_tro[0], trie_max+1);
-dump_things(trie_trc[0], trie_max+1);
+dump_things(trie[0], trie_max+1);
 dump_int(trie_op_ptr);
 dump_things(hyf_distance[1], trie_op_ptr);
 dump_things(hyf_num[1], trie_op_ptr);
@@ -1878,9 +1657,7 @@ for k:=1 to j do
   undump(min_quarterword)(max_quarterword)(hyf_next[k]);
   end;
 @y
-undump_things(trie_trl[0], j+1);
-undump_things(trie_tro[0], j+1);
-undump_things(trie_trc[0], j+1);
+undump_things(trie[0], j+1);
 undump_size(0)(trie_op_size)('trie op size')(j); @+init trie_op_ptr:=j;@+tini
 undump_things(hyf_distance[1], j);
 undump_things(hyf_num[1], j);
