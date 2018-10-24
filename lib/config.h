@@ -134,6 +134,5 @@ extern void zinput3ints ();
 extern int argc;
 extern char **gargv;
 extern void argv ();
-extern char *versionstring;
 
 #endif /* not CONFIG_H */

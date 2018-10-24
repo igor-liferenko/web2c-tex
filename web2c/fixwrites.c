@@ -315,7 +315,6 @@ main (argc, argv)
           || strncmp (cp + 1, "buffer", 6) == 0
           || strncmp (cp + 1, "dig", 3) == 0
           || strncmp (cp + 1, "xchr", 4) == 0
-          || strncmp (cp + 1, "versionstring", 13) == 0
           || strncmp (cp + 1, "k ,", 3) == 0
           || strncmp (cp + 1, "s ,", 3) == 0)
 	strcpy (filename, "stdout");
@@ -375,14 +374,6 @@ main (argc, argv)
 		if (*cp == '\\')
 		  ++cp;		/* allow \" in string */
 	    }
-
-          /* More kludge -- versionstring is a string, not a number, so
-             we have to use %s.  */
-          else if (strncmp (cp, "versionstring", 13) == 0)
-            {
-              *as++ = '%';
-              *as++ = 's';
-            }
 
           else
 	    {
