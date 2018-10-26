@@ -1079,14 +1079,7 @@ ship out a box of stuff, we shall use the macro |ensure_dvi_open|.
 @!months:c_char_pointer;
 @z
 
-FIXME: is it needed?
-@x
-begin wlog(banner);
-@y
-begin wlog (banner);
-@z
-
-FIXME: is it needed?
+FIXME: why is this done?
 @x
 months:='JANFEBMARAPRMAYJUNJULAUGSEPOCTNOVDEC';
 @y
