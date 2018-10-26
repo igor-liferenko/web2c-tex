@@ -1079,11 +1079,12 @@ ship out a box of stuff, we shall use the macro |ensure_dvi_open|.
 @!months:c_char_pointer;
 @z
 
-FIXME: why is this done?
+Start with space in order for `pool_name' to work with `strcpy' and `strlen'
+(see change [4.51]).
 @x
 months:='JANFEBMARAPRMAYJUNJULAUGSEPOCTNOVDEC';
 @y
-months := ' JANFEBMARAPRMAYJUNJULAUGSEPOCTNOVDEC';
+months:=' JANFEBMARAPRMAYJUNJULAUGSEPOCTNOVDEC';
 @z
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
