@@ -16,7 +16,7 @@ do not change init - tini to ifdef()-endif() - use initex.ch via "tie -c" which 
 
 ++++++++++
 
-check this:
+To understand what for is texmfmem.h, do this (the second is from web2c-7.5.4):
 diff -u lib/texmfmem.h texmfmem.h|colordiff
 
 ++++++++++
