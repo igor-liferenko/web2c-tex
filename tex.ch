@@ -177,13 +177,18 @@ start_of_TEX@t\hskip-2pt@>, end_of_TEX@t\hskip-2pt@>,@,final_end;
 @!save_size=4000; {space for saving values outside of current group; must be
 @z
 @x
+@!trie_op_size=500; {space for ``opcodes'' in the hyphenation patterns}
+@y
+@!trie_op_size=500; {space for ``opcodes'' in the hyphenation patterns}
+@!neg_trie_op_size=-500; {for lower |trie_op_hash| array bound;
+  must be equal to |-trie_op_size|.}
+@z
+@x
 @!dvi_buf_size=800; {size of the output buffer; must be a multiple of 8}
 @!file_name_size=40; {file names shouldn't be longer than this}
 @!pool_name='TeXformats:TEX.POOL                     ';
   {string of length |file_name_size|; tells where the string pool appears}
 @y
-@!neg_trie_op_size=-500; {for lower |trie_op_hash| array bound;
-  must be equal to |-trie_op_size|.}
 @!dvi_buf_size=16384; {size of the output buffer; must be a multiple of 8}
 @!file_name_size=1024; {file names shouldn't be longer than this}
 @!pool_name='tex.pool';
