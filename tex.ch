@@ -192,40 +192,6 @@ start_of_TEX@t\hskip-2pt@>, end_of_TEX@t\hskip-2pt@>,@,final_end;
 @z
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% [1.12] Sensitive compile-time constants.  For C we change mem_base and
-% hi_mem_base to reflect our use of 0-origin vs pc's use of
-% negative-origin.  Despite the fact that it is a ``sensitive''
-% constant, we're going to make mem_top a #define in the C code for
-% readability and ease of modification (it's up above) -- it needs
-% to be changed for the trip test.
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-@x
-@d mem_bot=0 {smallest index in the |mem| array dumped by \.{INITEX};
-  must not be less than |mem_min|}
-@d mem_top==30000 {largest index in the |mem| array dumped by \.{INITEX};
-  must be substantially larger than |mem_bot|
-  and not greater than |mem_max|}
-@d font_base=0 {smallest internal font number; must not be less
-  than |min_quarterword|}
-@d hash_size=2100 {maximum number of control sequences; it should be at most
-  about |(mem_max-mem_min)/10|}
-@d hash_prime=1777 {a prime number equal to about 85\pct! of |hash_size|}
-@d hyph_size=307 {another prime; the number of \.{\\hyphenation} exceptions}
-@y
-@d mem_bot=0 {smallest index in the |mem| array dumped by \.{INITEX};
-  must not be less than |mem_min|}
-@d mem_top==30000 {largest index in the |mem| array dumped by \.{INITEX};
-  must be substantially larger than |mem_bot|
-  and not greater than |mem_max|}
-@d font_base=0 {smallest internal font number; must not be less
-  than |min_quarterword|}
-@d hash_size=2100 {maximum number of control sequences; it should be at most
-  about |(mem_max-mem_min)/10|}
-@d hash_prime=1777 {a prime number equal to about 85\pct! of |hash_size|}
-@d hyph_size=307 {another prime; the number of \.{\\hyphenation} exceptions}
-@z
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % [1.16] Use C macros for `incr' and `decr'.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 @x
