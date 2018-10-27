@@ -1,1 +1,1 @@
-make stat/tats equal to empty in tex.ch, rm enctex.ch from Makefile
+make stat/tats equal to empty in tex.ch, do not touch init/tini in tex.ch, rm enctex.ch from Makefile
