@@ -203,7 +203,7 @@ start_of_TEX@t\hskip-2pt@>, end_of_TEX@t\hskip-2pt@>,@,final_end;
   length of \TeX's own strings, which is currently about 23000}
 @!save_size=4000; {space for saving values outside of current group; must be
   at most |max_halfword|}
-@!trie_size=14000; {space for hyphenation patterns; should be larger for
+@!trie_size=8000; {space for hyphenation patterns; should be larger for
   \.{INITEX} than it is in production versions of \TeX}
 @!trie_op_size=500; {space for ``opcodes'' in the hyphenation patterns}
 @!neg_trie_op_size=-500; {for lower |trie_op_hash| array bound;

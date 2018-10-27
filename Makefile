@@ -7,7 +7,7 @@ all:
 	rm -f iextra.c
 	ln -s lib/texmf.c iextra.c
 	rm -f ctex.ch
-	tie -c ctex.ch tex.web tex.ch enctex.ch
+	tie -c ctex.ch tex.web tex.ch ru.ch enctex.ch
 	tangle tex.web ctex.ch
 	/bin/sh ./convert
 	gcc -DTeX -Ilib -DINITEX -DINI -g  -c iextra.c
