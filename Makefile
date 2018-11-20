@@ -38,6 +38,7 @@ all:
 	@mkdir -p /usr/local/share/texmf/web2c/
 	mv tex.pool /usr/local/share/texmf/web2c/
 
+# remove the following and ./lhplain.ini when you finish testing tex
 fmt:
 	@perl -ne 'print if /plain/ or /\\let\\\w{6,}=\\undefined/ or /hoffset/..eof' lhplain.ini >tex.ini
 	@initex tex.ini >/dev/null
@@ -46,7 +47,7 @@ fmt:
 	@cat /usr/share/texlive/texmf-dist/tex/generic/ruhyphen/ruhyphal.tex | iconv -f koi8-r -t cp866 >ruhyphal.tex
 	@initex ru.ini >/dev/null
 	@mv ru.fmt /usr/local/share/texmf/web2c/
-	@#perl -ne 'print if /plain/ or /\\let\\\w{6,}=\\undefined/ or /dump/' lhplain.ini >plain.ini
-	@#initex plain.ini >/dev/null
-	@#mv plain.fmt /usr/local/share/texmf/web2c/
+	@perl -ne 'print unless /hoffset/../catcode...=12/' ru.ini >ru-mpost.ini
+	@initex ru-mpost.ini >/dev/null
+	@mv ru-mpost.fmt /usr/local/share/texmf/web2c/
 	@texhash /usr/local/share/texmf >/dev/null
