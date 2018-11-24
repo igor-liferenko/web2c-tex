@@ -47,7 +47,4 @@ fmt:
 	@cat /usr/share/texlive/texmf-dist/tex/generic/ruhyphen/ruhyphal.tex | iconv -f koi8-r -t cp866 >ruhyphal.tex
 	@initex ru.ini >/dev/null
 	@mv ru.fmt /usr/local/share/texmf/web2c/
-	@perl -ne 'print unless /hoffset/../catcode...=12/' ru.ini >mpost-no-offset.ini
-	@initex mpost-no-offset.ini >/dev/null
-	@mv mpost-no-offset.fmt /usr/local/share/texmf/web2c/
 	@texhash /usr/local/share/texmf >/dev/null
