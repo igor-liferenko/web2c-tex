@@ -38,7 +38,7 @@ all:
 	@mkdir -p /usr/local/share/texmf/web2c/
 	mv tex.pool /usr/local/share/texmf/web2c/
 
-# remove the following and ./lhplain.ini when you finish testing tex
+# remove the following and ./lhplain.ini when you do all that is needed in this repo
 fmt:
 	@perl -ne 'print if /plain/ or /\\let\\\w{6,}=\\undefined/ or /hoffset/..eof' lhplain.ini >tex.ini
 	@initex tex.ini >/dev/null
