@@ -43,7 +43,7 @@ fmt:
 	@perl -ne 'print if /plain/ or /\\let\\\w{6,}=\\undefined/ or /hoffset/..eof' lhplain.ini >tex.ini
 	@initex tex.ini >/dev/null
 	@mv tex.fmt /usr/local/share/texmf/web2c/
-	@perl -ne 'print unless /^\s+\\xordcode/' lhplain.ini >ru.ini
+	@perl -ne 'print unless /^\s+\\xordcode/' lhplain.ini >ru.ini # TL's tex works OK as-is, but this tex does not process \xordcode for some reason, so exclude it and convert manually in the next command
 	@cat /usr/share/texlive/texmf-dist/tex/generic/ruhyphen/ruhyphal.tex | iconv -f koi8-r -t cp866 >ruhyphal.tex
 	@initex ru.ini >/dev/null
 	@mv ru.fmt /usr/local/share/texmf/web2c/
