@@ -48,12 +48,3 @@ fmt:
 	@initex ru.ini >/dev/null
 	@mv ru.fmt /usr/local/share/texmf/web2c/
 	@texhash /usr/local/share/texmf >/dev/null
-
-pdffmt:
-	@mkdir -p /usr/local/share/texmf/web2c/pdftex/
-	@perl -pe 's/^(?=\\hoffset)/\\ifx\\pdfoutput\\undefined\\else\\pdfoutput=1 \\pdfcompresslevel=9 \\pdfdecimaldigits=3 \\pdfpkresolution=600 \\pdfminorversion=5 \\pdfobjcompresslevel=2 \\pdfhorigin=1in \\pdfvorigin=1in \\pdfpagewidth=210mm \\pdfpageheight=297mm \\fi\n/;s/^(?=  \\hoffset)/\\ifx\\pdfoutput\\undefined\\else\\pdfhorigin1truein \\pdfvorigin1truein \\pdfpagewidth210truemm \\pdfpageheight297truemm \\fi\n/' lhplain.ini >pdflhplain.ini
-	@pdftex -ini -jobname pdftex pdflhplain.ini >/dev/null
-	@mv pdftex.fmt /usr/local/share/texmf/web2c/pdftex/
-	@pdftex -ini -enc -jobname ru pdflhplain.ini >/dev/null
-	@mv ru.fmt /usr/local/share/texmf/web2c/pdftex/
-	@texhash /usr/local/share/texmf >/dev/null
