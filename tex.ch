@@ -139,7 +139,7 @@ start_of_TEX@t\hskip-2pt@>, end_of_TEX@t\hskip-2pt@>,@,final_end;
 @!error_line=72; {width of context lines on terminal error messages}
 @!half_error_line=42; {width of first lines of contexts in terminal
 @y
-@!error_line=79; {width of context lines on terminal error messages}
+@!error_line=78; {width of context lines on terminal error messages}
 @!half_error_line=50; {width of first lines of contexts in terminal
 @z
 @x
