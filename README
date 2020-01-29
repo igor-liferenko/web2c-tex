@@ -1,3 +1,6 @@
 The generated code assumes that the type `short' has at least the range
 -32768..32767, and that `unsigned short' has at least the range
 0..65535.
+
+How kpathsea support was added see
+https://github.com/asciidwango/ptex/blob/master/archives/ascii-ptex/ptex214/corresponding-sources/web2c.kpathsea-2.6.help
