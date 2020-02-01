@@ -1,0 +1,1 @@
+rm ctex.ch from tangle and run `make' and see errors and create minimal ctex.ch that compilation will succeed (no kpathsea is necessary); then read and understand `convert' script
