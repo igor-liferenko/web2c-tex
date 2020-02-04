@@ -1,6 +1,3 @@
-# ftp://tug.ctan.org/pub/tex/historic/systems/web2c/
-# http://tug.ctan.org/tex-archive/systems/knuth/local/tex/initex.ch
-# https://bencane.com/2011/09/22/kill-creating-a-core-dump/
 all:
 	make -C lib
 	make -C web2c
