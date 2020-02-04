@@ -2,20 +2,9 @@
    just call `exit' from the web files, since the webs use `exit' as a
    loop label.  */
 
-#include "config.h"
+#include <stdlib.h>
 
-void
-uexit (unix_code)
-  int unix_code;
+void uexit(int unix_code)
 {
-  int final_code;
-  
-  if (unix_code == 0)
-    final_code = EXIT_SUCCESS;
-  else if (unix_code == 1)
-    final_code = !EXIT_SUCCESS;
-  else
-    final_code = unix_code;
-  
-  exit (final_code);
+  exit(unix_code);
 }
