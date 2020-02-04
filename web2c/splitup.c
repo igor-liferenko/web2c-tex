@@ -19,7 +19,7 @@ char *output_name = "tex";
 int has_ini;
 
 #define	TEMPFILE	"temp.c"
-#define	MAXLINES	20000
+#define	MAXLINES	30000
 
 char buffer[1024], filename[PATH_MAX];
 
