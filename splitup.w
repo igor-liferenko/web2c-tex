@@ -8,8 +8,6 @@
 #define FATAL_PERROR(str) do { \
   perror (str); exit (EXIT_FAILURE); } while (0)
 
-int argc;
-char **gargv;
 int my_read_line ();
 
 int filenumber = 0, ifdef_nesting = 0, lines_in_file = 0;
@@ -24,33 +22,11 @@ char buffer[1024], filename[PATH_MAX];
 FILE *out, *ini, *temp;
 FILE *in;
 
-int main (int argc, char *argv[])
+int main (void)
 {
     in = stdin;
-    if (argc > 1)
-	output_name = argv[1];
 
-    (void) sprintf (filename, "%sd.h", output_name);
-    if (!(out = fopen (filename, "w")))
-	FATAL_PERROR (filename);
-
-    (void) fprintf(out, "#undef\tTRIP\n#undef\tTRAP\n#define\tSTAT\n#undef\tDEBUG\n");
-
-    for ((void) fgets(buffer, sizeof(buffer), in); strncmp(&buffer[10], "coerce.h", 8);
-         (void) fgets(buffer, sizeof(buffer), in))
-      {
-	if (buffer[0] == '#' || buffer[0] == '\n' || buffer[0] == '}'
-            || buffer[0] == '/'
-	    || buffer[0] == ' ' || strncmp(buffer, "typedef", 7) == 0)
-          /*nothing*/;
-	else
-          (void) fputs("EXTERN ", out);
-
-	(void) fputs(buffer, out);
-      }
-
-    (void) fputs(buffer, out);
-    fclose (out);
+  @<Write \.{texd.h}@>@;
 
     (void) sprintf(filename, "i%s.c", output_name);
     ini = fopen(filename, "w");
@@ -134,3 +110,35 @@ my_read_line()
     else if (strncmp(buffer, "#endif", 6) == 0) --ifdef_nesting;
     return true;
 }
+
+@ We read input line by line up to the line
+
+\centerline{\tt \#include "coerce.h"}
+
+and write to \.{texd.h}. But first write to \.{texd.h} the following:
+
+\centerline{\tt \#undef TRIP}
+
+And while writing to \.{texd.h}, append \.{EXTERN} to non-preprocessor directives and non-typedefs.
+
+@<Write \.{texd.h}@>=
+    (void) sprintf (filename, "%sd.h", output_name);
+    if (!(out = fopen (filename, "w")))
+	FATAL_PERROR (filename);
+
+    (void) fprintf(out, "#undef TRIP\n");
+
+    for ((void) fgets(buffer, sizeof(buffer), in); strncmp(&buffer[10], "coerce.h", 8);
+         (void) fgets(buffer, sizeof(buffer), in))
+      {
+	if (buffer[0] == '#' || buffer[0] == '\n' || buffer[0] == '}'
+	    || buffer[0] == ' ' || strncmp(buffer, "typedef", 7) == 0)
+          /*nothing*/;
+	else
+          (void) fputs("EXTERN ", out);
+
+	(void) fputs(buffer, out);
+      }
+
+    (void) fputs(buffer, out);
+    fclose (out);
