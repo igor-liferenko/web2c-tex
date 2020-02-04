@@ -11,3 +11,6 @@ tex0.o
 texd.h
 tex.pool
 ctex.ch
+splitup
+splitup.c
+temp.c
