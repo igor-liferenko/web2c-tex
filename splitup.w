@@ -66,7 +66,7 @@ and write to \.{texd.h}. But first write to \.{texd.h} the following:
 And while writing to \.{texd.h}, append \.{EXTERN} to non-preprocessor directives and non-typedefs.
 
 @<Write \.{texd.h}@>=
-    (void) sprintf (filename, "%sd.h", output_name);
+    (void) sprintf (filename, "texd.h");
     if (!(out = fopen (filename, "w")))
 	FATAL_PERROR (filename);
 

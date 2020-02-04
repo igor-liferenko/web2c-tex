@@ -5,7 +5,7 @@ cat lib/common.defines lib/texmf.defines tex.p \
 	| web2c/web2c -t -htexmf.h \
 	| web2c/fixwrites -t \
 	| web2c/regfix \
-	| web2c/splitup
+	| ./splitup
 
 cat coerce.h coerce.add > xcoerce.h
 mv xcoerce.h coerce.h
