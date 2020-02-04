@@ -1,10 +1,10 @@
 all:
 	make -C lib
 	make -C web2c
-	gcc -DTeX -Ilib -g -c lib/openinout.c
 	@#
 	tangle tex.web tex.ch
 	/bin/sh ./convert
+	gcc -DTeX -Ilib -g -c lib/openinout.c
 	gcc -DTeX -Ilib -g -c tex0.c
 	@#
 	gcc -DTeX -Ilib -DINITEX -DINI -g -c lib/texmf.c
