@@ -5,7 +5,7 @@ cat lib/common.defines lib/texmf.defines tex.p \
 	| web2c/web2c -t -htexmf.h \
 	| web2c/fixwrites -t \
 	| web2c/regfix \
-	| ./splitup
+	| ./splitup # TODO: do splitup via sed
 
-cat coerce.h coerce.add > xcoerce.h
+cat coerce.h coerce.add > xcoerce.h # TODO: use sponge
 mv xcoerce.h coerce.h
