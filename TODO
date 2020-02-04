@@ -14,7 +14,7 @@ do not change init - tini to ifdef()-endif() - use initex.ch via "tie -c" which 
 -@!trie_size=8000; {space for hyphenation patterns; should be larger for
 +@!trie_size=6500; {space for hyphenation patterns; should be larger for
 
-++++++++++
+----------------------
 
-To understand what for is texmfmem.h, do this (the second is from web2c-7.5.4):
-diff -u lib/texmfmem.h texmfmem.h|colordiff
+for TRIP test, find trip.sed and tripenv via 'git log --' and search 'trip.sed' and 'tripenv'
+in 'git log -p' how to use them
