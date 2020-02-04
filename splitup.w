@@ -21,24 +21,9 @@ int main (void)
     (void) fputs("#define EXTERN extern\n", out);
     (void) fprintf(out, "#include \"texd.h\"\n\n");
 
-    do {
-	/* Read one routine into a temp file */
-	if (!(temp = fopen("temp.c", "w+")))
-	    FATAL_PERROR ("temp.c");
-            
-	while (fgets(buffer, sizeof(buffer), in) != NULL) {
-	    (void) fputs(buffer, temp);
-	    if (buffer[0] == '}') break; /* End of procedure */
-	}
-	while (fgets(buffer, sizeof(buffer), in) != NULL)
-	    (void) fputs(buffer, temp);
-	rewind(temp);
 
-	    while (fgets(buffer, sizeof(buffer), temp))
-		(void) fputs(buffer, out);
-	if (fclose (temp))
-	    FATAL_PERROR ("fclose");
-    } while (!feof(in));
+    while (fgets(buffer, sizeof(buffer), in))
+	(void) fputs(buffer, out);
 
     return 0;
 }
