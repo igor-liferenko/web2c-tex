@@ -2,14 +2,37 @@
 % [1.4] program header
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 @x
+Actually the heading shown here is not quite normal: The |program| line
+does not mention any |output| file, because \ph\ would ask the \TeX\ user
+to specify a file name if |output| were specified here.
+@:PASCAL H}{\ph@>
+@^system dependencies@>
+
+@d mtype==t@&y@&p@&e {this is a \.{WEB} coding trick:}
+@f mtype==type {`\&{mtype}' will be equivalent to `\&{type}'}
+@f type==true {but `|type|' will not be treated as a reserved word}
+
+@p @t\4@>@<Compiler directives@>@/
+program TEX; {all file names are defined dynamically}
 label @<Labels in the outer block@>@/
 @y
+
+@d mtype==t@&y@&p@&e {this is a \.{WEB} coding trick:}
+@f mtype==type {`\&{mtype}' will be equivalent to `\&{type}'}
+@f type==true {but `|type|' will not be treated as a reserved word}
+
+@p @t\4@>@<Compiler directives@>@/
+program TEX; {all file names are defined dynamically}
 @z
 
 @x
 @<Labels in the out...@>=
+start_of_TEX@t\hskip-2pt@>, end_of_TEX@t\hskip-2pt@>,@,final_end;
+  {key control points}
 @y
 @<Labels in the outer block@>=
+start_of_TEX@t\hskip-2pt@>, end_of_TEX@t\hskip-2pt@>,@,final_end;
+  {key control points}
 @z
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -35,6 +58,7 @@ label @<Labels in the outer block@>@/
 @!pool_name='TeXformats:TEX.POOL                     ';
 @y
 @!pool_name='tex.pool';
+@.TeXformats@>
 @z
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
