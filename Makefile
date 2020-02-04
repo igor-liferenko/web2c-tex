@@ -1,6 +1,7 @@
 all:
 	make -C lib
 	make -C web2c
+	gcc -g -o splitup splitup.c
 	@#
 	tangle tex.web tex.ch
 	/bin/sh ./convert

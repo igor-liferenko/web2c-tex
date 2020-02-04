@@ -10,6 +10,5 @@ all:
 	gcc -o web2c -g   web2c.o y.tab.o lex.yy.o ../lib/lib.a -lkpathsea  -lfl
 	gcc -I./../lib -g  -c fixwrites.c
 	gcc -o fixwrites -g   fixwrites.o ../lib/lib.a -lkpathsea
-	gcc -g -o splitup splitup.c
 	gcc -I./../lib -g  -c regfix.c
 	gcc -o regfix -g   regfix.o ../lib/lib.a -lkpathsea 
