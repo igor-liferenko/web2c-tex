@@ -2,8 +2,10 @@ coerce.h
 ctex.ch
 iextra.c
 iextra.o
+initex
 initex.c
 initex.o
+virtex
 itex.c
 itex.o
 openinout.c
