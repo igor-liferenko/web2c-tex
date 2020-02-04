@@ -10,3 +10,4 @@ tex0.c
 tex0.o
 texd.h
 tex.pool
+ctex.ch

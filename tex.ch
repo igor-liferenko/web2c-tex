@@ -1,120 +1,15 @@
-% tex.ch for C compilation with web2c, derived from various other change files.
-% By Tim Morgan, UC Irvine ICS Department, and many others.
-%
-% Modification history:
-% (05/28/86) ETM Started with TeX 2.0
-% (06/03/87) ETM Brought up to TeX 2.2
-% (09/26/87) ETM Brought up to TeX 2.3
-% (10/01/87) ETM Brought up to TeX 2.5
-% (12/21/87) ETM Brought up to TeX 2.7
-% (01/14/88) ETM Brought up to TeX 2.9
-% (02/20/88) PAM Revised format and module numbers
-% (03/01/88) ETM Eliminated some unused variables and unnecesary tests
-% (05/09/88) ETM Added yet another casting bug fix
-% (06/21/88) ETM Brought up to TeX version 2.93
-% (12/11/88) ETM Brought up to TeX version 2.94
-% (01/12/89) PAM Brought up to TeX version 2.95
-% (02/14/89) ETM Brought up to TeX version 2.96
-% (03/10/89) ETM Brought up to TeX version 2.98
-% (07/06/89) ETM Brought up to TeX version 2.991
-% (11/30/89) KB  To version 2.992 (8-bit).
-% (01/10/90) SR  To version 2.993.
-% (03/27/90) KY  To version 3.0.
-% (more recent changes in ChangeLog)
-% 
-% The module numbers in this change file refer to the published text in
-% TeX: The Program, Volume B of Computers&Typesetting.
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% [0] WEAVE: print changes only.
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-@x
-  \def\?##1]{\hbox to 1in{\hfil##1.\ }}
-  }
-@y
-  \def\?##1]{\hbox{Changes to \hbox to 1em{\hfil##1}.\ }}
-  }
-\let\maybe=\iffalse
-@z
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% [1.2] banner
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-@x
-@d banner=='This is TeX, Version 3.14159265' {printed when \TeX\ starts}
-@y
-@d banner=='This is TeX, Version 3.14159265' {more is printed later}
-@z
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % [1.4] program header
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 @x
-Actually the heading shown here is not quite normal: The |program| line
-does not mention any |output| file, because \ph\ would ask the \TeX\ user
-to specify a file name if |output| were specified here.
-@:PASCAL H}{\ph@>
-@^system dependencies@>
-
-@d mtype==t@&y@&p@&e {this is a \.{WEB} coding trick:}
-@f mtype==type {`\&{mtype}' will be equivalent to `\&{type}'}
-@f type==true {but `|type|' will not be treated as a reserved word}
-
-@p @t\4@>@<Compiler directives@>@/
-program TEX; {all file names are defined dynamically}
 label @<Labels in the outer block@>@/
 @y
-
-@d mtype==t@&y@&p@&e {this is a \.{WEB} coding trick:}
-@f mtype==type {`\&{mtype}' will be equivalent to `\&{type}'}
-@f type==true {but `|type|' will not be treated as a reserved word}
-
-@p @t\4@>@<Compiler directives@>@/
-program TEX; {all file names are defined dynamically}
 @z
 
 @x
 @<Labels in the out...@>=
-start_of_TEX@t\hskip-2pt@>, end_of_TEX@t\hskip-2pt@>,@,final_end;
-  {key control points}
 @y
 @<Labels in the outer block@>=
-start_of_TEX@t\hskip-2pt@>, end_of_TEX@t\hskip-2pt@>,@,final_end;
-  {key control points}
-@z
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% [1.7] debug..gubed, stat..tats
-% Here we change these WEB symbols, which are used much as #ifdef's
-% are in C, into something which will get translated into actual #ifdef's.
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-@x
-@d debug==@{ {change this to `$\\{debug}\equiv\null$' when debugging}
-@d gubed==@t@>@} {change this to `$\\{gubed}\equiv\null$' when debugging}
-@y
-@d debug==ifdef('DEBUG')
-@d gubed==endif('DEBUG')
-@z
-@x
-@d stat==@{ {change this to `$\\{stat}\equiv\null$' when gathering
-  usage statistics}
-@d tats==@t@>@} {change this to `$\\{tats}\equiv\null$' when gathering
-  usage statistics}
-@y
-@d stat==ifdef('STAT')
-@d tats==endif('STAT')
-@z
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% [1.8] Same, for `init..tini'.
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-@x
-@d init== {change this to `$\\{init}\equiv\.{@@\{}$' in the production version}
-@d tini== {change this to `$\\{tini}\equiv\.{@@\}}$' in the production version}
-@y
-@d init==ifdef('INITEX')
-@d tini==endif('INITEX')
 @z
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -127,55 +22,8 @@ start_of_TEX@t\hskip-2pt@>, end_of_TEX@t\hskip-2pt@>,@,final_end;
 @z
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% [1.11] Compile-time constants: some enlarged, dvi_buf_size 16K for
-% BSD I/O, file_name_size is set from the system constant.
+% [1.11] Compile-time constants
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-@x
-@!buf_size=500; {maximum number of characters simultaneously present in
-@y
-@!buf_size=3000; {maximum number of characters simultaneously present in
-@z
-@x
-@!error_line=72; {width of context lines on terminal error messages}
-@!half_error_line=42; {width of first lines of contexts in terminal
-@y
-@!error_line=78; {width of context lines on terminal error messages}
-@!half_error_line=50; {width of first lines of contexts in terminal
-@z
-@x
-@!stack_size=200; {maximum number of simultaneous input sources}
-@!max_in_open=6; {maximum number of input files and error insertions that
-@y
-@!stack_size=300; {maximum number of simultaneous input sources}
-@!max_in_open=15; {maximum number of input files and error insertions that
-@z
-@x
-@!font_max=75; {maximum internal font number; must not exceed |max_quarterword|
-@y
-@!font_max=127; {maximum internal font number; must not exceed |max_quarterword|
-@z
-@x
-@!font_mem_size=20000; {number of words of |font_info| for all fonts}
-@y
-@!font_mem_size=100000; {number of words of |font_info| for all fonts}
-@z
-@x
-@!max_strings=3000; {maximum number of strings; must not exceed |max_halfword|}
-@!string_vacancies=8000; {the minimum number of characters that should be
-@y
-@!max_strings=15000; {maximum number of strings; must not exceed |max_halfword|}
-@!string_vacancies=100000; {the minimum number of characters that should be
-@z
-@x
-@!pool_size=32000; {maximum number of characters in strings, including all
-@y
-@!pool_size=124000; {maximum number of characters in strings, including all
-@z
-@x
-@!save_size=600; {space for saving values outside of current group; must be
-@y
-@!save_size=4000; {space for saving values outside of current group; must be
-@z
 @x
 @!trie_op_size=500; {space for ``opcodes'' in the hyphenation patterns}
 @y
@@ -184,16 +32,9 @@ start_of_TEX@t\hskip-2pt@>, end_of_TEX@t\hskip-2pt@>,@,final_end;
   must be equal to |-trie_op_size|.}
 @z
 @x
-@!dvi_buf_size=800; {size of the output buffer; must be a multiple of 8}
-@!file_name_size=40; {file names shouldn't be longer than this}
 @!pool_name='TeXformats:TEX.POOL                     ';
-  {string of length |file_name_size|; tells where the string pool appears}
 @y
-@!dvi_buf_size=16384; {size of the output buffer; must be a multiple of 8}
-@!file_name_size=1024; {file names shouldn't be longer than this}
 @!pool_name='tex.pool';
-  {string of length |file_name_size|; the string pool name}
-@.TeXformats@>
 @z
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
