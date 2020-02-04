@@ -1,14 +1,11 @@
-/* splitup -- take TeX or MF in C as a single stream on stdin,
-   and it produces several .c and .h files in the current directory
-   as its output.
-
-  Tim Morgan  September 19, 1987.  */
-
-#include "config.h"
-
-#ifdef VMS
-#define unlink delete
-#endif
+#include <stdio.h>
+#include <string.h>
+#include <stdbool.h>
+#include <linux/limits.h>
+#include <stdlib.h>
+#include <unistd.h>
+#define FATAL_PERROR(str) do { \
+  perror (str); exit (EXIT_FAILURE); } while (0)
 
 int argc;
 char **gargv;
@@ -26,11 +23,7 @@ char buffer[1024], filename[PATH_MAX];
 FILE *out, *ini, *temp;
 FILE *in;
 
-
-int
-main (argc, argv)
-  int argc;
-  char *argv[];
+int main (int argc, char *argv[])
 {
     in = stdin;
     if (argc > 1)
@@ -40,10 +33,9 @@ main (argc, argv)
     if (!(out = fopen (filename, "w")))
 	FATAL_PERROR (filename);
 
-    (void) fprintf(out,
-		"#undef\tTRIP\n#undef\tTRAP\n#define\tSTAT\n#undef\tDEBUG\n");
-    for ((void) fgets(buffer, sizeof(buffer), in);
-          strncmp(&buffer[10], "coerce.h", 8);
+    (void) fprintf(out, "#undef\tTRIP\n#undef\tTRAP\n#define\tSTAT\n#undef\tDEBUG\n");
+
+    for ((void) fgets(buffer, sizeof(buffer), in); strncmp(&buffer[10], "coerce.h", 8);
          (void) fgets(buffer, sizeof(buffer), in))
       {
 	if (buffer[0] == '#' || buffer[0] == '\n' || buffer[0] == '}'
@@ -102,10 +94,10 @@ main (argc, argv)
             
 	if (lines_in_file > MAXLINES) {
 	    if (fclose(out))
-		perror("fclose"), uexit (1);
+		perror("fclose"), exit(1);
 	    (void) sprintf(filename, "%s%d.c", output_name, ++filenumber);
 	    if ( !(out = fopen(filename, "w")))
-		perror(filename), uexit (1);
+		perror(filename), exit(1);
 	    (void) fputs("#define EXTERN extern\n", out);
 	    (void) fprintf(out, "#include \"%sd.h\"\n\n", output_name);
 	    lines_in_file = 0;
@@ -113,13 +105,13 @@ main (argc, argv)
     } while (!feof(in));
 
     if (fclose(out))
-	perror("fclose"), uexit (1);
+	perror("fclose"), exit(1);
     if (lines_in_file == 0)
 	(void) unlink(filename);
     if (fclose(ini))
-	perror("fclose"), uexit (1);
+	perror("fclose"), exit(1);
     if (unlink(TEMPFILE))
-	perror(TEMPFILE), uexit (1);
+	perror(TEMPFILE), exit(1);
 
     return EXIT_SUCCESS;
 }
