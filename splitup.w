@@ -19,15 +19,7 @@ int main (void)
 
   @<Write \.{texd.h}@>@;
 
-    (void) sprintf(filename, "itex.c");
-    ini = fopen(filename, "w");
-    if (!ini)
-	FATAL_PERROR (filename);
-
-    (void) fputs("#define EXTERN extern\n", ini);
-    (void) fprintf(ini, "#include \"texd.h\"\n\n");
     (void) sprintf(filename, "tex0.c");
-
     if (!(out = fopen(filename, "w")))
 	FATAL_PERROR (filename);
     (void) fputs("#define EXTERN extern\n", out);

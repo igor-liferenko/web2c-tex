@@ -1,7 +1,6 @@
 coerce.h
 initex
 virtex
-itex.c
 itex.o
 texmf.o
 openinout.o
