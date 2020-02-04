@@ -1,16 +1,13 @@
 @ @c
 #include <stdio.h>
 #include <string.h>
-#include <stdbool.h>
-#include <linux/limits.h>
 #include <stdlib.h>
-#include <unistd.h>
 #define FATAL_PERROR(str) do { \
   perror (str); exit (EXIT_FAILURE); } while (0)
 
-char buffer[1024], filename[PATH_MAX];
+char buffer[1024];
 
-FILE *out, *ini, *temp;
+FILE *out, *temp;
 FILE *in;
 
 int main (void)
@@ -19,9 +16,8 @@ int main (void)
 
   @<Write \.{texd.h}@>@;
 
-    (void) sprintf(filename, "tex0.c");
-    if (!(out = fopen(filename, "w")))
-	FATAL_PERROR (filename);
+    if (!(out = fopen("tex.c", "w")))
+	FATAL_PERROR ("tex.c");
     (void) fputs("#define EXTERN extern\n", out);
     (void) fprintf(out, "#include \"texd.h\"\n\n");
 
@@ -58,9 +54,8 @@ and write to \.{texd.h}. But first write to \.{texd.h} the following:
 And while writing to \.{texd.h}, append \.{EXTERN} to non-preprocessor directives and non-typedefs.
 
 @<Write \.{texd.h}@>=
-    (void) sprintf (filename, "texd.h");
-    if (!(out = fopen (filename, "w")))
-	FATAL_PERROR (filename);
+    if (!(out = fopen ("texd.h", "w")))
+	FATAL_PERROR ("texd.h");
 
     (void) fprintf(out, "#undef TRIP\n");
 

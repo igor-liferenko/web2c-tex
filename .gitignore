@@ -5,8 +5,8 @@ itex.o
 texmf.o
 openinout.o
 tex.p
-tex0.c
-tex0.o
+tex.c
+tex.o
 texd.h
 tex.pool
 ctex.ch
