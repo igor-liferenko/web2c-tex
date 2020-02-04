@@ -20,7 +20,7 @@ extern integer namelength;
 #define EXTERN extern /* Don't instantiate data here.  */
 
 #ifdef TeX
-#include "texd.h"
+#include "../texd.h"
 #else /* Metafont */
 #include "mfd.h"
 #endif

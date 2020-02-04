@@ -7,7 +7,7 @@
 #define	EXTERN
 
 #ifdef TeX
-#include "texd.h"
+#include "../texd.h"
 #define dump_default_var TEXformatdefault
 #define dump_default " plain.fmt"
 #define dump_format " %s.fmt"
