@@ -18,3 +18,8 @@ do not change init - tini to ifdef()-endif() - use initex.ch via "tie -c" which 
 
 for TRIP test, find trip.sed and tripenv via 'git log --' and search 'trip.sed' and 'tripenv'
 in 'git log -p' how to use them
+
+-----------------------
+
+find exact place where "shift/reduce" warning happens in tex.p and which resulting .c code is
+produced by cutting tex.p into halves and checking if warning still appears
