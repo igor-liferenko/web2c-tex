@@ -8,15 +8,6 @@
 #define FATAL_PERROR(str) do { \
   perror (str); exit (EXIT_FAILURE); } while (0)
 
-int my_read_line ();
-
-int filenumber = 0, ifdef_nesting = 0, lines_in_file = 0;
-char *output_name = "tex";
-int has_ini;
-
-#define	TEMPFILE	"temp.c"
-#define	MAXLINES	30000
-
 char buffer[1024], filename[PATH_MAX];
 
 FILE *out, *ini, *temp;
@@ -28,87 +19,40 @@ int main (void)
 
   @<Write \.{texd.h}@>@;
 
-    (void) sprintf(filename, "i%s.c", output_name);
+    (void) sprintf(filename, "itex.c");
     ini = fopen(filename, "w");
     if (!ini)
 	FATAL_PERROR (filename);
 
     (void) fputs("#define EXTERN extern\n", ini);
-    (void) fprintf(ini, "#include \"%sd.h\"\n\n", output_name);
-    (void) sprintf(filename, "%s0.c", output_name);
+    (void) fprintf(ini, "#include \"texd.h\"\n\n");
+    (void) sprintf(filename, "tex0.c");
 
     if (!(out = fopen(filename, "w")))
 	FATAL_PERROR (filename);
     (void) fputs("#define EXTERN extern\n", out);
-    (void) fprintf(out, "#include \"%sd.h\"\n\n", output_name);
+    (void) fprintf(out, "#include \"texd.h\"\n\n");
 
     do {
 	/* Read one routine into a temp file */
-	has_ini = false;
-	if (!(temp = fopen(TEMPFILE, "w+")))
-	    FATAL_PERROR (TEMPFILE);
+	if (!(temp = fopen("temp.c", "w+")))
+	    FATAL_PERROR ("temp.c");
             
-	while (my_read_line()) {
+	while (fgets(buffer, sizeof(buffer), in) != NULL) {
 	    (void) fputs(buffer, temp);
 	    if (buffer[0] == '}') break; /* End of procedure */
 	}
-	while (ifdef_nesting > 0 && my_read_line())
+	while (fgets(buffer, sizeof(buffer), in) != NULL)
 	    (void) fputs(buffer, temp);
 	rewind(temp);
 
-	if (has_ini) {	/* Contained "#ifdef INI..." */
 	    while (fgets(buffer, sizeof(buffer), temp))
-		(void) fputs(buffer, ini);
-	}
-	else {			/* Doesn't contain "#ifdef INI..." */
-	    while (fgets(buffer, sizeof(buffer), temp)) {
 		(void) fputs(buffer, out);
-		lines_in_file++;
-	    }
-	}
 	if (fclose (temp))
 	    FATAL_PERROR ("fclose");
-            
-	if (lines_in_file > MAXLINES) {
-	    if (fclose(out))
-		perror("fclose"), exit(1);
-	    (void) sprintf(filename, "%s%d.c", output_name, ++filenumber);
-	    if ( !(out = fopen(filename, "w")))
-		perror(filename), exit(1);
-	    (void) fputs("#define EXTERN extern\n", out);
-	    (void) fprintf(out, "#include \"%sd.h\"\n\n", output_name);
-	    lines_in_file = 0;
-	}
     } while (!feof(in));
 
-    if (fclose(out))
-	perror("fclose"), exit(1);
-    if (lines_in_file == 0)
-	(void) unlink(filename);
-    if (fclose(ini))
-	perror("fclose"), exit(1);
-    if (unlink(TEMPFILE))
-	perror(TEMPFILE), exit(1);
-
-    return EXIT_SUCCESS;
-}
-
-/*
- * Read a line of input into the buffer, returning `false' on EOF.
- * If the line is of the form "#ifdef INI...", we set "has_ini"
- * `true' else `false'.  We also keep up with the #ifdef/#endif nesting
- * so we know when it's safe to finish writing the current file.
- */
-int
-my_read_line()
-{
-    if (fgets(buffer, sizeof(buffer), in) == NULL) return false;
-    if (strncmp(buffer, "#ifdef", 6) == 0) {
-	++ifdef_nesting;
-	if (strncmp(&buffer[7], "INI", 3) == 0) has_ini = true;
-    }
-    else if (strncmp(buffer, "#endif", 6) == 0) --ifdef_nesting;
-    return true;
+    return 0;
 }
 
 @ We read input line by line up to the line
