@@ -10,5 +10,3 @@ tex.o
 texd.h
 tex.pool
 ctex.ch
-splitup
-splitup.c
