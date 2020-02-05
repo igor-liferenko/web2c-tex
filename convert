@@ -7,4 +7,3 @@ cat lib/common.defines lib/texmf.defines tex.p \
 	| web2c/regfix | ./split.pl
 
 cat tex.prep tex.c | sponge tex.c
-cat coerce.h coerce.add | sponge coerce.h
