@@ -32,17 +32,13 @@ int main (void)
 
 \centerline{\tt \#include "coerce.h"}
 
-and write to \.{texd.h}. But first write to \.{texd.h} the following:
-
-\centerline{\tt \#undef TRIP}
+and write to \.{texd.h}.
 
 And while writing to \.{texd.h}, append \.{EXTERN} to non-preprocessor directives and non-typedefs.
 
 @<Write \.{texd.h}@>=
     if (!(out = fopen ("texd.h", "w")))
 	FATAL_PERROR ("texd.h");
-
-    (void) fprintf(out, "#undef TRIP\n");
 
     for ((void) fgets(buffer, sizeof(buffer), in); strncmp(&buffer[10], "coerce.h", 8);
          (void) fgets(buffer, sizeof(buffer), in))
