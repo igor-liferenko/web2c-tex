@@ -7,6 +7,4 @@ all:
 	gcc -I./../lib -g  -c y.tab.c
 	flex web2c.lex
 	gcc -I./../lib -g  -c lex.yy.c
-	gcc -o web2c -g   web2c.o y.tab.o lex.yy.o ../lib/lib.a -lkpathsea  -lfl
-	gcc -I./../lib -g  -c fixwrites.c
-	gcc -o fixwrites -g   fixwrites.o ../lib/lib.a -lkpathsea 
+	gcc -o web2c -g   web2c.o y.tab.o lex.yy.o ../lib/lib.a -lkpathsea  -lfl 
