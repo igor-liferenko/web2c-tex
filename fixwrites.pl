@@ -1,10 +1,10 @@
 #!/usr/bin/perl -0777 -p
-s/write\(([^,]+),\s*([^"]+?)\)/putc($2, $1)/g;
-s/write\(([^,]+),\s*"(.+?)"/Fputs($1, "$2"/g;
-s/writeln\(([^,]+?)\)/putc('\\n', $1)/g;
-s/writeln\(([^,]+?),\s*([^,]+?)\)/fprintf($1, "%s\\n", $2)/g;
-s/writeln\(([^,]+?),\s*([^,]+?),\s*([^,]+?)\)/fprintf($1, "%s%s\\n", $2, $3)/g;
-s/writeln\(([^,]+?),\s*([^,]+?),\s*([^,]+?),\s*([^,]+?)\)/fprintf($1, "%s%s%ld\\n", $2, $3, (long) $4)/g;
+s/write\s*\(([^,]+),\s*([^"]+?)\)/putc($2, $1)/g;
+s/write\s*\(([^,]+),\s*"(.+?)"/Fputs($1, "$2"/g;
+s/writeln\s*\(([^,]+?)\)/putc('\\n', $1)/g;
+s/writeln\s*\(([^,]+?),\s*([^,]+?)\)/fprintf($1, "%s\\n", $2)/g;
+s/writeln\s*\(([^,]+?),\s*([^,]+?),\s*([^,]+?)\)/fprintf($1, "%s%s\\n", $2, $3)/g;
+s/writeln\s*\(([^,]+?),\s*([^,]+?),\s*([^,]+?),\s*([^,]+?)\)/fprintf($1, "%s%s%ld\\n", $2, $3, (long) $4)/g;
 __END__
 
 This script does the following substitutions:
