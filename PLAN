@@ -1,20 +1,7 @@
 put values to tex.ch, system changes to C-file (like in mytex/) (apply them after `convert' (indent `convert' output first)), UTF-8 changes to C-file (like in mytex/) (apply them after system change-files).
 
-Understand what `convert' does. It creates these files:
+`convert' creates these files:
 
-        coerce.h
-        itex.c
-        tex0.c
-        tex1.c
-        tex2.c
-        tex3.c
-        tex4.c
-        tex5.c
-        tex6.c
-        tex7.c
-        tex8.c
-        tex9.c
-        texd.h
-
-Try old versions of Web2C from ftp://tug.ctan.org/pub/tex/historic/systems/web2c/ - tex.web must compile and run without any change files.
-No kpathsea is necessary.
+        coerce.h - created by web2c
+        tex.c - created by split.pl
+        texd.h - created by split.pl
