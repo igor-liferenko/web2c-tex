@@ -110,33 +110,3 @@
 
 /* Define if you have the ANSI C header files.  */
 #define STDC_HEADERS 1
-
-/* Define if you have memmove.  */
-#define HAVE_MEMMOVE 1
-
-/* Define if you have putenv.  */
-#define HAVE_PUTENV 1
-
-/* Define if you have the <assert.h> header file.  */
-#define HAVE_ASSERT_H 1
-
-/* Define if you have the <float.h> header file.  */
-#define HAVE_FLOAT_H 1
-
-/* Define if you have the <limits.h> header file.  */
-#define HAVE_LIMITS_H 1
-
-/* Define if you have the <memory.h> header file.  */
-#define HAVE_MEMORY_H 1
-
-/* Define if you have the <pwd.h> header file.  */
-#define HAVE_PWD_H 1
-
-/* Define if you have the <stdlib.h> header file.  */
-#define HAVE_STDLIB_H 1
-
-/* Define if you have the <string.h> header file.  */
-#define HAVE_STRING_H 1
-
-/* Define if you have the <unistd.h> header file.  */
-#define HAVE_UNISTD_H 1
