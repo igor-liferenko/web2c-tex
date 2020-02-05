@@ -167,17 +167,6 @@ extern void do_dump (), do_undump ();
     }									\
   while (0)
 
-
-
-/* If we're running on an ASCII system, there is no need to use the
-   `xchr' array to convert characters to the external encoding.  */
-#ifdef NONASCII
-#define	Xchr(x)		xchr[x]
-#else
-#define	Xchr(x)		((char) (x))
-#endif
-
-
 /* Declare routines in texmf.c.  */
 extern void get_date_and_time ();
 extern void topenin ();

@@ -134,12 +134,9 @@ topenin ()
     ;
   last++;
 
-  /* One more time, this time converting to TeX's internal character
-     representation.  */
-#ifdef NONASCII
+  // TODO: here we will need to convert to wide characters with mbstowcs()
   for (i = first; i < last; i++)
     buffer[i] = xord[buffer[i]];
-#endif
 }
 
 /* All our interrupt handler has to do is set TeX's or Metafont's global
@@ -240,11 +237,8 @@ input_line (f)
          && (isblank (buffer[last - 1]) || buffer[last - 1] == '\r'))
     --last;
 
-  /* Don't bother using xord if we don't need to.  */
-#ifdef NONASCII
   for (i = first; i <= last; i++)
      buffer[i] = xord[buffer[i]];
-#endif
 
     return true;
 }
