@@ -4,8 +4,7 @@
 cat lib/common.defines lib/texmf.defines tex.p \
 	| web2c/web2c -t -htexmf.h \
 	| web2c/fixwrites -t \
-	| web2c/regfix \
-	| ./splitup # TODO: do splitup via sed
+	| web2c/regfix | ./split.pl
 
-cat coerce.h coerce.add > xcoerce.h # TODO: use sponge
-mv xcoerce.h coerce.h
+cat tex.prep tex.c | sponge tex.c
+cat coerce.h coerce.add | sponge coerce.h

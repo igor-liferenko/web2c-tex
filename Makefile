@@ -14,7 +14,7 @@ all:
 	@#
 	tie -c ctex.ch tex.web tex.ch virtex.ch
 	tangle tex.web ctex.ch
-	/bin/sh ./convert
+	sh convert
 	gcc -DTeX -Ilib -g -c lib/openinout.c
 	gcc -DTeX -Ilib -g -c tex.c
 	gcc -DTeX -Ilib -g -c lib/texmf.c
