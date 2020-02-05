@@ -5,5 +5,3 @@ cat lib/common.defines lib/texmf.defines tex.p \
 	| web2c/web2c -t -htexmf.h \
 	| web2c/fixwrites -t \
 	| web2c/regfix | ./split.pl
-
-cat tex.prep tex.c | sponge tex.c
