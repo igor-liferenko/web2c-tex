@@ -1,6 +1,13 @@
 /* web2c.h: general includes for the `web2c' program itself.  */
 
-#include "config.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <stdbool.h>
+#include <string.h>
+void uexit(int);
+#define DECLARE_YYTEXT extern char *yytext;
+#include <limits.h>
+#define STREQ(s1, s2) (((s1) != NULL) && ((s2) != NULL) && (strcmp (s1, s2) == 0))
 
 #define ex_32 2
 #define ex_real 3
@@ -38,8 +45,8 @@ struct sym_entry {
   int val_sym, upper_sym;	/* Sym table entries of symbols for lower
 				   and upper bounds
 				 */
-  boolean var_formal;	/* Is this a formal parameter by reference? */
-  boolean var_not_needed;
+  bool var_formal;	/* Is this a formal parameter by reference? */
+  bool var_not_needed;
   		      /* True if VAR token should be ignored for this type */
 };
 

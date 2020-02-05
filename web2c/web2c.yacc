@@ -35,20 +35,20 @@ char my_routine[100];	/* Name of routine being parsed, if any */
 static char array_bounds[80], array_offset[80];
 static int uses_mem, uses_eqtb, lower_sym, upper_sym;
 static FILE *orig_std;
-boolean doing_statements = false;
-static boolean var_formals = false;
+bool doing_statements = false;
+static bool var_formals = false;
 static int param_id_list[MAX_ARGS], ids_paramed=0;
 
 extern char conditional[], temp[], *std_header;
 extern int tex, mf, strict_for;
 extern FILE *coerce;
 extern char coerce_name[];
-extern boolean debug;
+extern bool debug;
 
 static long my_labs();
 static void compute_array_bounds(), fixup_var_list();
 static void do_proc_args(), gen_function_head();
-static boolean doreturn();
+static bool doreturn();
 
 %}
 
@@ -1199,8 +1199,8 @@ fixup_var_list ()
    return true if the label is "10" and we're not in one of four TeX
    routines where the line labeled "10" isn't the end of the routine.
    Otherwise, return 0.  */
-   
-static boolean
+ 
+static bool
 doreturn (label)
     char *label;
 {
@@ -1212,7 +1212,6 @@ doreturn (label)
       && !STREQ (my_routine, "vpackage")
       && !STREQ (my_routine, "trybreak");
 }
-
 
 /* Return the absolute value of a long.  */
 static long 
