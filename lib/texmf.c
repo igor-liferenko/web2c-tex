@@ -311,7 +311,7 @@ calledit (filename, fnstart, fnlength, linenumber)
 		  uexit (1);
 		}
               for (i =0; i < fnlength; i++)
-		*temp++ = Xchr (filename[i]);
+		*temp++ = xchr[filename[i]]; // TODO: maybe here mbstowcs() is needed
               sdone = 1;
               break;
 
