@@ -9,5 +9,5 @@ tex.c
 tex.o
 texd.h
 tex.pool
-ctex.ch
+vir.ch
 uexit.o

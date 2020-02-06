@@ -12,8 +12,8 @@ all:
 	gcc -DTeX -Ilib -DINI -g -c lib/texmf.c
 	gcc -o initex -g texmf.o open.o tex.o uexit.o lib/lib.a
 	@#
-	tie -c ctex.ch tex.web tex.ch virtex.ch
-	tangle tex.web ctex.ch
+	tie -c vir.ch tex.web tex.ch virtex.ch
+	tangle tex.web vir.ch
 	sh convert
 	gcc -DTeX -Ilib -g -c open.c
 	cat -s tex.c | indent -nce -nut -i2 -kr | sponge tex.c
