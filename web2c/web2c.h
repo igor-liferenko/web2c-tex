@@ -2,8 +2,10 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <stdbool.h>
 #include <string.h>
+typedef int boolean;
+#define true 1
+#define false 0
 void uexit(int);
 #define DECLARE_YYTEXT extern char *yytext;
 #include <limits.h>
@@ -45,8 +47,8 @@ struct sym_entry {
   int val_sym, upper_sym;	/* Sym table entries of symbols for lower
 				   and upper bounds
 				 */
-  bool var_formal;	/* Is this a formal parameter by reference? */
-  bool var_not_needed;
+  boolean var_formal;	/* Is this a formal parameter by reference? */
+  boolean var_not_needed;
   		      /* True if VAR token should be ignored for this type */
 };
 

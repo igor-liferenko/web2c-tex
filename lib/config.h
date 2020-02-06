@@ -7,8 +7,9 @@
 #include "c-auto.h"
 
 #include <stdio.h>
-#include <stdbool.h>
 typedef int boolean;
+#define true 1
+#define false 0
 #include <stdlib.h>
 #include <string.h>
 #include <limits.h>

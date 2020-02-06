@@ -35,20 +35,20 @@ char my_routine[100];	/* Name of routine being parsed, if any */
 static char array_bounds[80], array_offset[80];
 static int uses_mem, uses_eqtb, lower_sym, upper_sym;
 static FILE *orig_std;
-bool doing_statements = false;
-static bool var_formals = false;
+boolean doing_statements = false;
+static boolean var_formals = false;
 static int param_id_list[MAX_ARGS], ids_paramed=0;
 
 extern char conditional[], temp[], *std_header;
 extern int tex, mf, strict_for;
 extern FILE *coerce;
 extern char coerce_name[];
-extern bool debug;
+extern boolean debug;
 
 static long my_labs();
 static void compute_array_bounds(), fixup_var_list();
 static void do_proc_args(), gen_function_head();
-static bool doreturn();
+static boolean doreturn();
 
 %}
 
@@ -1200,7 +1200,7 @@ fixup_var_list ()
    routines where the line labeled "10" isn't the end of the routine.
    Otherwise, return 0.  */
  
-static bool
+static boolean
 doreturn (label)
     char *label;
 {
