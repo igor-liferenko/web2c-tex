@@ -6,6 +6,7 @@ all:
 	tangle tex.web tex.ch
 	sh convert
 	gcc -DTeX -Ilib -g -c lib/openinout.c
+	cat -s tex.c | indent -nce -nut -i2 -kr | sponge tex.c
 	gcc -DTeX -Ilib -g -c tex.c
 	@#
 	gcc -DTeX -Ilib -DINI -g -c lib/texmf.c
@@ -15,6 +16,7 @@ all:
 	tangle tex.web ctex.ch
 	sh convert
 	gcc -DTeX -Ilib -g -c lib/openinout.c
+	cat -s tex.c | indent -nce -nut -i2 -kr | sponge tex.c
 	gcc -DTeX -Ilib -g -c tex.c
 	gcc -DTeX -Ilib -g -c lib/texmf.c
 	gcc -o virtex -g texmf.o openinout.o tex.o uexit.o lib/lib.a
