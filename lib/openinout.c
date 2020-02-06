@@ -72,7 +72,7 @@ open_input (FILE **f, int path_index, char *fopen_mode)
   else
 #endif /* BibTeX */
   
-  if (testreadaccess (nameoffile, path_index))
+  if (1/*testreadaccess (nameoffile, path_index)*/)
     {
       /* We can assume `nameoffile' is openable, since
          `testreadaccess' just returned true.  */

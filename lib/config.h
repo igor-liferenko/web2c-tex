@@ -174,7 +174,6 @@ extern void printpascalstring ();
 extern void setpaths ();
 extern void space_terminate ();
 extern boolean test_eof ();
-extern boolean testreadaccess ();
 extern void uexit ();
 extern FILE *xfopen_pas ();
 extern void zinput2ints ();

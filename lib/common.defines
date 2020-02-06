@@ -70,7 +70,6 @@
 @define function round ();
 @define function strcmp ();
 @define function strlen ();
-@define function testreadaccess ();
 @define function toint ();
 @define function trunc ();
 @define function xmalloc ();

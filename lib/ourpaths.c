@@ -11,16 +11,3 @@ extern void
 setpaths (int path_bits)
 {
 }
-
-/* Look for NAME, a Pascal string, in the colon-separated list of
-   directories given by `path_dirs[PATH_INDEX]'.  If the search is
-   successful, leave the full pathname in NAME (which therefore must
-   have enough room for such a pathname), padded with blanks.
-   Otherwise, or if NAME is an absolute or relative pathname, just leave
-   it alone.  */
-
-boolean
-testreadaccess (char *name, int path_index)
-{
-  return true;
-}
