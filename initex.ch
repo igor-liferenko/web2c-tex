@@ -448,7 +448,7 @@ vstrcpy (name_of_file+1, pool_name); {copy the string}
 name_of_file[0] := ' ';
 name_of_file[strlen (pool_name) +1 ] := ' ';
 name_length := strlen (pool_name);
-if a_open_in (pool_file, TEX_POOL_PATH) then
+if a_open_in (pool_file) then
 @z
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -1005,7 +1005,7 @@ loop@+begin
   begin_file_reading; {set up |cur_file| and new level of input}
   {If we have an extension try the current name first, to avoid looking
    for names like |"article.sty.tex"|.}
-  if (cur_ext <> "") and a_open_in (cur_file, TEX_INPUT_PATH) then goto done;
+  if (cur_ext <> "") and a_open_in (cur_file) then goto done;
 
   {That failed. Next, append |".tex"| if (1)~it's not already there; and
    (2)~it doesn't overflow |name_of_file|, and
@@ -1022,7 +1022,7 @@ loop@+begin
     name_of_file[name_length + 3] := "e";
     name_of_file[name_length + 4] := "x";
     name_length := name_length + 4;
-    if a_open_in (cur_file, TEX_INPUT_PATH) then goto done;
+    if a_open_in (cur_file) then goto done;
     {If failed, take away our addition.}
     name_length := name_length - 4;
     name_of_file[name_length + 1] := " ";
@@ -1033,11 +1033,11 @@ loop@+begin
    trying with |".tex"| appended, because if someone is writing a
    program |foo|, they might like to call their documentation
    |"foo.tex"|, and we don't want to input the binary executable |foo|.}
-  if (cur_ext = "") and a_open_in (cur_file, TEX_INPUT_PATH) then goto done;
+  if (cur_ext = "") and a_open_in (cur_file) then goto done;
   
   {Couldn't find the file.  Possibly invoke an external program to
    create it.  If that claims success, try one last open.}
-  if make_tex_tex and a_open_in (cur_file, TEX_INPUT_PATH) then goto done;
+  if make_tex_tex and a_open_in (cur_file) then goto done;
 @z
 
 % Knuth should fix this -- sometimes lines go over the |max_print_line|.
@@ -1187,7 +1187,7 @@ begin h:=abs(toint(trie_c[p])+1009*toint(trie_o[p])+@|
   if a_open_in(read_file[n]) then read_open[n]:=just_open;
 @y
   pack_cur_name;
-  if (cur_ext <> "") and a_open_in (read_file[n], TEX_INPUT_PATH)
+  if (cur_ext <> "") and a_open_in (read_file[n])
   then read_open[n] := just_open
 
   else if (cur_ext <> ".tex") and (name_length + 5 < file_name_size)
@@ -1198,16 +1198,16 @@ begin h:=abs(toint(trie_c[p])+1009*toint(trie_o[p])+@|
     name_of_file[name_length + 3] := "e";
     name_of_file[name_length + 4] := "x";
     name_length := name_length + 4;
-    if a_open_in (read_file[n], TEX_INPUT_PATH)
+    if a_open_in (read_file[n])
     then read_open[n] := just_open
 
     else begin
       name_length := name_length - 4;
       name_of_file[name_length + 1] := " ";
-      if (cur_ext = "") and a_open_in (read_file[n], TEX_INPUT_PATH)
+      if (cur_ext = "") and a_open_in (read_file[n])
       then read_open[n] := just_open
   
-      else if make_tex_tex and a_open_in (read_file[n], TEX_INPUT_PATH)
+      else if make_tex_tex and a_open_in (read_file[n])
       then read_open[n] := just_open;
     end;
   end;
