@@ -2,11 +2,6 @@
 
 #include "config.h"
 
-/* `path_dirs' is initialized in `setpaths', to a null-terminated array
-   of directories to search for.  */
-static const char *path_dirs[LAST_PATH];
-
-
 /* This sets up the paths, by either copying from an environment variable
    or using the default path, which is defined as a preprocessor symbol
    (with the same name as the environment variable) in `site.h'.  The

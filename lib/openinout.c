@@ -40,10 +40,7 @@ extern void funny_core_dump ();
    opened.  */
 
 boolean
-open_input (f, path_index, fopen_mode)
-    FILE **f;
-    path_constant_type path_index;
-    char *fopen_mode;
+open_input (FILE **f, int path_index, char *fopen_mode)
 {
   boolean openable = false;
 

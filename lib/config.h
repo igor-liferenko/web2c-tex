@@ -56,7 +56,14 @@ typedef int boolean;
 #include "getopt.h"
 
 /* Path searching.  */
-#include "ourpaths.h"
+#define TEXFORMATPATH 7
+#define TEXINPUTPATH 8
+#define TEXPOOLPATH 9
+#define TFMFILEPATH 10
+#define TEXFORMATPATHBIT (1 << TEXFORMATPATH)
+#define TEXINPUTPATHBIT (1 << TEXINPUTPATH)
+#define TEXPOOLPATHBIT (1 << TEXPOOLPATH)
+#define TFMFILEPATHBIT (1 << TFMFILEPATH)
 
 /* We never need the `link' system call, which is sometimes declared in
    <unistd.h>, but we do have lots of variables called `link' in the web
