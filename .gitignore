@@ -3,7 +3,7 @@ initex
 virtex
 itex.o
 texmf.o
-openinout.o
+open.o
 tex.p
 tex.c
 tex.o
