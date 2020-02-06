@@ -10,3 +10,4 @@ tex.o
 texd.h
 tex.pool
 ctex.ch
+uexit.o
