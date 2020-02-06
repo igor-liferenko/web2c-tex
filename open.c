@@ -4,6 +4,10 @@
 #include "config.h"
 #define IS_DIR_SEP(ch) ((ch) == '/')
 
+extern void
+setpaths (int path_bits)
+{
+}
 
 #ifdef BibTeX
 /* See comments in bibtex.ch for why we need these.  */

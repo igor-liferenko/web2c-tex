@@ -5,7 +5,6 @@ getopt1.o
 inputint.o
 lib.a
 main.o
-setpaths.o
 strpascal.o
 version.o
 xfopen-pas.o
