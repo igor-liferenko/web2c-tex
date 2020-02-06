@@ -8,7 +8,7 @@ all:
 	@#
 	tangle tex.web initex.ch
 	sh convert
-	gcc -DTeX -Ilib -g -c open.c
+	gcc -DTeX -g -c open.c
 	cat -s tex.c | indent -nce -nut -i2 -kr | sponge tex.c
 	gcc -DTeX -Ilib -g -c tex.c
 	@#
@@ -18,7 +18,7 @@ all:
 	./ini_to_vir initex.ch virtex.ch
 	tangle tex.web virtex.ch
 	sh convert
-	gcc -DTeX -Ilib -g -c open.c
+	gcc -DTeX -g -c open.c
 	cat -s tex.c | indent -nce -nut -i2 -kr | sponge tex.c
 	gcc -DTeX -Ilib -g -c tex.c
 	gcc -DTeX -Ilib -g -c lib/texmf.c

@@ -1,7 +1,3 @@
-/* openinout.c: open input and output files.  These routines used by
-   TeX, Metafont, and BibTeX.  */
-
-#include "config.h"
 #define IS_DIR_SEP(ch) ((ch) == '/')
 
 extern void
@@ -9,34 +5,9 @@ setpaths (int path_bits)
 {
 }
 
-#ifdef BibTeX
-/* See comments in bibtex.ch for why we need these.  */
-FILE *standardinput = stdin;
-FILE *standardoutput = stdout;
-
-/* Because we don't generate a .h file with all the global definitions
-   for BibTeX, as we do with TeX and Metafont, we must declare these
-   variables.  */
-extern char nameoffile[];
-extern integer namelength;
-
-#else /* not BibTeX */
-
 #define EXTERN extern /* Don't instantiate data here.  */
+#include "texd.h"
 
-#ifdef TeX
-#include "../texd.h"
-#else /* Metafont */
-#include "mfd.h"
-#endif
-
-#ifdef FUNNY_CORE_DUMP
-/* This is defined in texmf.c.  */
-extern void funny_core_dump ();
-#endif /* FUNNY_CORE_DUMP */
-
-#endif /* not BibTeX */
-
 /* Open an input file F, using the path PATHSPEC and passing
    FOPEN_MODE to fopen.  The filename is in `nameoffile', as a Pascal
    string. We return whether or not the open succeeded.  If it did, we
