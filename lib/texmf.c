@@ -1,13 +1,11 @@
 /* Hand-coded routines for TeX or Metafont in C.  Originally
    written by Tim Morgan, drawing from other Unix ports of TeX.  */
 
-/* Either `texd.h' or `mfd.h' will include `../common/texmf.h'.  */
+/* `texd.h' will include `texmf.h' */
 
-/* Instantiate data in `texd.h' or `mfd.h' here.  */
 #define	EXTERN
-
-#ifdef TeX
 #include "../texd.h"
+
 #define dump_default_var TEXformatdefault
 #define dump_default " plain.fmt"
 #define dump_format " %s.fmt"
@@ -17,18 +15,6 @@
 #define main_program texbody
 #define edit_value tex_edit_value
 #define edit_var "TEXEDIT"
-#else /* not TeX */
-#include "mfd.h"
-#define dump_default_var MFbasedefault
-#define dump_default " plain.base"
-#define dump_format " %s.base"
-#define dump_ext_length 5
-#define dump_default_length basedefaultlength
-#define virgin_program "virmf"
-#define main_program main_body
-#define edit_value mf_edit_value
-#define edit_var "MFEDIT"
-#endif /* not TeX */
 
 /* For `struct tm'.  */
 #include <time.h>

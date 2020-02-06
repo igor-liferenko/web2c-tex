@@ -115,7 +115,7 @@ typedef FILE *text, *file_ptr, *alphafile;
 
 /* `aopenin' is used both for input files and pool files, so it
    needs to know what path to use.  */
-#define aopenin(f, p)	open_input (&(f), p, FOPEN_R_MODE)
+#define aopenin(f, p)	a_open_in (&(f))
 #define aopenout(f)	open_output (&(f), FOPEN_W_MODE)
 
 /* Closing files is even easier; we don't bother to check the return

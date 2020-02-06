@@ -1587,15 +1587,6 @@ begin @!{|start_here|}
 @z
 
 @x
-t_open_out; {open the terminal for output}
-@y
-t_open_out; {open the terminal for output}
-{get default file paths from the environment}
-set_paths (TEX_FORMAT_PATH_BIT + TEX_INPUT_PATH_BIT + TEX_POOL_PATH_BIT
-           + TFM_FILE_PATH_BIT);
-@z
-
-@x
 end_of_TEX: close_files_and_terminate;
 final_end: ready_already:=0;
 end.

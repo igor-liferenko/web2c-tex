@@ -1,11 +1,6 @@
 #define IS_DIR_SEP(ch) ((ch) == '/')
 
-extern void
-setpaths (int path_bits)
-{
-}
-
-#define EXTERN extern /* Don't instantiate data here.  */
+#define EXTERN extern
 #include "texd.h"
 
 /* Open an input file F, using the path PATHSPEC and passing
@@ -19,34 +14,6 @@ open_input (FILE **f, int path_index, char *fopen_mode)
 {
   boolean openable = false;
 
-#if defined (FUNNY_CORE_DUMP) && !defined (BibTeX)
-  /* This only applies if a preloaded TeX/Metafont is being made;
-     it allows automatic creation of the core dump (typing ^\ loses
-     since it requires manual intervention).  */
-  if ((path_index == TEXINPUTPATH || path_index == MFINPUTPATH)
-      && strncmp (nameoffile+1, "HackyInputFileNameForCoreDump.tex", 33) == 0)
-    funny_core_dump ();
-#endif /* FUNNY_CORE_DUMP and not BibTeX */
-
-#ifdef BibTeX
-  if (path_index == NO_FILE_PATH)
-    {
-      unsigned temp_length;
-
-      null_terminate (nameoffile + 1);
-      *f = fopen (nameoffile + 1, fopen_mode);
-      temp_length = strlen (nameoffile + 1);
-      space_terminate (nameoffile + 1);
-      if (*f != NULL)
-        {
-          namelength = temp_length;
-          openable = true;
-        }
-    }
-
-  else
-#endif /* BibTeX */
-  
   if (1/*testreadaccess (nameoffile, path_index) - see commit a59a2591cb51ae028c */)
     {
       /* We can assume `nameoffile' is openable, since
@@ -70,7 +37,6 @@ open_input (FILE **f, int path_index, char *fopen_mode)
       else
         namelength = strchr (nameoffile + 1, ' ') - nameoffile - 1;
       
-#ifdef TeX
       /* If we just opened a TFM file, we have to read the first byte,
          since TeX wants to look at it.  What a kludge.  */
       if (path_index == TFMFILEPATH)
@@ -78,7 +44,40 @@ open_input (FILE **f, int path_index, char *fopen_mode)
           extern integer tfmtemp;
           tfmtemp = getc (*f);
         }
-#endif /* TeX */  
+
+      openable = true;
+    }
+
+  return openable;
+}
+
+boolean
+a_open_in(FILE **f)
+{
+  boolean openable = false;
+
+  if (1/*testreadaccess (nameoffile, path_index) - see commit a59a2591cb51ae028c */)
+    {
+      /* We can assume `nameoffile' is openable, since
+         `testreadaccess' just returned true.  */
+      *f = xfopen_pas (nameoffile, FOPEN_R_MODE);
+
+      /* If we found the file in the current directory, don't leave the
+         `./' at the beginning of `nameoffile', since it looks dumb when
+         TeX says `(./foo.tex ... )', and analogously for Metafont.  */
+      if (nameoffile[1] == '.' && IS_DIR_SEP (nameoffile[2]))
+        {
+          unsigned i = 1;
+          while (nameoffile[i + 2] != ' ')
+            {
+              nameoffile[i] = nameoffile[i + 2];
+              i++;
+            }
+          nameoffile[i] = ' ';
+          namelength = i - 1;
+        }
+      else
+        namelength = strchr (nameoffile + 1, ' ') - nameoffile - 1;
 
       openable = true;
     }
