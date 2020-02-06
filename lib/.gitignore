@@ -7,7 +7,6 @@ lib.a
 main.o
 ourpaths.o
 strpascal.o
-uexit.o
 version.o
 xfopen-pas.o
 zround.o
