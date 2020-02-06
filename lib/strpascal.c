@@ -1,7 +1,6 @@
 /* strpascal.c: deal with C vs. Pascal strings.  */
 
 #include "config.h"
-#include <kpathsea/c-pathch.h>
 
 /* Change the Pascal string P_STRING into a C string; i.e., make it
    start after the leading character Pascal puts in, and terminate it
@@ -66,11 +65,8 @@ extendfilename (base, suffix)
 {
   make_c_string (&base);
   
-  if (!find_suffix (base))
-    {
       strcat (base, ".");
       strcat (base, suffix);
-    }
     
   make_pascal_string (&base);
 }

@@ -2,7 +2,8 @@
    TeX, Metafont, and BibTeX.  */
 
 #include "config.h"
-#include <kpathsea/kpathsea.h>
+#define IS_DIR_SEP(ch) ((ch) == '/')
+
 
 #ifdef BibTeX
 /* See comments in bibtex.ch for why we need these.  */
@@ -114,59 +115,24 @@ open_input (f, path_index, fopen_mode)
 }
 
 
-/* Call the external program for FORMAT, passing it `nameoffile'.  We'd
-   like to pass back the filename the script returns, but I'm not yet
-   sure how to do that in Pascal.  */
-
-static boolean
-make_tex_file (format)
-    kpse_file_format_type format;
-{
-  static boolean kpathsea_dpi_set = 0;
-  static boolean maketex_base_dpi_set = 0;
-
-  string found;
-  /* Since & is a no-op when applied to an array, we must put the
-     address of the filename in a variable.  */
-  string name = nameoffile;
-  
-  if (!kpathsea_dpi_set) {
-    if (!getenv ("KPATHSEA_DPI"))
-	xputenv_int ("KPATHSEA_DPI", 300);
-    kpathsea_dpi_set = 1;
-  }
-  if (!maketex_base_dpi_set) {
-    if (!getenv ("MAKETEX_BASE_DPI"))
-      xputenv_int ("MAKETEX_BASE_DPI", 300);
-    maketex_base_dpi_set = 1;
-  }
- 
-  make_c_string (&name);
-  found = kpse_make_tex (format, name);
-  make_pascal_string (&name);
-
-  return found != NULL;
-}
-
-
 /* These are called by TeX or MF if an input or TFM file can't be opened.  */
 
 boolean
 maketextex ()
 {
-  return make_tex_file (kpse_tex_format);
+  return false;
 }
 
 boolean
 maketexmf ()
 {
-  return make_tex_file (kpse_mf_format);
+  return false;
 }
 
 boolean
 maketextfm ()
 {
-  return make_tex_file (kpse_tfm_format);
+  return false;
 }
 
 /* Open an output file F either in the current directory or in
@@ -189,23 +155,6 @@ open_output (f, fopen_mode)
   
   /* Is the filename openable as given?  */
   *f = fopen (nameoffile + 1, fopen_mode);
-
-  if (*f == NULL)
-    { /* Can't open as given.  Try the envvar.  */
-      string temp_dir = getenv ("TEXMFOUTPUT");
-
-      if (temp_dir != NULL)
-        {
-          string temp_name = concat3 (temp_dir, "/", nameoffile + 1);
-          *f = fopen (temp_name, fopen_mode);
-          
-          /* If this succeeded, change nameoffile accordingly.  */
-          if (*f)
-            strcpy (nameoffile + 1, temp_name);
-          
-          free (temp_name);
-        }
-    }
 
   /* Back into a Pascal string, but first get its length.  */
   temp_length = strlen (nameoffile + 1);
@@ -234,7 +183,7 @@ extensionirrelevantp (base, suffix)
   strcat (temp, ".");
   strcat (temp, suffix);
   
-  ret = same_file_p (base, temp);
+  ret = (strcmp(base, temp) == 0);
   make_pascal_string (&base);
   
   return ret;

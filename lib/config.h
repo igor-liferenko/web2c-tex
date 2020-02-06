@@ -6,7 +6,51 @@
 
 #include "c-auto.h"
 
-#include <kpathsea/kpathsea.h>
+#include <stdio.h>
+#include <stdbool.h>
+typedef int boolean;
+#include <stdlib.h>
+#include <string.h>
+#include <limits.h>
+#define FATAL_PERROR(str) do { \
+  perror (str); exit (EXIT_FAILURE); } while (0)
+#include <unistd.h>
+#define ISSPACE(c) (isascii (c) && isspace((unsigned char)c))
+#include <ctype.h>
+#define DIR_SEP '/'
+
+/* How to open a text file:  */
+/* From Akira:
+   I'm using Unix style line ending character to write text files.
+   I find it is easiest to define FOPEN_W_MODE == FOPEN_WBIN_MODE etc. for
+   my purpose.  */
+#ifndef FOPEN_A_MODE
+#define FOPEN_A_MODE "ab"
+#endif
+
+#ifndef FOPEN_R_MODE
+#define FOPEN_R_MODE "r"
+#endif
+
+#ifndef FOPEN_W_MODE
+#define FOPEN_W_MODE "wb"
+#endif
+
+/* How to open a binary file for reading:  */
+#ifndef FOPEN_RBIN_MODE
+#define FOPEN_RBIN_MODE "rb"
+#endif /* not FOPEN_RBIN_MODE */
+
+/* How to open a binary file for writing:  */
+#ifndef FOPEN_WBIN_MODE
+#define FOPEN_WBIN_MODE "wb"
+#endif /* not FOPEN_WBIN_MODE */
+
+/* How to open a binary file for appending:  */
+#ifndef FOPEN_ABIN_MODE
+#define FOPEN_ABIN_MODE "ab"
+#endif /* not FOPEN_ABIN_MODE */
+
 
 /* Argument parsing.  */
 #include "getopt.h"

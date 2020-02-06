@@ -30,8 +30,6 @@
 #define edit_var "MFEDIT"
 #endif /* not TeX */
 
-#include <kpathsea/kpathsea.h>
-
 /* For `struct tm'.  */
 #include <time.h>
 extern struct tm *localtime ();
@@ -71,8 +69,6 @@ main (ac, av)
   dump_default_var = dump_default;
   dump_default_length = strlen (dump_default + 1);
 
-  kpse_set_program_name(av[0], NULL);
-
 #ifndef INI
   if (readyalready != 314159)
     {
@@ -92,9 +88,6 @@ main (ac, av)
         }
     }
 #endif /* not INI */
-
-  kpse_format_info[kpse_tex_format].program_enabled_p = false;
-  kpse_format_info[kpse_tfm_format].program_enabled_p = false;
 
   main_program ();
 } 
@@ -279,7 +272,7 @@ calledit (filename, fnstart, fnlength, linenumber)
 
   /* Construct the command string.  The `11' is the maximum length an
      integer might be.  */
-  command = (string) xmalloc (strlen (edit_value) + fnlength + 11);
+  if (NULL == (command = (char*) malloc(strlen(edit_value) + fnlength + 11))) exit(1);
 
   /* So we can construct it as we go.  */
   temp = command;
