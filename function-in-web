@@ -1,0 +1,57 @@
+diff --git a/coerce.h b/coerce.h
+index 2e77119..35413cf 100644
+--- a/coerce.h
++++ b/coerce.h
+@@ -51,6 +51,9 @@ void zoverflow();
+ void zconfusion();
+ #define confusion(s) zconfusion((strnumber) (s))
+ #define confusion_regmem
++boolean zaopenin();
++#define aopenin(f) zaopenin((alphafile *) &(f))
++#define aopenin_regmem
+ boolean initterminal();
+ #define initterminal_regmem
+ strnumber makestring();
+diff --git a/tex.c b/tex.c
+index 5e42722..6b36fb9 100644
+--- a/tex.c
++++ b/tex.c
+@@ -1015,6 +1015,14 @@ zconfusion ( s )
+   } 
+ } 
+ boolean 
++zaopenin(&( f )) 
++  alphafile * f ; 
++{ register boolean Result; aopenin_regmem 
++  reset ( *f , nameoffile , "/O" ) ; 
++  Result = erstat ( *f ) == 0 ; 
++  return Result ; 
++} 
++boolean 
+ initterminal ( ) 
+ { /* 10 */ register boolean Result; initterminal_regmem 
+   topenin () ; 
+diff --git a/initex.ch b/initex.ch
+index 35e69e4..f2aa3dc 100644
+--- a/initex.ch
++++ b/initex.ch
+@@ -248,6 +248,10 @@ begin rewrite(f,name_of_file,'/O'); w_open_out:=rewrite_OK(f);
+ end;
+ @y
+ @ All of the file opening functions are defined in C.
++@p function a_open_in(var f:alpha_file):boolean;
++  {open a text file for input}
++begin reset(f,name_of_file,'/O'); a_open_in:=erstat(f)=0;
++end;
+ @z
+ 
+ %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+diff --git a/lib/common.defines b/lib/common.defines
+index 74152fc..d0d76bb 100644
+--- a/lib/common.defines
++++ b/lib/common.defines
+@@ -126,3 +126,4 @@
+ {These two are needed in BibTeX; see bibtex.ch.}
+ @define var standardinput;
+ @define var standardoutput;
++@define function erstat ();
