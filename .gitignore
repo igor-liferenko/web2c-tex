@@ -11,3 +11,4 @@ texd.h
 tex.pool
 virtex.ch
 uexit.o
+open.c
