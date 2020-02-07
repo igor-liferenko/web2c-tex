@@ -126,7 +126,6 @@ extern void setpaths ();
 extern void space_terminate ();
 extern boolean test_eof ();
 extern void uexit ();
-extern FILE *xfopen_pas ();
 extern void zinput2ints ();
 extern void zinput3ints ();
 

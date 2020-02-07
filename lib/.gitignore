@@ -5,5 +5,4 @@ lib.a
 main.o
 strpascal.o
 version.o
-xfopen-pas.o
 zround.o
