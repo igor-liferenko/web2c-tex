@@ -84,10 +84,6 @@ typedef struct option getoptstruct;
 /* For throwing away input from the file F.  */
 #define vgetc(f)	(void) getc (f)
 
-/* If we don't care that strcpy(3) returns A.  Likewise for strcat.  */
-#define vstrcpy(a, b)	(void) strcpy (a, b)
-#define vstrcat(a, b)	(void) strcat (a, b)
-
 /* Write out elements START through END of BUF to the file F.  */
 #define writechunk(f, buf, start, end) \
   (void) fwrite (&buf[start], sizeof (buf[start]), end - start + 1, f)

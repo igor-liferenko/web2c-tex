@@ -443,7 +443,7 @@ end;
 @x
 name_of_file:=pool_name; {we needn't set |name_length|}
 @y
-vstrcpy (name_of_file+1, pool_name); {copy the string}
+strcpy (name_of_file+1, pool_name); {copy the string}
 name_of_file[0] := ' ';
 name_of_file[strlen (pool_name) +1 ] := ' ';
 name_length := strlen (pool_name);
