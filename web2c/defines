@@ -36,7 +36,7 @@
 @define procedure incr ();
 @define function odd ();
 @define procedure decr ();
-@define procedure flush ();
+@define procedure fflush ();
 @define procedure uexit ();
 @define function inputln ();
 @define const stdin;

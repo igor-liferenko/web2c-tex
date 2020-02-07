@@ -26,16 +26,6 @@
 #define	round(x)	zround ((double) (x))
 #define trunc(x)	((integer) (x))
 
-/* File routines.  These are used for both binary and text files, but
-   binary is more common.  If you want it 100% right, fix the change
-   files to pass the fopen mode to reset in all cases and send me the
-   changes; it doesn't matter for Unix, so I'm not going to spend any
-   more time on it.  */
-#define	reset(f, n)	((f) ? fclose (f) : 0), \
-			 (f) = xfopen_pas ((char *) (n), FOPEN_RBIN_MODE)
-#define rewrite(f, n)	(f) = xfopen_pas ((char *) (n), FOPEN_WBIN_MODE)
-#define flush(f)	(void) fflush (f)
-
 #define read(f, b)	((b) = getc (f))
 #define	readln(f)	{ register int c; \
                           while ((c = getc (f)) != '\n' && c != EOF); }

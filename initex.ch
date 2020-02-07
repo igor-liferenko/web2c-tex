@@ -351,11 +351,11 @@ these operations can be specified in \ph:
 @d clear_terminal == break_in(term_in,true) {clear the terminal input buffer}
 @y
 these operations can be specified with {\mc UNIX}.  |update_terminal|
-does an |fflush| (via the macro |flush|). |clear_terminal| is redefined
+does an |fflush|. |clear_terminal| is redefined
 to do nothing, since the user should control the terminal.
 @^system dependencies@>
 
-@d update_terminal == flush (term_out)
+@d update_terminal == fflush(term_out)
 @d clear_terminal == do_nothing
 @z
 

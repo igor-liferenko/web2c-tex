@@ -20,21 +20,6 @@ typedef int boolean;
 #include <ctype.h>
 #define DIR_SEP '/'
 
-/* How to open a binary file for reading:  */
-#ifndef FOPEN_RBIN_MODE
-#define FOPEN_RBIN_MODE "rb"
-#endif /* not FOPEN_RBIN_MODE */
-
-/* How to open a binary file for writing:  */
-#ifndef FOPEN_WBIN_MODE
-#define FOPEN_WBIN_MODE "wb"
-#endif /* not FOPEN_WBIN_MODE */
-
-/* How to open a binary file for appending:  */
-#ifndef FOPEN_ABIN_MODE
-#define FOPEN_ABIN_MODE "ab"
-#endif /* not FOPEN_ABIN_MODE */
-
 /* Path searching.  */
 #define TEXFORMATPATH 7
 #define TEXINPUTPATH 8
