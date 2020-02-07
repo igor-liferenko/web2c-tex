@@ -3,5 +3,5 @@
 
 cat y tex.p \
 	| web2c/web2c -t -h/home/user/tex/lib/texmf.h \
-	| ./fixwrites.pl \
+	| ./edit.pl \
 	| ./split.pl
