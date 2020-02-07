@@ -4,6 +4,11 @@ extern boolean aopenin();
 extern boolean aopenout();
 #define aclose(f) if (f) fclose(f)
 extern boolean bopenin();
+extern boolean bopenout();
+#define bclose(f) if (f) fclose(f)
+extern boolean wopenin();
+#define wopenout bopenout
+#define wclose(f) if (f) fclose(f)
 
 #include "cpascal.h"
 
@@ -19,16 +24,6 @@ typedef FILE *bytefile, *wordfile;
 /* Read a line of input as quickly as possible. */
 #define	inputln(stream, flag)	input_line (stream)
 extern boolean input_line ();
-
-/* `bopenin' (and out) is used only for reading (and writing) .tfm
-   files; `wopenin' (and out) only for dump files.  The filenames are
-   passed in as a global variable, `nameoffile'.  */
-   
-#define wopenin(f)	open_input (&(f), dump_path, FOPEN_RBIN_MODE)
-#define bopenout(f)	open_output (&(f), FOPEN_WBIN_MODE)
-#define wopenout	bopenout
-#define bclose		aclose
-#define wclose		aclose
 
 /* This routine has to return four values.  */
 #define	dateandtime(i, j, k, l)	get_date_and_time (&(i), &(j), &(k), &(l))

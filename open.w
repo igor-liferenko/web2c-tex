@@ -10,8 +10,7 @@
    also set `namelength' to the length of the full pathname that we
    opened.  */
 
-boolean
-open_input (FILE **f, int path_index, char *fopen_mode)
+boolean wopenin(FILE **f)
 {
   boolean openable = false;
 
@@ -19,7 +18,7 @@ open_input (FILE **f, int path_index, char *fopen_mode)
     {
       /* We can assume `nameoffile' is openable, since
          `testreadaccess' just returned true.  */
-      *f = xfopen_pas (nameoffile, fopen_mode);
+      *f = xfopen_pas (nameoffile, "rb");
       
       /* If we found the file in the current directory, don't leave the
          `./' at the beginning of `nameoffile', since it looks dumb when
@@ -38,14 +37,6 @@ open_input (FILE **f, int path_index, char *fopen_mode)
       else
         namelength = strchr (nameoffile + 1, ' ') - nameoffile - 1;
       
-      /* If we just opened a TFM file, we have to read the first byte,
-         since TeX wants to look at it.  What a kludge.  */
-      if (path_index == TFMFILEPATH)
-        { /* See comments in ctex.ch for why we need this.  */
-          extern integer tfmtemp;
-          tfmtemp = getc (*f);
-        }
-
       openable = true;
     }
 
@@ -153,10 +144,7 @@ maketextfm ()
    succeeded.  If it did, the global `namelength' is set to the length
    of the actual filename.  */
 
-boolean
-open_output (f, fopen_mode)
-    FILE **f;
-    char *fopen_mode;
+boolean bopenout(FILE **f)
 {
   unsigned temp_length;
 
@@ -164,7 +152,7 @@ open_output (f, fopen_mode)
   null_terminate (nameoffile + 1);
   
   /* Is the filename openable as given?  */
-  *f = fopen (nameoffile + 1, fopen_mode);
+  *f = fopen (nameoffile + 1, "wb");
 
   /* Back into a Pascal string, but first get its length.  */
   temp_length = strlen (nameoffile + 1);

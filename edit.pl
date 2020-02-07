@@ -8,6 +8,8 @@ s/writeln\s*\(([^,]+?),\s*([^,]+?),\s*([^,]+?),\s*([^,]+?)\)/fprintf($1, "%s%s%l
 s/aopenin\s*\((.+?)\)/aopenin(&($1))/g;
 s/aopenout\s*\((.+?)\)/aopenout(&($1))/g;
 s/bopenin\s*\((.+?)\)/bopenin(&($1))/g;
+s/wopenin\s*\((.+?)\)/wopenin(&($1))/g;
+s/bopenout\s*\((.+?)\)/bopenout(&($1))/g;
 __END__
 
 This script does the following substitutions:
@@ -21,3 +23,5 @@ writeln(x, y, z, v); -> fprintf(x, "%s%s%ld\n", y, z, (long) v);
 aopenin(f) -> aopenin(&(f))
 aopenout(f) -> aopenout(&(f))
 bopenin(f) -> bopenin(&(f))
+wopenin(f) -> wopenin(&(f))
+bopenout(f) -> bopenout(&(f))
