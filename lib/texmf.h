@@ -19,41 +19,26 @@ extern boolean aopenout();
 
 #include "cpascal.h"
 
-#ifdef TeX
 #define dump_file fmtfile
 #define dump_path TEXFORMATPATH
 #define write_out writedvi
 #define out_file dvifile
 #define out_buf dvibuf
-#else /* not TeX */
-#define dump_file basefile
-#define dump_path MFBASEPATH
-#define write_out writegf
-#define out_file gffile
-#define out_buf gfbuf
-#endif /* not TeX */
 
-
-
 /* File types.  */
 typedef FILE *bytefile, *wordfile;
 
-
-
-/* Read a line of input as quickly as possible.  */
+/* Read a line of input as quickly as possible. */
 #define	inputln(stream, flag)	input_line (stream)
 extern boolean input_line ();
 
-
-/* We need to read an integer from stdin if we're debugging.  */
+/* We need to read an integer from stdin if we're debugging. */
 #ifdef DEBUG
 #define getint()  inputint (stdin)
 #else
 #define getint()
 #endif
 
-
-
 /* `bopenin' (and out) is used only for reading (and writing) .tfm
    files; `wopenin' (and out) only for dump files.  The filenames are
    passed in as a global variable, `nameoffile'.  */
@@ -68,41 +53,24 @@ extern boolean input_line ();
 /* This routine has to return four values.  */
 #define	dateandtime(i, j, k, l)	get_date_and_time (&(i), &(j), &(k), &(l))
 
-
-
 /* If we're running under Unix, use system calls instead of standard I/O
    to read and write the output files; also, be able to make a core dump. */ 
 #ifndef unix
 #define	dumpcore()	exit (1)
 
-#ifdef TeX
 #define	writedvi(a, b)							\
   (void) fwrite ((char *) &dvibuf[a], sizeof (dvibuf[a]),		\
                  (int) ((b) - (a) + 1), dvifile)
-#else
-#define	writegf(a, b)							\
-  (void) fwrite ((char *) &gfbuf[a], sizeof (gfbuf[a]),			\
-                 (int) ((b) - (a) + 1), gffile)
-#endif /* not TeX */
 
 #else /* unix */
 #define	dumpcore	abort
 
-#ifdef TeX
 #define	writedvi(start, end)						\
   if (write (fileno (dvifile), (char *) &dvibuf[start],			\
              (int) ((end) - (start) + 1))				\
       != (int) ((end) - (start) + 1))					\
     FATAL_PERROR ("dvi file")
-#else
-#define	writegf(start, end)						\
-  if (write (fileno (gffile), (char *) &gfbuf[start],			\
-             (int) ((end) - (start) + 1))				\
-      != (int) ((end) - (start) + 1))					\
-    FATAL_PERROR ("gf file")
-#endif /* not TeX */
 #endif /* unix */
-
 
 /* Reading and writing the dump files.  `(un)dumpthings' is called from
    the change file.*/
@@ -182,14 +150,5 @@ extern boolean extensionirrelevantp ();
 extern boolean input_line ();
 extern void do_dump ();
 extern void do_undump ();
-#ifdef TeX
 extern boolean maketextex ();
 extern boolean maketextfm ();
-#else
-extern void main_body ();
-extern boolean initscreen ();
-extern boolean maketexmf ();
-extern void updatescreen ();
-extern void blankrectangle ();
-extern void paintrow ();
-#endif /* not TeX */
