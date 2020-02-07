@@ -45,18 +45,15 @@ extern boolean input_line ();
   do_undump ((char *) &(base), sizeof (base), (int) (len), dump_file)
 
 /* We define the routines to do the actual work in texmf.c.  */
-extern void do_dump (), do_undump ();
+extern void do_dump();
+extern void do_undump();
 
 /* Use the above for all the other dumping and undumping.  */
 #define generic_dump(x) dumpthings (x, 1)
 #define generic_undump(x) undumpthings (x, 1)
 
-#define dumpwd		generic_dump
-#define undumpwd	generic_undump
 #define dumphh		generic_dump
 #define undumphh	generic_undump
-#define dumpqqqq   	generic_dump
-#define	undumpqqqq	generic_undump
 
 /* `dump_int' is called with constant integers, so we put them into a
    variable first.  */
@@ -70,35 +67,11 @@ extern void do_dump (), do_undump ();
 
 #define	undumpint	generic_undump
 
-/* Metafont wants to write bytes to the TFM file.  The casts in these
-   routines are important, since otherwise memory is clobbered in some
-   strange way, which causes ``13 font metric dimensions to be
-   decreased'' in the trap test, instead of 4.  */
-
-#define bwritebyte(f, b)    putc ((char) (b), f)
-#define bwrite2bytes(f, h)						\
-  do									\
-    {									\
-      integer v = (integer) (h);					\
-      putc (v >> 8, f);  putc (v & 0xff, f);				\
-    }									\
-  while (0)
-#define bwrite4bytes(f, w)						\
-  do									\
-    {									\
-      integer v = (integer) (w);					\
-      putc (v >> 24, f); putc (v >> 16, f);				\
-      putc (v >> 8, f);  putc (v & 0xff, f);				\
-    }									\
-  while (0)
-
 /* Declare routines in texmf.c.  */
 extern void get_date_and_time ();
 extern void topenin ();
 extern void calledit ();
 extern boolean extensionirrelevantp ();
 extern boolean input_line ();
-extern void do_dump ();
-extern void do_undump ();
 extern boolean maketextex ();
 extern boolean maketextfm ();

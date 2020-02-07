@@ -109,10 +109,7 @@ static void catch_interrupt(int arg)
    `fix_date_and_time' routine is called early on (section 1337 in TeX,
    ``Get the first line of input and prepare to start''), this is as
    good a place as any.  */
-
-void
-get_date_and_time (minutes, day, month, year)
-    integer *minutes, *day, *month, *year;
+void get_date_and_time(integer *minutes, integer *day, integer *month, integer *year)
 {
   time_t clock = time ((time_t *) 0);
   struct tm *tmptr = localtime (&clock);
@@ -123,33 +120,17 @@ get_date_and_time (minutes, day, month, year)
   *year = tmptr->tm_year + 1900;
 
   {
-#ifdef SA_INTERRUPT
-    /* Under SunOS 4.1.x, the default action after return from the
-       signal handler is to restart the I/O if nothing has been
-       transferred.  The effect on TeX is that interrupts are ignored if
-       we are waiting for input.  The following tells the system to
-       return EINTR from read() in this case.  From ken@cs.toronto.edu.  */
-
     struct sigaction a, oa;
-
     a.sa_handler = catch_interrupt;
     sigemptyset (&a.sa_mask);
     sigaddset (&a.sa_mask, SIGINT);
-    a.sa_flags = SA_INTERRUPT;
+    a.sa_flags = 0;
     sigaction (SIGINT, &a, &oa);
     if (oa.sa_handler != SIG_DFL)
       sigaction (SIGINT, &oa, (struct sigaction *) 0);
-
-#else /* no SA_INTERRUPT */
-    void (*old_handler) ();
-    
-    old_handler = signal (SIGINT, catch_interrupt);
-    if (old_handler != SIG_DFL)
-      signal (SIGINT, old_handler);
-#endif /* no SA_INTERRUPT */
   }
 }
-
+
 /* I/O for TeX and Metafont.  */
 
 /* Read a line of input as efficiently as possible while still looking
