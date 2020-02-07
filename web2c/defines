@@ -33,9 +33,7 @@
 @define const stdout;
 @define var eqtb;
 @define procedure write ();
-@define procedure incr ();
 @define function odd ();
-@define procedure decr ();
 @define procedure fflush ();
 @define procedure uexit ();
 @define function inputln ();
