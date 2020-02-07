@@ -86,6 +86,44 @@ boolean aopenin(FILE **f)
   return openable;
 }
 
+boolean bopenin(FILE **f)
+{
+  boolean openable = false;
+
+  if (1/*testreadaccess (nameoffile, path_index) - see commit a59a2591cb51ae028c */)
+    {
+      /* We can assume `nameoffile' is openable, since
+         `testreadaccess' just returned true.  */
+      *f = xfopen_pas (nameoffile, "rb");
+
+      /* If we found the file in the current directory, don't leave the
+         `./' at the beginning of `nameoffile', since it looks dumb when
+         TeX says `(./foo.tex ... )', and analogously for Metafont.  */
+      if (nameoffile[1] == '.' && IS_DIR_SEP (nameoffile[2]))
+        {
+          unsigned i = 1;
+          while (nameoffile[i + 2] != ' ')
+            {
+              nameoffile[i] = nameoffile[i + 2];
+              i++;
+            }
+          nameoffile[i] = ' ';
+          namelength = i - 1;
+        }
+      else
+        namelength = strchr (nameoffile + 1, ' ') - nameoffile - 1;
+
+      /* We just opened a TFM file, we have to read the first byte,
+         since TeX wants to look at it.
+         See 30.564 in initex.ch for why we need this.  */
+      extern integer tfmtemp;
+      tfmtemp = getc(*f);
+
+      openable = true;
+    }
+
+  return openable;
+}
 
 /* These are called by TeX or MF if an input or TFM file can't be opened.  */
 

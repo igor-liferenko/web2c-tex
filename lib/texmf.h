@@ -3,6 +3,7 @@
 extern boolean aopenin();
 extern boolean aopenout();
 #define aclose(f) if (f) fclose(f)
+extern boolean bopenin();
 
 #include "cpascal.h"
 
@@ -23,7 +24,6 @@ extern boolean input_line ();
    files; `wopenin' (and out) only for dump files.  The filenames are
    passed in as a global variable, `nameoffile'.  */
    
-#define bopenin(f)	open_input (&(f), TFMFILEPATH, FOPEN_RBIN_MODE)
 #define wopenin(f)	open_input (&(f), dump_path, FOPEN_RBIN_MODE)
 #define bopenout(f)	open_output (&(f), FOPEN_WBIN_MODE)
 #define wopenout	bopenout
