@@ -1,21 +1,8 @@
-/* Main include file for TeX in C.  Originally by Tim Morgan,
-   December 23, 1987.  These routines are also used by Metafont (with
-   some name changes).  */
-
-#ifndef TEXMF_DEBUG
-/* Tell Kpathsea not to define DEBUG, which tells TeX & MF to go into
-   debugging mode at fatal errors. This file (texmf.h) is included by
-   {tex,mf}d.h, which is the first include in the C files output by
-   web2c.  */
-#define NO_DEBUG
-#endif
-
 #include "config.h"
 
 extern boolean aopenin();
 extern boolean aopenout();
-#define aclose(f)       if (f) (void) fclose (f)
-  /* we don't bother to check the return status from fclose(3) */
+#define aclose(f) if (f) fclose(f)
 
 #include "cpascal.h"
 
@@ -31,13 +18,6 @@ typedef FILE *bytefile, *wordfile;
 /* Read a line of input as quickly as possible. */
 #define	inputln(stream, flag)	input_line (stream)
 extern boolean input_line ();
-
-/* We need to read an integer from stdin if we're debugging. */
-#ifdef DEBUG
-#define getint()  inputint (stdin)
-#else
-#define getint()
-#endif
 
 /* `bopenin' (and out) is used only for reading (and writing) .tfm
    files; `wopenin' (and out) only for dump files.  The filenames are
