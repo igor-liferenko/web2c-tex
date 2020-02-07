@@ -95,7 +95,6 @@ typedef SCHAR_TYPE schar;
 typedef INTEGER_TYPE integer;
 
 
-#ifdef TeX
 /* The type `glueratio' should be a floating point type which won't
    unnecessarily increase the size of the memoryword structure.  This is
    the basic requirement.  On most machines, if you're building a
@@ -103,23 +102,10 @@ typedef INTEGER_TYPE integer;
    restriction: sizeof(glueratio) <= sizeof(integer).  Usually, then,
    glueratio must be `float'.  But if you build a big TeX, you can (on
    most machines) and should make it `double' to avoid loss of precision
-   and conversions to and from double during calculations.  (All this
-   also goes for Metafont.)  Furthermore, if you have enough memory, it
-   won't hurt to have this defined to be `double' for running the
-   trip/trap tests.
-   
-   This type is set automatically to `float' by configure if a small TeX
-   is built.  */
-#ifndef GLUERATIO_TYPE
-#define GLUERATIO_TYPE double
-#endif
-typedef GLUERATIO_TYPE glueratio;
-#endif /* TeX */
-
-/* Declarations for the routines we provide ourselves.  */
+   and conversions to and from double during calculations. */
+typedef double glueratio;
 
 extern integer zround ();
-
 
 /* File routines.  */
 extern boolean eof ();

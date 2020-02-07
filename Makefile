@@ -9,19 +9,19 @@ all:
 	tangle tex.web initex.ch
 	sh convert
 	ctangle -bhp open
-	gcc -DTeX -g -c open.c
+	gcc -g -c open.c
 	cat -s tex.c | indent -nce -nut -i2 -kr | sponge tex.c
-	gcc -DTeX -Ilib -g -c tex.c
+	gcc -Ilib -g -c tex.c
 	@#
-	gcc -DTeX -Ilib -DINI -g -c lib/texmf.c
+	gcc -Ilib -DINI -g -c lib/texmf.c
 	gcc -o initex -g texmf.o open.o tex.o uexit.o lib/lib.a
 	@#
 	./ini_to_vir initex.ch virtex.ch
 	tangle tex.web virtex.ch
 	sh convert
 	ctangle -bhp open
-	gcc -DTeX -g -c open.c
+	gcc -g -c open.c
 	cat -s tex.c | indent -nce -nut -i2 -kr | sponge tex.c
-	gcc -DTeX -Ilib -g -c tex.c
-	gcc -DTeX -Ilib -g -c lib/texmf.c
+	gcc -Ilib -g -c tex.c
+	gcc -Ilib -g -c lib/texmf.c
 	gcc -o virtex -g texmf.o open.o tex.o uexit.o lib/lib.a
