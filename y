@@ -1,3 +1,12 @@
+{This file is concatenated by ./convert to the beginning of the Pascal
+ code that tangle outputs.  The idea is to put all these symbols, which
+ can be defined as macros or functions, or as part of standard C, into
+ web2c's symbol table, so that we can access them from a change file.
+ Some are standard Pascal functions, others are simply used in our
+ implementation.
+
+ web2c.yacc can parse these @define statements.}
+
 @define type integer;
 @define type memoryword;
 @define type char = 0..255;
@@ -34,7 +43,10 @@
 @define function abs ();
 @define function toint ();
 @define @field gr;
+
+{The field in the memory_word structure, defined in `texmfmem.h'.}
 @define @field qqqq;
+
 @define type real;
 @define function fabs ();
 @define function round ();
