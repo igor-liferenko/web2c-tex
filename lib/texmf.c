@@ -1,8 +1,4 @@
-/* Hand-coded routines for TeX or Metafont in C.  Originally
-   written by Tim Morgan, drawing from other Unix ports of TeX.  */
-
 /* `texd.h' will include `texmf.h' */
-
 #define	EXTERN
 #include "../texd.h"
 
@@ -23,22 +19,15 @@ extern struct tm *localtime ();
 /* Catch interrupts.  */
 #include <signal.h>
 
-/* The main program, etc.  */
-
 /* What we were invoked as and with.  */
 static char *program_name = NULL;
 static int gargc;
 char **gargv;
 int argc;
 
-
 /* The entry point: set up for reading the command line, which will
    happen in `topenin', then call the main body.  */
-
-void
-main (ac, av)
-    int ac;
-    char *av[];
+void main (int ac, char *av[])
 {
   gargc = ac;
   gargv = av;
@@ -58,7 +47,7 @@ main (ac, av)
         {
           char custom_default[PATH_MAX];
 
-          /* TeX/Metafont adds the space at the end of the name.  */
+          /* TeX adds the space at the end of the name.  */
           sprintf (custom_default, dump_format, program_name);
           dump_default_var = custom_default;
           dump_default_length = strlen (program_name) + dump_ext_length;
@@ -75,9 +64,7 @@ main (ac, av)
    buffer, so they can handle them.  If nothing is available, or we've
    been called already (and hence, gargc==0), we return with
    `last=first'.  */
-
-void
-topenin ()
+void topenin()
 {
   register int i;
 
@@ -108,18 +95,14 @@ topenin ()
   for (i = first; i < last; i++)
     buffer[i] = xord[buffer[i]];
 }
-
+
 /* All our interrupt handler has to do is set TeX's or Metafont's global
    variable `interrupt'; then they will do everything needed.  */
-
-static RETSIGTYPE
-catch_interrupt (arg)
-    int arg;
+static RETSIGTYPE catch_interrupt(int arg)
 {
   interrupt = 1;
   (void) signal (SIGINT, catch_interrupt);
 }
-
 
 /* Besides getting the date and time here, we also set up the interrupt
    handler, for no particularly good reason.  It's just that since the
