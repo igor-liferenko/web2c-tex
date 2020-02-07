@@ -1,7 +1,7 @@
 #!/bin/sh
 # Convert TeX to C.
 
-cat y tex.p \
+cat web2c/defines tex.p \
 	| web2c/web2c -t -h/home/user/tex/lib/texmf.h \
 	| ./edit.pl \
 	| ./split.pl
