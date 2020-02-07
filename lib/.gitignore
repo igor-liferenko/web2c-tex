@@ -1,7 +1,5 @@
 eofeoln.o
 fprintreal.o
-getopt.o
-getopt1.o
 inputint.o
 lib.a
 main.o

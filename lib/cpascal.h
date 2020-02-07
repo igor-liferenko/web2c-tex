@@ -64,17 +64,8 @@
 /* The fixwrites program outputs this.  */
 #define	Fputs(f, s)	(void) fputs (s, f)
 
-/* Tangle removes underscores from names, but the `struct option'
-   structure has a field name with an underscore.  So we have to put it
-   back.  Ditto for the other names.  */
-#define getoptlongonly	getopt_long_only
-#define hasarg		has_arg
-
 /* Same underscore problem.  */
 #define PATHMAX		PATH_MAX
-
-/* We need a new type for the argument parsing, too.  */
-typedef struct option getoptstruct;
 
 #define printreal(r, n, m)  fprintreal (stdout, r, n, m)
 #define	putbyte(x, f)	putc ((char) (x) & 255, f)
@@ -97,9 +88,6 @@ typedef unsigned char *pointertobyte;
 
 /* For some initializations of constant strings.  */
 typedef char *ccharpointer;
-
-/* For interacting with getopt, etc.  */
-#define cinttype int
 
 /* `real' is used for noncritical floating-point stuff.  */
 typedef double real;

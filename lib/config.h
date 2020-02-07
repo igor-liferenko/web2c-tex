@@ -35,10 +35,6 @@ typedef int boolean;
 #define FOPEN_ABIN_MODE "ab"
 #endif /* not FOPEN_ABIN_MODE */
 
-
-/* Argument parsing.  */
-#include "getopt.h"
-
 /* Path searching.  */
 #define TEXFORMATPATH 7
 #define TEXINPUTPATH 8
