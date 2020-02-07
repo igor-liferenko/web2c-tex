@@ -28,24 +28,13 @@ extern boolean input_line ();
 /* This routine has to return four values.  */
 #define	dateandtime(i, j, k, l)	get_date_and_time (&(i), &(j), &(k), &(l))
 
-/* If we're running under Unix, use system calls instead of standard I/O
-   to read and write the output files; also, be able to make a core dump. */ 
-#ifndef unix
-#define	dumpcore()	exit (1)
-
-#define	writedvi(a, b)							\
-  (void) fwrite ((char *) &dvibuf[a], sizeof (dvibuf[a]),		\
-                 (int) ((b) - (a) + 1), dvifile)
-
-#else /* unix */
-#define	dumpcore	abort
-
+/* Use system calls instead of standard I/O
+   to read and write the output files. */ 
 #define	writedvi(start, end)						\
   if (write (fileno (dvifile), (char *) &dvibuf[start],			\
              (int) ((end) - (start) + 1))				\
       != (int) ((end) - (start) + 1))					\
-    FATAL_PERROR ("dvi file")
-#endif /* unix */
+    fprintf(stderr, "dvi file: %m\n"); exit(EXIT_FAILURE)
 
 /* Reading and writing the dump files.  `(un)dumpthings' is called from
    the change file.*/

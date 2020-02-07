@@ -231,6 +231,6 @@ FILE *xfopen_pas(char *name, char *mode)
       return result;
     }
   
-  FATAL_PERROR (name);
-  return NULL; /* Stop compiler warnings.  */
+  fprintf(stderr, "%s: %m\n", name);
+  exit(EXIT_FAILURE);
 }

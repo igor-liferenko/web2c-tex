@@ -13,8 +13,6 @@ typedef int boolean;
 #include <stdlib.h>
 #include <string.h>
 #include <limits.h>
-#define FATAL_PERROR(str) do { \
-  perror (str); exit (EXIT_FAILURE); } while (0)
 #include <unistd.h>
 #define ISSPACE(c) (isascii (c) && isspace((unsigned char)c))
 #include <ctype.h>
