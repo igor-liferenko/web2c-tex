@@ -29,7 +29,7 @@ extern boolean input_line ();
 #define	dateandtime(i, j, k, l)	get_date_and_time (&(i), &(j), &(k), &(l))
 
 /* Use system calls instead of standard I/O
-   to read and write the output files. */ 
+   to read and write the output files. */
 #define	writedvi(start, end)						\
   if (write (fileno (dvifile), (char *) &dvibuf[start],			\
              (int) ((end) - (start) + 1))				\
