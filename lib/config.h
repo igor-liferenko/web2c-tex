@@ -166,7 +166,6 @@ extern integer inputint ();
 extern void main_body ();
 extern boolean open_input ();
 extern boolean open_output ();
-extern boolean a_open_in ();
 extern void fprintreal ();
 extern void make_c_string ();
 extern void make_pascal_string ();

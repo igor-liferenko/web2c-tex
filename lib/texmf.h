@@ -10,6 +10,10 @@
 #define NO_DEBUG
 #endif
 
+#include "config.h"
+
+extern boolean aopenin ();
+
 #include "cpascal.h"
 
 #ifdef TeX

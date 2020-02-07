@@ -52,7 +52,7 @@ open_input (FILE **f, int path_index, char *fopen_mode)
 }
 
 boolean
-a_open_in(FILE **f)
+aopenin(FILE **f)
 {
   boolean openable = false;
 

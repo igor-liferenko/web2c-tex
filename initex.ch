@@ -435,20 +435,18 @@ end;
 @z
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% [4.51] Open the pool file using a path, and can't do string
-% assignments directly.  (`strcpy' and `strlen' work here because
+% [4.51] Can't do string assignments directly.
+% (`strcpy' and `strlen' work here because
 % `pool_name' is a constant string, and thus ends in a null and doesn't
 % start with a space.)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 @x
 name_of_file:=pool_name; {we needn't set |name_length|}
-if a_open_in(pool_file) then
 @y
 vstrcpy (name_of_file+1, pool_name); {copy the string}
 name_of_file[0] := ' ';
 name_of_file[strlen (pool_name) +1 ] := ' ';
 name_length := strlen (pool_name);
-if a_open_in (pool_file) then
 @z
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

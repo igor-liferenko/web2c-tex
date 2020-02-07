@@ -5,9 +5,7 @@
 #ifndef CPASCAL_H
 #define CPASCAL_H
 
-/* We must include this first, to resolve many C issues.  */
 #include "config.h"
-
 
 /* Absolute value.  Without the casts to integer here, the Ultrix and
    AIX compilers (at least) produce bad code (or maybe it's that I don't
@@ -113,9 +111,6 @@ typedef double real;
 /* C doesn't distinguish between text files and other files.  */
 typedef FILE *text, *file_ptr, *alphafile;
 
-/* `aopenin' is used both for input files and pool files, so it
-   needs to know what path to use.  */
-#define aopenin(f)	a_open_in(&(f))
 #define aopenout(f)	open_output (&(f), FOPEN_W_MODE)
 
 /* Closing files is even easier; we don't bother to check the return
