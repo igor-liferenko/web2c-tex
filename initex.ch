@@ -841,21 +841,6 @@ track of the occurrences of area and extension delimiters:
 @z
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% [29.514] TeX area directories.
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-@x
-@d TEX_area=="TeXinputs:"
-@.TeXinputs@>
-@d TEX_font_area=="TeXfonts:"
-@.TeXfonts@>
-@y
-In C, the default paths are specified in a separate
-file, \.{site.h}.  The file opening procedures do path searching
-based either on those default paths, or on paths given by the user
-in environment variables.
-@z
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % [29.516] more_name
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 @x
@@ -983,71 +968,6 @@ months:=' JANFEBMARAPRMAYJUNJULAUGSEPOCTNOVDEC';
 @z
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% [29.537] Use a path when calling a_open_in to do a \input; also, try
-% to open the file with and without the `.tex' extension, regardless of
-% whether the file already has an extension.  This allows filenames like
-% `foo' and `foo.bar.tex', as well as `foo.tex' and `foo.bar'.
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-@x
-if cur_ext="" then cur_ext:=".tex";
-pack_cur_name;
-loop@+  begin begin_file_reading; {set up |cur_file| and new level of input}
-  if a_open_in(cur_file) then goto done;
-  if cur_area="" then
-    begin pack_file_name(cur_name,TEX_area,cur_ext);
-    if a_open_in(cur_file) then goto done;
-    end;
-@y
-pack_cur_name;
-loop@+begin
-  begin_file_reading; {set up |cur_file| and new level of input}
-  {If we have an extension try the current name first, to avoid looking
-   for names like |"article.sty.tex"|.}
-  if (cur_ext <> "") and a_open_in (cur_file) then goto done;
-
-  {That failed. Next, append |".tex"| if (1)~it's not already there; and
-   (2)~it doesn't overflow |name_of_file|, and
-   (3)~it changes the actual file looked for (e.g., |"afourteenlongf"|
-   and |"afourteenlongf.tex"| are the same file under System V).
-   
-   We ignore the presence or absence of an extension, because we want to
-   allow input files like |"foo.bar.tex"|.}
-  if (cur_ext <> ".tex") and (name_length + 5 < file_name_size)
-     and (not extension_irrelevant_p (name_of_file, 'tex'))
-  then begin
-    name_of_file[name_length + 1] := ".";
-    name_of_file[name_length + 2] := "t";
-    name_of_file[name_length + 3] := "e";
-    name_of_file[name_length + 4] := "x";
-    name_length := name_length + 4;
-    if a_open_in (cur_file) then goto done;
-    {If failed, take away our addition.}
-    name_length := name_length - 4;
-    name_of_file[name_length + 1] := " ";
-  end;
-  
-  {That failed too. If there was no extension, try the name just as it
-   was given, so we will find an input file |"foo"|. We do this after
-   trying with |".tex"| appended, because if someone is writing a
-   program |foo|, they might like to call their documentation
-   |"foo.tex"|, and we don't want to input the binary executable |foo|.}
-  if (cur_ext = "") and a_open_in (cur_file) then goto done;
-  
-  {Couldn't find the file.  Possibly invoke an external program to
-   create it.  If that claims success, try one last open.}
-  if make_tex_tex and a_open_in (cur_file) then goto done;
-@z
-
-% Knuth should fix this -- sometimes lines go over the |max_print_line|.
-% ... But now I don't remember what caused this, so I'll comment this
-% out until it happens again.
-% @x
-% if term_offset+length(name)>max_print_line-2 then print_ln
-% @y
-% if term_offset+length(name)>max_print_line-3 then print_ln
-% @z
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % [29.537] Get rid of return of filename to string pool.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 @x
@@ -1173,42 +1093,6 @@ begin h:=abs(trie_c[p]+1009*trie_o[p]+@|
 @y
 begin h:=abs(toint(trie_c[p])+1009*toint(trie_o[p])+@|
     2718*toint(trie_l[p])+3142*toint(trie_r[p])) mod trie_size;
-@z
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% [49.1275] Same stuff as for \input, this time for \openin. There seems
-% to be no reasonable way to make this into a subroutine ...
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-@x
-  if cur_ext="" then cur_ext:=".tex";
-  pack_cur_name;
-  if a_open_in(read_file[n]) then read_open[n]:=just_open;
-@y
-  pack_cur_name;
-  if (cur_ext <> "") and a_open_in (read_file[n])
-  then read_open[n] := just_open
-
-  else if (cur_ext <> ".tex") and (name_length + 5 < file_name_size)
-     and (not extension_irrelevant_p (name_of_file, 'tex'))
-  then begin
-    name_of_file[name_length + 1] := ".";
-    name_of_file[name_length + 2] := "t";
-    name_of_file[name_length + 3] := "e";
-    name_of_file[name_length + 4] := "x";
-    name_length := name_length + 4;
-    if a_open_in (read_file[n])
-    then read_open[n] := just_open
-
-    else begin
-      name_length := name_length - 4;
-      name_of_file[name_length + 1] := " ";
-      if (cur_ext = "") and a_open_in (read_file[n])
-      then read_open[n] := just_open
-  
-      else if make_tex_tex and a_open_in (read_file[n])
-      then read_open[n] := just_open;
-    end;
-  end;
 @z
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
