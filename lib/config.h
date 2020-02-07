@@ -4,8 +4,6 @@
 #ifndef CONFIG_H
 #define CONFIG_H
 
-#include "c-auto.h"
-
 #include <stdio.h>
 typedef int boolean;
 #define true 1
@@ -60,38 +58,15 @@ typedef int boolean;
 #endif /* not SCHAR_TYPE */
 typedef SCHAR_TYPE schar;
 
-
 /* The type `integer' must be a signed integer capable of holding at
    least the range of numbers (-2^31)..(2^31-1).  If your compiler goes
    to great lengths to make programs fail, you might have to change this
    definition.  If this changes, you may have to modify
    web2c/fixwrites.c, since it generates code to do integer output using
-   "%ld", and casts all integral values to be printed to `long'.
-   
-   If you define your own INTEGER_TYPE, you have to define your own
-   INTEGER_MAX and INTEGER_MIN, too. */
-#ifndef INTEGER_TYPE
-
-#if defined (LONG_64_BITS) && !defined (NO_FMTBASE_SWAP)
-/* If we have 64-bit longs and want to share format files (with 32-bit
-   machines), use `int'.  */
-#define INTEGER_IS_INT
-#endif
-
-#ifdef INTEGER_IS_INT
-#define INTEGER_TYPE int
-#define INTEGER_MAX INT_MAX
-#define INTEGER_MIN INT_MIN
-#else
-#define INTEGER_TYPE long
+   "%ld", and casts all integral values to be printed to `long'. */
 #define INTEGER_MAX LONG_MAX
 #define INTEGER_MIN LONG_MIN
-#endif /* not INTEGER_IS_INT */
-
-#endif /* not INTEGER_TYPE */
-
-typedef INTEGER_TYPE integer;
-
+typedef long integer;
 
 /* The type `glueratio' should be a floating point type which won't
    unnecessarily increase the size of the memoryword structure.  This is

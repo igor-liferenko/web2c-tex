@@ -68,21 +68,7 @@ extern void do_dump (), do_undump ();
     }									\
   while (0)
 
-/* web2c/regfix puts variables in the format file loading into
-   registers.  Some compilers aren't willing to take addresses of such
-   variables.  So we must kludge.  */
-#ifdef REGFIX
-#define undumpint(x)							\
-  do									\
-    {									\
-      integer x_val;							\
-      generic_undump (x_val);						\
-      x = x_val;							\
-    }									\
-  while (0)
-#else
 #define	undumpint	generic_undump
-#endif
 
 /* Metafont wants to write bytes to the TFM file.  The casts in these
    routines are important, since otherwise memory is clobbered in some

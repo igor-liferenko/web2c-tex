@@ -98,7 +98,7 @@ void topenin()
 
 /* All our interrupt handler has to do is set TeX's or Metafont's global
    variable `interrupt'; then they will do everything needed.  */
-static RETSIGTYPE catch_interrupt(int arg)
+static void catch_interrupt(int arg)
 {
   interrupt = 1;
   (void) signal (SIGINT, catch_interrupt);
@@ -141,7 +141,7 @@ get_date_and_time (minutes, day, month, year)
       sigaction (SIGINT, &oa, (struct sigaction *) 0);
 
 #else /* no SA_INTERRUPT */
-    RETSIGTYPE (*old_handler) ();
+    void (*old_handler) ();
     
     old_handler = signal (SIGINT, catch_interrupt);
     if (old_handler != SIG_DFL)
@@ -198,7 +198,7 @@ input_line (f)
 
 /* This string specifies what the `e' option does in response to an
    error message.  */ 
-static char *edit_value = EDITOR;
+static char *edit_value = "em %s %d";
 
 /* This procedure is due to sjc@s1-c.  TeX (or Metafont) calls it when
    the user types `e' in response to an error, invoking a text editor on
@@ -302,8 +302,6 @@ calledit (filename, fnstart, fnlength, linenumber)
    to make a format file that dumps a glue ratio, i.e., a floating-point
    number.  Fortunately, none of the standard formats do that.  */
 
-#if !defined (WORDS_BIGENDIAN) && !defined (NO_FMTBASE_SWAP) /* this fn */
-
 /* This macro is always invoked as a statement.  It assumes a variable
    `temp'.  */
    
@@ -379,22 +377,13 @@ swap_items (p, nitems, size)
       uexit (1);
   }
 }
-#endif /* not WORDS_BIGENDIAN and not NO_FMTBASE_SWAP */
-
 
 /* Here we write NITEMS items, each item being ITEM_SIZE bytes long.
    The pointer to the stuff to write is P, and we write to the file
    OUT_FILE.  */
-
-void
-do_dump (p, item_size, nitems, out_file)
-    char *p;
-    int item_size, nitems;
-    FILE *out_file;
+void do_dump(char *p, int item_size, int nitems, FILE *out_file)
 {
-#if !defined (WORDS_BIGENDIAN) && !defined (NO_FMTBASE_SWAP)
   swap_items (p, nitems, item_size);
-#endif
 
   if (fwrite (p, item_size, nitems, out_file) != nitems)
     {
@@ -405,9 +394,7 @@ do_dump (p, item_size, nitems, out_file)
 
   /* Have to restore the old contents of memory, since some of it might
      get used again.  */
-#if !defined (WORDS_BIGENDIAN) && !defined (NO_FMTBASE_SWAP)
   swap_items (p, nitems, item_size);
-#endif
 }
 
 
@@ -426,7 +413,5 @@ do_undump (p, item_size, nitems, in_file)
       uexit (1);
     }
 
-#if !defined (WORDS_BIGENDIAN) && !defined (NO_FMTBASE_SWAP)
   swap_items (p, nitems, item_size);
-#endif
 }
