@@ -8,6 +8,7 @@ all:
 	@#
 	tangle tex.web initex.ch
 	sh convert
+	ctangle -bhp open
 	gcc -DTeX -g -c open.c
 	cat -s tex.c | indent -nce -nut -i2 -kr | sponge tex.c
 	gcc -DTeX -Ilib -g -c tex.c
@@ -18,6 +19,7 @@ all:
 	./ini_to_vir initex.ch virtex.ch
 	tangle tex.web virtex.ch
 	sh convert
+	ctangle -bhp open
 	gcc -DTeX -g -c open.c
 	cat -s tex.c | indent -nce -nut -i2 -kr | sponge tex.c
 	gcc -DTeX -Ilib -g -c tex.c

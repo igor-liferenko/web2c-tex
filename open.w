@@ -1,3 +1,4 @@
+@ @c
 #define IS_DIR_SEP(ch) ((ch) == '/')
 
 #define EXTERN extern
