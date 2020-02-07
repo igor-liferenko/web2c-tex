@@ -7,32 +7,16 @@ does not mention any |output| file, because \ph\ would ask the \TeX\ user
 to specify a file name if |output| were specified here.
 @:PASCAL H}{\ph@>
 @^system dependencies@>
-
-@d mtype==t@&y@&p@&e {this is a \.{WEB} coding trick:}
-@f mtype==type {`\&{mtype}' will be equivalent to `\&{type}'}
-@f type==true {but `|type|' will not be treated as a reserved word}
-
-@p @t\4@>@<Compiler directives@>@/
-program TEX; {all file names are defined dynamically}
+@y
+@z
+@x
 label @<Labels in the outer block@>@/
 @y
-
-@d mtype==t@&y@&p@&e {this is a \.{WEB} coding trick:}
-@f mtype==type {`\&{mtype}' will be equivalent to `\&{type}'}
-@f type==true {but `|type|' will not be treated as a reserved word}
-
-@p @t\4@>@<Compiler directives@>@/
-program TEX; {all file names are defined dynamically}
 @z
-
 @x
 @<Labels in the out...@>=
-start_of_TEX@t\hskip-2pt@>, end_of_TEX@t\hskip-2pt@>,@,final_end;
-  {key control points}
 @y
 @<Labels in the outer block@>=
-start_of_TEX@t\hskip-2pt@>, end_of_TEX@t\hskip-2pt@>,@,final_end;
-  {key control points}
 @z
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -128,7 +112,6 @@ start_of_TEX@t\hskip-2pt@>, end_of_TEX@t\hskip-2pt@>,@,final_end;
 @!trie_size=8000; {space for hyphenation patterns; should be larger for
   \.{INITEX} than it is in production versions of \TeX}
 @z
-
 @x
 @!trie_op_size=500; {space for ``opcodes'' in the hyphenation patterns}
 @y
@@ -136,7 +119,6 @@ start_of_TEX@t\hskip-2pt@>, end_of_TEX@t\hskip-2pt@>,@,final_end;
 @!neg_trie_op_size=-500; {for lower |trie_op_hash| array bound;
   must be equal to |-trie_op_size|.}
 @z
-
 @x
 @!pool_name='TeXformats:TEX.POOL                     ';
   {string of length |file_name_size|; tells where the string pool appears}
@@ -144,15 +126,6 @@ start_of_TEX@t\hskip-2pt@>, end_of_TEX@t\hskip-2pt@>,@,final_end;
 @!pool_name='tex.pool';
   {string of length |file_name_size|; the string pool name}
 @.TeXformats@>
-@z
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% [1.16] Use C macros for `incr' and `decr'.
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-@x
-@d incr(#) == #:=#+1 {increase a variable by unity}
-@d decr(#) == #:=#-1 {decrease a variable by unity}
-@y
 @z
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -450,8 +423,7 @@ name_length := strlen (pool_name);
 @z
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% [4.51,52,53] Make `TEX.POOL' lowercase in messages, and change how
-% it's read.
+% [4.51,52,53] Change how tex.pool is read.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 @x
 else  bad_pool('! I can''t read TEX.POOL.')
@@ -462,29 +434,11 @@ else begin
    get_strings_started:= false; return;
 end
 @z
+read(f,b) == b=getc(f)
 @x
-begin if eof(pool_file) then bad_pool('! TEX.POOL has no check sum.');
-@.TEX.POOL has no check sum@>
 read(pool_file,m,n); {read two digits of string length}
 @y
-begin if eof(pool_file) then bad_pool('! tex.pool has no check sum.');
-@.TEX.POOL has no check sum@>
 read(pool_file,m); read(pool_file,n); {read two digits of string length}
-@z
-@x
-    bad_pool('! TEX.POOL line doesn''t begin with two digits.');
-@y
-    bad_pool('! tex.pool line doesn''t begin with two digits.');
-@z
-@x
-  bad_pool('! TEX.POOL check sum doesn''t have nine digits.');
-@y
-  bad_pool('! tex.pool check sum doesn''t have nine digits.');
-@z
-@x
-done: if a<>@$ then bad_pool('! TEX.POOL doesn''t match; TANGLE me again.');
-@y
-done: if a<>@$ then bad_pool('! tex.pool doesn''t match; tangle me again.');
 @z
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

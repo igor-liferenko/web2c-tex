@@ -30,11 +30,6 @@
 #define	readln(f)	{ register int c; \
                           while ((c = getc (f)) != '\n' && c != EOF); }
 
-/* We hope this will be efficient than the `x = x - 1' that decr would
-   otherwise be translated to.  Likewise for incr.  */
-#define	decr(x)		--(x)
-#define	incr(x)		++(x)
-
 /* PatGen 2 uses this.  */
 #define	input2ints(a, b)  zinput2ints (&a, &b)
 
