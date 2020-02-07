@@ -52,8 +52,8 @@ open_input (FILE **f, int path_index, char *fopen_mode)
   return openable;
 }
 
-boolean
-aopenin(FILE **f)
+@ @c
+boolean aopenin(FILE **f)
 {
   boolean openable = false;
 
@@ -61,7 +61,7 @@ aopenin(FILE **f)
     {
       /* We can assume `nameoffile' is openable, since
          `testreadaccess' just returned true.  */
-      *f = xfopen_pas (nameoffile, FOPEN_R_MODE);
+      *f = xfopen_pas (nameoffile, "r");
 
       /* If we found the file in the current directory, don't leave the
          `./' at the beginning of `nameoffile', since it looks dumb when
@@ -138,6 +138,28 @@ open_output (f, fopen_mode)
   
   return *f != NULL;
 }
+
+boolean aopenout(FILE **f)
+{
+  unsigned temp_length;
+
+  /* Make the filename into a C string.  */
+  null_terminate (nameoffile + 1);
+
+  /* Is the filename openable as given?  */
+  *f = fopen (nameoffile + 1, "w");
+
+  /* Back into a Pascal string, but first get its length.  */
+  temp_length = strlen (nameoffile + 1);
+  space_terminate (nameoffile + 1);
+
+  /* Only set `namelength' if we succeeded.  I'm not sure why.  */
+  if (*f)
+    namelength = temp_length;
+
+  return *f != NULL;
+}
+
 
 /* Test if the Pascal string BASE concatenated with the extension
    `.SUFFIX' is the same file as just BASE.  SUFFIX is a C string.  */

@@ -20,23 +20,6 @@ typedef int boolean;
 #include <ctype.h>
 #define DIR_SEP '/'
 
-/* How to open a text file:  */
-/* From Akira:
-   I'm using Unix style line ending character to write text files.
-   I find it is easiest to define FOPEN_W_MODE == FOPEN_WBIN_MODE etc. for
-   my purpose.  */
-#ifndef FOPEN_A_MODE
-#define FOPEN_A_MODE "ab"
-#endif
-
-#ifndef FOPEN_R_MODE
-#define FOPEN_R_MODE "r"
-#endif
-
-#ifndef FOPEN_W_MODE
-#define FOPEN_W_MODE "wb"
-#endif
-
 /* How to open a binary file for reading:  */
 #ifndef FOPEN_RBIN_MODE
 #define FOPEN_RBIN_MODE "rb"

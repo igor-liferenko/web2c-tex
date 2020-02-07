@@ -12,7 +12,10 @@
 
 #include "config.h"
 
-extern boolean aopenin ();
+extern boolean aopenin();
+extern boolean aopenout();
+#define aclose(f)       if (f) (void) fclose (f)
+  /* we don't bother to check the return status from fclose(3) */
 
 #include "cpascal.h"
 

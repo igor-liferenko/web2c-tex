@@ -107,16 +107,4 @@ typedef double real;
 /* C doesn't distinguish between text files and other files.  */
 typedef FILE *text, *file_ptr, *alphafile;
 
-#define aopenout(f)	open_output (&(f), FOPEN_W_MODE)
-
-/* Closing files is even easier; we don't bother to check the return
-   status from fclose(3).  */
-#define aclose(f)	if (f) (void) fclose (f)
-
-#ifdef BibTeX
-/* See bibtex.ch for why these are necessary.  */
-extern FILE *standardinput;
-extern FILE *standardoutput;
-#endif
-
 #endif /* not CPASCAL_H */
