@@ -1,7 +1,7 @@
 #!/bin/sh
 # Convert TeX to C.
 
-cat lib/common.defines lib/texmf.defines tex.p \
+cat y tex.p \
 	| web2c/web2c -t -h/home/user/tex/lib/texmf.h \
 	| ./fixwrites.pl \
 	| ./split.pl
