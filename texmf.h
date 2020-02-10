@@ -100,15 +100,15 @@ extern void zinput3ints ();
 extern int argc;
 extern char **gargv;
 
-extern boolean aopenin();
-extern boolean aopenout();
-#define aclose(f) if (f) fclose(f)
-extern boolean bopenin();
-extern boolean bopenout();
-#define bclose(f) if (f) fclose(f)
-extern boolean wopenin();
-#define wopenout bopenout
-#define wclose(f) if (f) fclose(f)
+extern boolean a_open_in();
+extern boolean a_open_out();
+extern void a_close();
+extern boolean b_open_in();
+extern boolean b_open_out();
+extern void b_close();
+extern boolean w_open_in();
+extern boolean w_open_out();
+extern void w_close();
 
 /* cpascal.h: implement various bits of standard Pascal that we use.
    This is the top-level include file for all the web2c-generated C

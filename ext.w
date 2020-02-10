@@ -30,7 +30,7 @@ FILE *xfopen_pas(char *name, char *mode)
    also set `namelength' to the length of the full pathname that we
    opened.  */
 
-boolean wopenin(FILE **f)
+boolean w_open_in(FILE **f)
 {
   boolean openable = false;
 
@@ -64,7 +64,7 @@ boolean wopenin(FILE **f)
 }
 
 @ @c
-boolean aopenin(FILE **f)
+boolean a_open_in(FILE **f)
 {
   boolean openable = false;
 
@@ -97,7 +97,7 @@ boolean aopenin(FILE **f)
   return openable;
 }
 
-boolean bopenin(FILE **f)
+boolean b_open_in(FILE **f)
 {
   boolean openable = false;
 
@@ -136,6 +136,21 @@ boolean bopenin(FILE **f)
   return openable;
 }
 
+void a_close(FILE *f)
+{
+  if (f) fclose(f);
+}
+
+void b_close(FILE *f)
+{
+  if (f) fclose(f);
+}
+
+void w_close(FILE *f)
+{
+  if (f) fclose(f);
+}
+
 /* These are called by TeX or MF if an input or TFM file can't be opened.  */
 
 boolean
@@ -164,7 +179,7 @@ maketextfm ()
    succeeded.  If it did, the global `namelength' is set to the length
    of the actual filename.  */
 
-boolean bopenout(FILE **f)
+boolean b_open_out(FILE **f)
 {
   unsigned temp_length;
 
@@ -185,7 +200,28 @@ boolean bopenout(FILE **f)
   return *f != NULL;
 }
 
-boolean aopenout(FILE **f)
+boolean w_open_out(FILE **f)
+{
+  unsigned temp_length;
+
+  /* Make the filename into a C string.  */
+  null_terminate (nameoffile + 1);
+
+  /* Is the filename openable as given?  */
+  *f = fopen (nameoffile + 1, "wb");
+
+  /* Back into a Pascal string, but first get its length.  */
+  temp_length = strlen (nameoffile + 1);
+  space_terminate (nameoffile + 1);
+
+  /* Only set `namelength' if we succeeded.  I'm not sure why.  */
+  if (*f)
+    namelength = temp_length;
+
+  return *f != NULL;
+}
+
+boolean a_open_out(FILE **f)
 {
   unsigned temp_length;
 
