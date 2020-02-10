@@ -188,29 +188,6 @@ boolean aopenout(FILE **f)
   return *f != NULL;
 }
 
-
-/* Test if the Pascal string BASE concatenated with the extension
-   `.SUFFIX' is the same file as just BASE.  SUFFIX is a C string.  */
-
-boolean
-extensionirrelevantp (base, suffix)
-    char *base;
-    char *suffix;
-{
-  boolean ret;
-  char temp[PATH_MAX];
-  
-  make_c_string (&base);
-  strcpy (temp, base);
-  strcat (temp, ".");
-  strcat (temp, suffix);
-  
-  ret = (strcmp(base, temp) == 0);
-  make_pascal_string (&base);
-  
-  return ret;
-}
-
 @ Open a file; don't return if any error occurs.  NAME
    should be a Pascal string; it is changed to a C string and then
    changed back.
