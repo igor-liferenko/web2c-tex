@@ -2,6 +2,6 @@
 # Convert TeX to C.
 
 cat web2c/defines tex.p \
-	| web2c/web2c -t -h/home/user/tex/lib/texmf.h \
+	| web2c/web2c -t -htexmf.h \
 	| ./edit.pl \
 	| ./split.pl
