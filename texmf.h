@@ -1,9 +1,3 @@
-/* config.h: Master configuration file.  This is included by common.h,
-   which everyone includes.  */
-
-#ifndef CONFIG_H
-#define CONFIG_H
-
 #include <stdio.h>
 typedef int boolean;
 #define true 1
@@ -105,9 +99,6 @@ extern void zinput3ints ();
 /* Argument handling, etc.  */
 extern int argc;
 extern char **gargv;
-
-#endif /* not CONFIG_H */
-
 
 extern boolean aopenin();
 extern boolean aopenout();
