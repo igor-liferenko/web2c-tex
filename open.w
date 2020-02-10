@@ -1,10 +1,29 @@
 @ @c
 #include <stdio.h>
-@<Predeclarations of procedures@>@;
 #define IS_DIR_SEP(ch) ((ch) == '/')
 
 #define EXTERN
 #include "texd.h"
+
+/* Open a file; don't return if any error occurs.  NAME
+   should be a Pascal string; it is changed to a C string and then
+   changed back. */
+FILE *xfopen_pas(char *name, char *mode)
+{
+  FILE *result;
+
+  make_c_string (&name);
+  result = fopen (name, mode);
+
+  if (result != NULL)
+    {
+      make_pascal_string (&name);
+      return result;
+    }
+
+  fprintf(stderr, "%s: %m\n", name);
+  exit(EXIT_FAILURE);
+}
 
 /* Open an input file F, using the path PATHSPEC and passing
    FOPEN_MODE to fopen.  The filename is in `nameoffile', as a Pascal
@@ -186,30 +205,6 @@ boolean aopenout(FILE **f)
     namelength = temp_length;
 
   return *f != NULL;
-}
-
-@ Open a file; don't return if any error occurs.  NAME
-   should be a Pascal string; it is changed to a C string and then
-   changed back.
-@<Predecl...@>=
-FILE *xfopen_pas(char *name, char *mode);
-
-@ @c
-FILE *xfopen_pas(char *name, char *mode)
-{
-  FILE *result;
-
-  make_c_string (&name);
-  result = fopen (name, mode);
-
-  if (result != NULL)
-    {
-      make_pascal_string (&name);
-      return result;
-    }
-  
-  fprintf(stderr, "%s: %m\n", name);
-  exit(EXIT_FAILURE);
 }
 
 #define edit_value tex_edit_value
