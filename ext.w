@@ -136,19 +136,28 @@ boolean b_open_in(FILE **f)
   return openable;
 }
 
-void a_close(FILE *f)
+void a_close(FILE **f)
 {
-  if (f) fclose(f);
+  if (*f) {
+    fclose(*f);
+    *f = NULL;
+  }
 }
 
-void b_close(FILE *f)
+void b_close(FILE **f)
 {
-  if (f) fclose(f);
+  if (*f) {
+    fclose(*f);
+    *f = NULL;
+  }
 }
 
-void w_close(FILE *f)
+void w_close(FILE **f)
 {
-  if (f) fclose(f);
+  if (*f) {
+    fclose(*f);
+    *f = NULL;
+  }
 }
 
 /* Open an output file F either in the current directory or in

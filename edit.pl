@@ -11,9 +11,9 @@ s/bopenin\s*\((.+?)\)/b_open_in(&($1))/g;
 s/wopenin\s*\((.+?)\)/w_open_in(&($1))/g;
 s/bopenout\s*\((.+?)\)/b_open_out(&($1))/g;
 s/wopenout\s*\((.+?)\)/w_open_out(&($1))/g;
-s/aclose\s*\((.+?)\)/a_close($1)/g;
-s/bclose\s*\((.+?)\)/b_close($1)/g;
-s/wclose\s*\((.+?)\)/w_close($1)/g;
+s/aclose\s*\((.+?)\)/a_close(&($1))/g;
+s/bclose\s*\((.+?)\)/b_close(&($1))/g;
+s/wclose\s*\((.+?)\)/w_close(&($1))/g;
 __END__
 
 This script does the following substitutions:
@@ -30,6 +30,6 @@ bopenin(f) -> b_open_in(&(f))
 wopenin(f) -> w_open_in(&(f))
 bopenout(f) -> b_open_out(&(f))
 wopenout(f) -> w_open_out(&(f))
-aclose(f) -> a_close(f)
-bclose(f) -> b_close(f)
-wclose(f) -> w_close(f)
+aclose(f) -> a_close(&(f))
+bclose(f) -> b_close(&(f))
+wclose(f) -> w_close(&(f))
