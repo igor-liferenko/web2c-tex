@@ -261,6 +261,24 @@ void main (int ac, char *av[])
   TEXformatdefault = " plain.fmt";
   formatdefaultlength = strlen(" plain.fmt" + 1);
 
+  char *program_name = strrchr(av[0], DIR_SEP);
+  if (program_name == NULL)
+    program_name = av[0];
+  else
+    program_name++;
+/*
+  if (strcmp(program_name, "virtex") == 0) {
+    if (command line contains -format option) {
+          char custom_default[PATH_MAX];
+
+          /* TeX adds the space at the end of the name.  */
+          sprintf (custom_default, dump_format, program_name);
+          dump_default_var = custom_default;
+          dump_default_length = strlen (program_name) + dump_ext_length;
+    }
+  }
+*/
+
   texbody();
 } 
 
