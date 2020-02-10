@@ -1,14 +1,11 @@
 coerce.h
 initex
 virtex
-itex.o
-texmf.o
-open.o
+ext.c
+ext.o
 tex.p
 tex.c
 tex.o
 texd.h
 tex.pool
 virtex.ch
-uexit.o
-open.c
