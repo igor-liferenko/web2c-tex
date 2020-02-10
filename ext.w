@@ -4,17 +4,6 @@
 
 #define IS_DIR_SEP(ch) ((ch) == '/')
 
-/* uexit.c: define uexit to do an exit with the right status.  We can't
-   just call `exit' from the web files, since the webs use `exit' as a
-   loop label.  */
-
-#include <stdlib.h>
-
-void uexit(int unix_code)
-{
-  exit(unix_code);
-}
-
 /* Open a file; don't return if any error occurs.  NAME
    should be a Pascal string; it is changed to a C string and then
    changed back. */
@@ -788,4 +777,12 @@ fprintreal (f, r, n, m)
 
   sprintf (fmt, "%%%d.%dlf", n, m);
   fprintf (f, fmt, r);
+}
+
+/* Define uexit to do an exit with the right status.  We can't
+   just call `exit' from the web files, since the webs use `exit' as a
+   loop label.  */
+void uexit(int unix_code)
+{
+  exit(unix_code);
 }
