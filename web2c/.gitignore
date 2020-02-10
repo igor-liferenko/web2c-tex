@@ -1,14 +1,9 @@
-fixwrites
-fixwrites.o
 lex.yy.c
 lex.yy.o
-regfix
-regfix.o
-splitup
-splitup.o
 web2c
 web2c.o
 y.output
 y.tab.c
 y.tab.h
 y.tab.o
+uexit.o
