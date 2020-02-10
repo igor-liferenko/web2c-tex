@@ -51,7 +51,6 @@
 @define procedure aclose ();
 @define function aopenout ();
 @define function aopenin ();
-@define function maketextex;
 @define function bopenin ();
 @define function maketextfm;
 @define function getc ();

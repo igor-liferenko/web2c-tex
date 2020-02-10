@@ -154,12 +154,6 @@ void w_close(FILE *f)
 /* These are called by TeX or MF if an input or TFM file can't be opened.  */
 
 boolean
-maketextex ()
-{
-  return false;
-}
-
-boolean
 maketexmf ()
 {
   return false;
