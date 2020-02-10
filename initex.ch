@@ -134,30 +134,9 @@ label @<Labels in the outer block@>@/
 % indices in C.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 @x
-from |ASCII_code| when they are input and output. We shall also assume
-that |text_char| consists of the elements |chr(first_text_char)| through
-|chr(last_text_char)|, inclusive. The following definitions should be
-adjusted if necessary.
-@^system dependencies@>
- 
 @d text_char == char {the data type of characters in text files}
-@d first_text_char=0 {ordinal number of the smallest element of |text_char|}
-@d last_text_char=255 {ordinal number of the largest element of |text_char|}
 @y
-from |ASCII_code| when they are input and output.
-
-@d text_char == wchar_t {the data type of characters in text files}
-@z
-@x
-for i:=0 to @'37 do xchr[i]:=' ';
-for i:=@'177 to @'377 do xchr[i]:=' ';
-@y
-@z
-@x
-for i:=first_text_char to last_text_char do xord[chr(i)]:=invalid_code;
-for i:=@'200 to @'377 do xord[xchr[i]]:=i;
-for i:=0 to @'176 do xord[xchr[i]]:=i;
-@y
+@d text_char == ASCII_code {the data type of characters in text files}
 @z
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
