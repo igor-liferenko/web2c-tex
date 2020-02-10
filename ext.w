@@ -2,8 +2,6 @@
 #define EXTERN
 #include "texd.h"
 
-#define IS_DIR_SEP(ch) ((ch) == '/')
-
 /* Open a file; don't return if any error occurs.  NAME
    should be a Pascal string; it is changed to a C string and then
    changed back. */
@@ -24,105 +22,21 @@ FILE *xfopen_pas(char *name, char *mode)
   exit(EXIT_FAILURE);
 }
 
-/* Open an input file F, using the path PATHSPEC and passing
-   FOPEN_MODE to fopen.  The filename is in `nameoffile', as a Pascal
-   string. We return whether or not the open succeeded.  If it did, we
-   also set `namelength' to the length of the full pathname that we
-   opened.  */
-
 boolean w_open_in(FILE **f)
 {
-  boolean openable = false;
-
-  if (1/*testreadaccess (nameoffile, path_index) - see commit a59a2591cb51ae028c */)
-    {
-      /* We can assume `nameoffile' is openable, since
-         `testreadaccess' just returned true.  */
-      *f = xfopen_pas (nameoffile, "rb");
-      
-      /* If we found the file in the current directory, don't leave the
-         `./' at the beginning of `nameoffile', since it looks dumb when
-         TeX says `(./foo.tex ... )', and analogously for Metafont.  */
-      if (nameoffile[1] == '.' && IS_DIR_SEP (nameoffile[2]))
-        {
-          unsigned i = 1;
-          while (nameoffile[i + 2] != ' ')
-            {
-              nameoffile[i] = nameoffile[i + 2];
-              i++;
-            }
-          nameoffile[i] = ' ';
-          namelength = i - 1;
-        }
-      else
-        namelength = strchr (nameoffile + 1, ' ') - nameoffile - 1;
-      
-      openable = true;
-    }
-
-  return openable;
+  *f = xfopen_pas(nameoffile, "rb");
+  return true;
 }
 
-@ @c
 boolean a_open_in(FILE **f)
 {
-  boolean openable = false;
-
-  if (1/*testreadaccess (nameoffile, path_index) - see commit a59a2591cb51ae028c */)
-    {
-      /* We can assume `nameoffile' is openable, since
-         `testreadaccess' just returned true.  */
-      *f = xfopen_pas (nameoffile, "r");
-
-      /* If we found the file in the current directory, don't leave the
-         `./' at the beginning of `nameoffile', since it looks dumb when
-         TeX says `(./foo.tex ... )', and analogously for Metafont.  */
-      if (nameoffile[1] == '.' && IS_DIR_SEP (nameoffile[2]))
-        {
-          unsigned i = 1;
-          while (nameoffile[i + 2] != ' ')
-            {
-              nameoffile[i] = nameoffile[i + 2];
-              i++;
-            }
-          nameoffile[i] = ' ';
-          namelength = i - 1;
-        }
-      else
-        namelength = strchr (nameoffile + 1, ' ') - nameoffile - 1;
-
-      openable = true;
-    }
-
-  return openable;
+  *f = xfopen_pas (nameoffile, "r");
+  return true;
 }
 
 boolean b_open_in(FILE **f)
 {
-  boolean openable = false;
-
-  if (1/*testreadaccess (nameoffile, path_index) - see commit a59a2591cb51ae028c */)
-    {
-      /* We can assume `nameoffile' is openable, since
-         `testreadaccess' just returned true.  */
-      *f = xfopen_pas (nameoffile, "rb");
-
-      /* If we found the file in the current directory, don't leave the
-         `./' at the beginning of `nameoffile', since it looks dumb when
-         TeX says `(./foo.tex ... )', and analogously for Metafont.  */
-      if (nameoffile[1] == '.' && IS_DIR_SEP (nameoffile[2]))
-        {
-          unsigned i = 1;
-          while (nameoffile[i + 2] != ' ')
-            {
-              nameoffile[i] = nameoffile[i + 2];
-              i++;
-            }
-          nameoffile[i] = ' ';
-          namelength = i - 1;
-        }
-      else
-        namelength = strchr (nameoffile + 1, ' ') - nameoffile - 1;
+  *f = xfopen_pas (nameoffile, "rb");
 
       /* We just opened a TFM file, we have to read the first byte,
          since TeX wants to look at it.
@@ -130,10 +44,7 @@ boolean b_open_in(FILE **f)
       extern integer tfmtemp;
       tfmtemp = getc(*f);
 
-      openable = true;
-    }
-
-  return openable;
+  return true;
 }
 
 void a_close(FILE **f)
