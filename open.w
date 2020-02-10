@@ -271,7 +271,7 @@ void main (int ac, char *av[])
     if (command line contains -format option) {
           char custom_default[PATH_MAX];
 
-          /* TeX adds the space at the end of the name.  */
+          // TeX adds the space at the end of the name.
           sprintf (custom_default, dump_format, program_name);
           dump_default_var = custom_default;
           dump_default_length = strlen (program_name) + dump_ext_length;
