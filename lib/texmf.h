@@ -1,4 +1,113 @@
-#include "config.h"
+/* config.h: Master configuration file.  This is included by common.h,
+   which everyone includes.  */
+
+#ifndef CONFIG_H
+#define CONFIG_H
+
+#include <stdio.h>
+typedef int boolean;
+#define true 1
+#define false 0
+#include <stdlib.h>
+#include <string.h>
+#include <limits.h>
+#include <unistd.h>
+#define ISSPACE(c) (isascii (c) && isspace((unsigned char)c))
+#include <ctype.h>
+#define DIR_SEP '/'
+
+/* Path searching.  */
+#define TEXFORMATPATH 7
+#define TEXINPUTPATH 8
+#define TEXPOOLPATH 9
+#define TFMFILEPATH 10
+#define TEXFORMATPATHBIT (1 << TEXFORMATPATH)
+#define TEXINPUTPATHBIT (1 << TEXINPUTPATH)
+#define TEXPOOLPATHBIT (1 << TEXPOOLPATH)
+#define TFMFILEPATHBIT (1 << TFMFILEPATH)
+
+/* We never need the `link' system call, which is sometimes declared in
+   <unistd.h>, but we do have lots of variables called `link' in the web
+   sources.  */
+#ifdef link
+#undef link
+#endif
+#define link link_var
+
+
+/* Throw away VMS' library routine `getname', as WEB uses that name.  */
+#ifdef VMS
+#ifdef getname
+#undef getname
+#endif
+#define getname vms_getname
+#endif
+
+/* The smallest signed type: use `signed char' if ANSI C, `short' if
+   char is unsigned, otherwise `char'.  */
+#ifndef SCHAR_TYPE
+#ifdef __STDC__
+#define SCHAR_TYPE signed char
+#else /* not __STDC */
+#ifdef __CHAR_UNSIGNED__
+#define SCHAR_TYPE short
+#else
+#define SCHAR_TYPE char
+#endif
+#endif /* not __STDC__ */
+#endif /* not SCHAR_TYPE */
+typedef SCHAR_TYPE schar;
+
+/* The type `integer' must be a signed integer capable of holding at
+   least the range of numbers (-2^31)..(2^31-1).  If your compiler goes
+   to great lengths to make programs fail, you might have to change this
+   definition.  If this changes, you may have to modify
+   web2c/fixwrites.c, since it generates code to do integer output using
+   "%ld", and casts all integral values to be printed to `long'. */
+#define INTEGER_MAX LONG_MAX
+#define INTEGER_MIN LONG_MIN
+typedef long integer;
+
+/* The type `glueratio' should be a floating point type which won't
+   unnecessarily increase the size of the memoryword structure.  This is
+   the basic requirement.  On most machines, if you're building a
+   normal-sized TeX, then glueratio must probably meet the following
+   restriction: sizeof(glueratio) <= sizeof(integer).  Usually, then,
+   glueratio must be `float'.  But if you build a big TeX, you can (on
+   most machines) and should make it `double' to avoid loss of precision
+   and conversions to and from double during calculations. */
+typedef double glueratio;
+
+extern integer zround ();
+
+/* File routines.  */
+extern boolean eof ();
+extern boolean eoln ();
+extern void errprintpascalstring ();
+extern void extendfilename ();
+extern integer inputint ();
+extern boolean open_input ();
+extern boolean open_output ();
+extern void fprintreal ();
+extern void make_c_string ();
+extern void make_pascal_string ();
+extern void makesuffixpas ();
+extern void null_terminate ();
+extern void printpascalstring ();
+extern void setpaths ();
+extern void space_terminate ();
+extern boolean test_eof ();
+extern void uexit ();
+extern void zinput2ints ();
+extern void zinput3ints ();
+
+
+/* Argument handling, etc.  */
+extern int argc;
+extern char **gargv;
+
+#endif /* not CONFIG_H */
+
 
 extern boolean aopenin();
 extern boolean aopenout();
@@ -13,8 +122,6 @@ extern boolean wopenin();
 /* cpascal.h: implement various bits of standard Pascal that we use.
    This is the top-level include file for all the web2c-generated C
    programs except TeX and Metafont themselves, which use texmf.h.  */
-
-#include "config.h"
 
 /* Absolute value.  Without the casts to integer here, the Ultrix and
    AIX compilers (at least) produce bad code (or maybe it's that I don't
