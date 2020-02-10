@@ -52,7 +52,6 @@
 @define function aopenout ();
 @define function aopenin ();
 @define function bopenin ();
-@define function maketextfm;
 @define function getc ();
 @define function feof ();
 @define procedure bclose ();

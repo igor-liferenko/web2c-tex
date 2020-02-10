@@ -151,20 +151,6 @@ void w_close(FILE *f)
   if (f) fclose(f);
 }
 
-/* These are called by TeX or MF if an input or TFM file can't be opened.  */
-
-boolean
-maketexmf ()
-{
-  return false;
-}
-
-boolean
-maketextfm ()
-{
-  return false;
-}
-
 /* Open an output file F either in the current directory or in
    $TEXMFOUTPUT/F, if the environment variable `TEXMFOUTPUT' exists.
    (Actually, this applies to the BibTeX output files, also, but

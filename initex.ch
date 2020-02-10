@@ -932,28 +932,6 @@ if name=str_ptr-1 then {we can conserve string pool space now}
 @z
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% [30.563] Don't use font_area's in TFM opening, and invoke an external
-% program if the first open fails.
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-@x
-file_opened:=false;
-if aire="" then pack_file_name(nom,TEX_font_area,".tfm")
-else pack_file_name(nom,aire,".tfm");
-if not b_open_in(tfm_file) then abort;
-file_opened:=true
-@y
-file_opened := false;
-pack_file_name (nom, aire, ".tfm");
-if not b_open_in(tfm_file) then begin
-  if make_tex_tfm then begin
-    if not b_open_in(tfm_file) then abort;
-  end else
-    abort;
-end;
-file_opened:=true
-@z
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % [30.564] Reading the tfm file.  As a special case, whenever we open a
 % tfm file, we read its first byte into `tfm_temp' right away.  TeX
 % looks at `fbyte' before calling `fget', so it ends up seeing every

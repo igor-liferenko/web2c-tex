@@ -249,4 +249,3 @@ extern void get_date_and_time ();
 extern void topenin ();
 extern void calledit ();
 extern boolean input_line ();
-extern boolean maketextfm ();
