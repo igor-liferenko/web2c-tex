@@ -1,9 +1,8 @@
 @ @c
-#include <stdio.h>
-#define IS_DIR_SEP(ch) ((ch) == '/')
-
 #define EXTERN
 #include "texd.h"
+
+#define IS_DIR_SEP(ch) ((ch) == '/')
 
 /* Open a file; don't return if any error occurs.  NAME
    should be a Pascal string; it is changed to a C string and then
