@@ -235,7 +235,6 @@ FILE *xfopen_pas(char *name, char *mode)
   exit(EXIT_FAILURE);
 }
 
-#define main_program texbody
 #define edit_value tex_edit_value
 #define edit_var "TEXEDIT"
 
@@ -262,9 +261,8 @@ void main (int ac, char *av[])
   TEXformatdefault = " plain.fmt";
   formatdefaultlength = strlen(" plain.fmt" + 1);
 
-  main_program ();
+  texbody();
 } 
-
 
 /* This is supposed to ``open the terminal for input'', but what we
    really do is copy command line arguments into TeX's or Metafont's

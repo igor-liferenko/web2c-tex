@@ -86,7 +86,6 @@ extern boolean eoln ();
 extern void errprintpascalstring ();
 extern void extendfilename ();
 extern integer inputint ();
-extern void main_body ();
 extern boolean open_input ();
 extern boolean open_output ();
 extern void fprintreal ();
@@ -106,6 +105,5 @@ extern void zinput3ints ();
 /* Argument handling, etc.  */
 extern int argc;
 extern char **gargv;
-extern void argv ();
 
 #endif /* not CONFIG_H */
