@@ -235,12 +235,6 @@ FILE *xfopen_pas(char *name, char *mode)
   exit(EXIT_FAILURE);
 }
 
-#define dump_default_var TEXformatdefault
-#define dump_default " plain.fmt"
-#define dump_format " %s.fmt"
-#define dump_ext_length 4
-#define dump_default_length formatdefaultlength
-#define virgin_program "virtex"
 #define main_program texbody
 #define edit_value tex_edit_value
 #define edit_var "TEXEDIT"
@@ -265,28 +259,8 @@ void main (int ac, char *av[])
   gargc = ac;
   gargv = av;
 
-  dump_default_var = dump_default;
-  dump_default_length = strlen (dump_default + 1);
-
-#ifndef INI
-  if (readyalready != 314159)
-    {
-      program_name = strrchr (av[0], DIR_SEP);
-      if (program_name == NULL)
-	program_name = av[0];
-      else
-	program_name++;
-      if (strcmp (program_name, virgin_program) != 0)
-        {
-          char custom_default[PATH_MAX];
-
-          /* TeX adds the space at the end of the name.  */
-          sprintf (custom_default, dump_format, program_name);
-          dump_default_var = custom_default;
-          dump_default_length = strlen (program_name) + dump_ext_length;
-        }
-    }
-#endif /* not INI */
+  TEXformatdefault = " plain.fmt";
+  formatdefaultlength = strlen(" plain.fmt" + 1);
 
   main_program ();
 } 
