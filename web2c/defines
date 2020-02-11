@@ -9,9 +9,9 @@
 
 @define type integer;
 @define type memoryword;
-@define type char = 0..255;
+@define type char;
 @define type alphafile;
-@define type boolean = 0..1;
+@define type boolean;
 @define type twohalves;
 @define type ccharpointer;
 @define type bytefile;
