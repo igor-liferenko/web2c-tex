@@ -33,3 +33,5 @@ wopenout(f) -> w_open_out(&(f))
 aclose(f) -> a_close(&(f))
 bclose(f) -> b_close(&(f))
 wclose(f) -> w_close(&(f))
+
+TODO: try to change exit here to get rid of uexit
