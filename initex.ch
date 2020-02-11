@@ -297,18 +297,10 @@ We define |input_ln| in C, for efficiency.
 % [3.33] We don't need to open terminal files.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 @x
-@ Here is how to open the terminal files
-in \ph. The `\.{/I}' switch suppresses the first |get|.
-@:PASCAL H}{\ph@>
-@^system dependencies@>
-
 @d t_open_in==reset(term_in,'TTY:','/O/I') {open the terminal for text input}
 @d t_open_out==rewrite(term_out,'TTY:','/O') {open the terminal for text output}
 @y
-@ Here is how to open the terminal files.  |t_open_out| does nothing.
-|t_open_in|, on the other hand, does the work of ``rescanning,'' or getting
-any command line arguments the user has provided.  It's defined in C.
-
+@d t_open_in ==
 @d t_open_out == {output already open for text output}
 @z
 

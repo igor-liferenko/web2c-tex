@@ -189,41 +189,10 @@ void main (int ac, char *av[])
   texbody();
 } 
 
-/* This is supposed to ``open the terminal for input'', but what we
-   really do is copy command line arguments into TeX's or Metafont's
-   buffer, so they can handle them.  If nothing is available, or we've
-   been called already (and hence, gargc==0), we return with
-   `last=first'.  */
 void topenin()
 {
-  register int i;
-
-  buffer[first] = 0;	/* So the first `strcat' will work.  */
-
-  if (gargc > 1)
-    { /* We have command line arguments.  */
-      for (i = 1; i < gargc; i++)
-        {
-	  (void) strcat ((char *) &buffer[first], gargv[i]);
-          (void) strcat ((char *) &buffer[first], " ");
-	}
-      gargc = 0;	/* Don't do this again.  */
-    }
-
-  /* Find the end of the buffer.  */
-  for (last = first; buffer[last]; ++last)
-    ;
-
-  /* Make `last' be one past the last non-blank non-formfeed character
-     in `buffer'.  */
-  for (--last; last >= first
-       && ISSPACE (buffer[last]) && buffer[last] != '\f'; --last) 
-    ;
-  last++;
-
-  // TODO: here we will need to convert to wide characters with mbstowcs()
-  for (i = first; i < last; i++)
-    buffer[i] = xord[buffer[i]];
+  buffer[first] = 0;
+  last = first;
 }
 
 /* All our interrupt handler has to do is set TeX's or Metafont's global
