@@ -20,3 +20,6 @@ all:
 	cat -s tex.c | indent -nce -nut -i2 -kr | sponge tex.c
 	gcc -g -c tex.c
 	gcc -o virtex -g ext.o tex.o
+
+clean:
+	git clean -X -d -f
