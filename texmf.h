@@ -5,55 +5,21 @@
 #include <unistd.h>
 #include <ctype.h>
 
+typedef double glueratio;
+typedef long integer;
 typedef char schar;
 typedef int boolean;
 #define true 1
 #define false 0
 
-/* The type `integer' must be a signed integer capable of holding at
-   least the range of numbers (-2^31)..(2^31-1).  If your compiler goes
-   to great lengths to make programs fail, you might have to change this
-   definition.  If this changes, you may have to modify
-   web2c/fixwrites.c, since it generates code to do integer output using
-   "%ld", and casts all integral values to be printed to `long'. */
-#define INTEGER_MAX LONG_MAX
-#define INTEGER_MIN LONG_MIN
-typedef long integer;
-
-/* The type `glueratio' should be a floating point type which won't
-   unnecessarily increase the size of the memoryword structure.  This is
-   the basic requirement.  On most machines, if you're building a
-   normal-sized TeX, then glueratio must probably meet the following
-   restriction: sizeof(glueratio) <= sizeof(integer).  Usually, then,
-   glueratio must be `float'.  But if you build a big TeX, you can (on
-   most machines) and should make it `double' to avoid loss of precision
-   and conversions to and from double during calculations. */
-typedef double glueratio;
-
 extern integer zround();
-
-/* File routines.  */
-extern boolean eof ();
-extern boolean eoln ();
-extern void errprintpascalstring ();
-extern void extendfilename ();
-extern integer inputint ();
-extern boolean open_input ();
-extern boolean open_output ();
-extern void fprintreal ();
-extern void make_c_string ();
-extern void make_pascal_string ();
-extern void makesuffixpas ();
-extern void null_terminate ();
-extern void printpascalstring ();
-extern void setpaths ();
-extern void space_terminate ();
-extern boolean test_eof ();
-extern void uexit ();
-extern void zinput2ints ();
-extern void zinput3ints ();
-
-
+extern boolean eof();
+extern boolean eoln();
+extern void make_c_string();
+extern void make_pascal_string();
+extern void null_terminate();
+extern void space_terminate();
+extern void uexit();
 extern boolean a_open_in();
 extern boolean a_open_out();
 extern void a_close();

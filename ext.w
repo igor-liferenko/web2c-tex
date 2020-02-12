@@ -533,10 +533,10 @@ integer zround(double r)
 {
   integer i;
 
-  if (r > INTEGER_MAX)
-    i = INTEGER_MAX;
-  else if (r < INTEGER_MIN)
-    i = INTEGER_MIN;
+  if (r > LONG_MAX)
+    i = LONG_MAX;
+  else if (r < LONG_MIN)
+    i = LONG_MIN;
   else if (r >= 0.0)
     i = r + 0.5;
   else
@@ -638,22 +638,6 @@ zinput3ints (a,b,c)
     }
 
   while ((ch = getchar ()) != EOF && ch != '\n');
-}
-
-/* fprintreal.c: print the real number R in the Pascal format N:M on the
-   file F.  */
-
-void
-fprintreal (f, r, n, m)
-  FILE *f;
-  double r;
-  int n, m;
-{
-  char fmt[50];  /* Surely enough, since N and M won't be more than 25
-                    digits each!  */
-
-  sprintf (fmt, "%%%d.%dlf", n, m);
-  fprintf (f, fmt, r);
 }
 
 /* Define uexit to do an exit with the right status.  We can't
