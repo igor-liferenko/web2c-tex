@@ -139,6 +139,11 @@ label @<Labels in the outer block@>@/
 @d text_char == ASCII_code {the data type of characters in text files}
 @z
 
+@x
+for i:=first_text_char to last_text_char do xord[chr(i)]:=invalid_code;
+@y
+@z
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % [3.25] Remove file types we don't need.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
