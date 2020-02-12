@@ -118,16 +118,10 @@ extern boolean input_line ();
 #define	undumpthings(base, len)						\
   do_undump ((char *) &(base), sizeof (base), (int) (len), dump_file)
 
-/* We define the routines to do the actual work in texmf.c.  */
 extern void do_dump();
 extern void do_undump();
 
-/* Use the above for all the other dumping and undumping.  */
-#define generic_dump(x) dumpthings (x, 1)
-#define generic_undump(x) undumpthings (x, 1)
-
-#define dumphh		generic_dump
-#define undumphh	generic_undump
+#define dumphh(x)	dumpthings(x, 1)
 
 /* `dump_int' is called with constant integers, so we put them into a
    variable first.  */
@@ -135,11 +129,12 @@ extern void do_undump();
   do									\
     {									\
       integer x_val = (x);						\
-      generic_dump (x_val);						\
+      dumpthings(x_val, 1);						\
     }									\
   while (0)
 
-#define	undumpint	generic_undump
+#define undumphh(x) undumpthings(x, 1)
+#define	undumpint(x) undumpthings(x, 1)
 
 /* Declare routines in texmf.c.  */
 extern void get_date_and_time ();
