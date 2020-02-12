@@ -64,11 +64,7 @@ extern boolean w_open_in();
 extern boolean w_open_out();
 extern void w_close();
 
-/* Other standard predefined routines.  */
 #define	chr(x)		(x)
-#define ord(x)		(x)
-#define	odd(x)		((x) % 2)
-#define trunc(x)	((integer) (x))
 
 #define read(f, b)	((b) = getc (f))
 #define	readln(f)	{ register int c; \
