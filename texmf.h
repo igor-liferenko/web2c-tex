@@ -64,22 +64,6 @@ extern boolean w_open_in();
 extern boolean w_open_out();
 extern void w_close();
 
-/* cpascal.h: implement various bits of standard Pascal that we use.
-   This is the top-level include file for all the web2c-generated C
-   programs except TeX and Metafont themselves, which use texmf.h.  */
-
-/* Absolute value.  Without the casts to integer here, the Ultrix and
-   AIX compilers (at least) produce bad code (or maybe it's that I don't
-   understand all the casting rules in C) for tests on memory fields. 
-   Specifically, a test in diag_round (in Metafont) on a quarterword
-   comes out differently without the cast, thus causing the trap test to
-   fail.  (A path at line 86 is constructed slightly differently).  */
-#ifdef abs
-/* If the system had an abs #define already, get rid of it.  */
-#undef abs
-#endif
-#define	abs(x) ((integer)(x) >= 0 ? (integer)(x) : (integer)-(x))
-
 /* Other standard predefined routines.  */
 #define	chr(x)		(x)
 #define ord(x)		(x)
