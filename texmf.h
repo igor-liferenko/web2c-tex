@@ -84,15 +84,6 @@ typedef double real;
 /* C doesn't distinguish between text files and other files.  */
 typedef FILE *text, *file_ptr, *alphafile;
 
-
-
-#define dump_file fmtfile
-#define dump_path TEXFORMATPATH
-#define write_out writedvi
-#define out_file dvifile
-#define out_buf dvibuf
-
-/* File types.  */
 typedef FILE *bytefile, *wordfile;
 
 /* Read a line of input as quickly as possible. */
@@ -113,10 +104,10 @@ extern boolean input_line ();
 /* Reading and writing the dump files.  `(un)dumpthings' is called from
    the change file.*/
 #define	dumpthings(base, len)						\
-  do_dump ((char *) &(base), sizeof (base), (int) (len), dump_file)
+  do_dump ((char *) &(base), sizeof (base), (int) (len), fmtfile)
 
 #define	undumpthings(base, len)						\
-  do_undump ((char *) &(base), sizeof (base), (int) (len), dump_file)
+  do_undump ((char *) &(base), sizeof (base), (int) (len), fmtfile)
 
 extern void do_dump();
 extern void do_undump();

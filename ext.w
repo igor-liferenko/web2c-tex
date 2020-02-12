@@ -448,11 +448,11 @@ swap_items (p, nitems, size)
 /* Here we write NITEMS items, each item being ITEM_SIZE bytes long.
    The pointer to the stuff to write is P, and we write to the file
    OUT_FILE.  */
-void do_dump(char *p, int item_size, int nitems, FILE *out_file)
+void do_dump(char *p, int item_size, int nitems, FILE *dvifile)
 {
   swap_items (p, nitems, item_size);
 
-  if (fwrite (p, item_size, nitems, out_file) != nitems)
+  if (fwrite (p, item_size, nitems, dvifile) != nitems)
     {
       fprintf (stderr, "! Could not write %d %d-byte item(s).\n",
                nitems, item_size);
