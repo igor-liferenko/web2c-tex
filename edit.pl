@@ -34,4 +34,4 @@ aclose(f) -> a_close(&(f))
 bclose(f) -> b_close(&(f))
 wclose(f) -> w_close(&(f))
 
-TODO: try to change exit here to get rid of uexit
+TODO: try to change exit here to get rid of uexit (first change uexit to exit, compile and see if errors will be)
