@@ -96,10 +96,6 @@ extern void zinput2ints ();
 extern void zinput3ints ();
 
 
-/* Argument handling, etc.  */
-extern int argc;
-extern char **gargv;
-
 extern boolean a_open_in();
 extern boolean a_open_out();
 extern void a_close();
@@ -246,6 +242,5 @@ extern void do_undump();
 
 /* Declare routines in texmf.c.  */
 extern void get_date_and_time ();
-extern void topenin ();
 extern void calledit ();
 extern boolean input_line ();

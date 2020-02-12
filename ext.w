@@ -154,17 +154,9 @@ extern struct tm *localtime ();
 
 /* What we were invoked as and with.  */
 static char *program_name = NULL;
-static int gargc;
-char **gargv;
-int argc;
 
-/* The entry point: set up for reading the command line, which will
-   happen in `topenin', then call the main body.  */
-void main (int ac, char *av[])
+void main (void)
 {
-  gargc = ac;
-  gargv = av;
-
   TEXformatdefault = " plain.fmt";
   formatdefaultlength = strlen(" plain.fmt" + 1);
 
@@ -188,12 +180,6 @@ void main (int ac, char *av[])
 
   texbody();
 } 
-
-void topenin()
-{
-  buffer[first] = 0;
-  last = first;
-}
 
 /* All our interrupt handler has to do is set TeX's or Metafont's global
    variable `interrupt'; then they will do everything needed.  */
