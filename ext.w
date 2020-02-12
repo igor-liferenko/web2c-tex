@@ -161,7 +161,7 @@ void main (void)
   formatdefaultlength = strlen(" plain.fmt" + 1);
 
 /*
-  char *program_name = strrchr(av[0], DIR_SEP);
+  char *program_name = strrchr(av[0], '/');
   if (program_name == NULL)
     program_name = av[0];
   else
@@ -528,26 +528,11 @@ eoln (file)
   return c == '\n' || c == EOF;
 }
 
-/* zround.c: round R to the nearest whole number.  */
-
-integer
-zround (r)
-    double r;
+/* Round to the nearest whole number. */
+integer zround(double r)
 {
   integer i;
 
-  /* R can be outside the range of an integer if glue is stretching or
-     shrinking a lot.  We can't do any better than returning the largest
-     or smallest integer possible in that case.  It doesn't seem to make
-     any practical difference.  Here is a sample input file which
-     demonstrates the problem, from phil@cs.arizona.edu:
-     	\documentstyle{article}
-	\begin{document}
-	\begin{flushleft}
-	$\hbox{} $\hfill 
-	\filbreak
-	\eject
-  */
   if (r > INTEGER_MAX)
     i = INTEGER_MAX;
   else if (r < INTEGER_MIN)

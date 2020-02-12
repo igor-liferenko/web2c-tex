@@ -14,6 +14,7 @@ s/wopenout\s*\((.+?)\)/w_open_out(&($1))/g;
 s/aclose\s*\((.+?)\)/a_close(&($1))/g;
 s/bclose\s*\((.+?)\)/b_close(&($1))/g;
 s/wclose\s*\((.+?)\)/w_close(&($1))/g;
+s/\bround\b/zround/g;
 __END__
 
 This script does the following substitutions:
@@ -33,5 +34,6 @@ wopenout(f) -> w_open_out(&(f))
 aclose(f) -> a_close(&(f))
 bclose(f) -> b_close(&(f))
 wclose(f) -> w_close(&(f))
+round(f) -> zround(f)
 
 TODO: try to change exit here to get rid of uexit (first change uexit to exit, compile and see if errors will be)

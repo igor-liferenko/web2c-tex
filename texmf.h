@@ -1,56 +1,14 @@
 #include <stdio.h>
-typedef int boolean;
-#define true 1
-#define false 0
 #include <stdlib.h>
 #include <string.h>
 #include <limits.h>
 #include <unistd.h>
-#define ISSPACE(c) (isascii (c) && isspace((unsigned char)c))
 #include <ctype.h>
-#define DIR_SEP '/'
 
-/* Path searching.  */
-#define TEXFORMATPATH 7
-#define TEXINPUTPATH 8
-#define TEXPOOLPATH 9
-#define TFMFILEPATH 10
-#define TEXFORMATPATHBIT (1 << TEXFORMATPATH)
-#define TEXINPUTPATHBIT (1 << TEXINPUTPATH)
-#define TEXPOOLPATHBIT (1 << TEXPOOLPATH)
-#define TFMFILEPATHBIT (1 << TFMFILEPATH)
-
-/* We never need the `link' system call, which is sometimes declared in
-   <unistd.h>, but we do have lots of variables called `link' in the web
-   sources.  */
-#ifdef link
-#undef link
-#endif
-#define link link_var
-
-
-/* Throw away VMS' library routine `getname', as WEB uses that name.  */
-#ifdef VMS
-#ifdef getname
-#undef getname
-#endif
-#define getname vms_getname
-#endif
-
-/* The smallest signed type: use `signed char' if ANSI C, `short' if
-   char is unsigned, otherwise `char'.  */
-#ifndef SCHAR_TYPE
-#ifdef __STDC__
-#define SCHAR_TYPE signed char
-#else /* not __STDC */
-#ifdef __CHAR_UNSIGNED__
-#define SCHAR_TYPE short
-#else
-#define SCHAR_TYPE char
-#endif
-#endif /* not __STDC__ */
-#endif /* not SCHAR_TYPE */
-typedef SCHAR_TYPE schar;
+typedef char schar;
+typedef int boolean;
+#define true 1
+#define false 0
 
 /* The type `integer' must be a signed integer capable of holding at
    least the range of numbers (-2^31)..(2^31-1).  If your compiler goes
@@ -72,7 +30,7 @@ typedef long integer;
    and conversions to and from double during calculations. */
 typedef double glueratio;
 
-extern integer zround ();
+extern integer zround();
 
 /* File routines.  */
 extern boolean eof ();
@@ -126,7 +84,6 @@ extern void w_close();
 #define	chr(x)		(x)
 #define ord(x)		(x)
 #define	odd(x)		((x) % 2)
-#define	round(x)	zround ((double) (x))
 #define trunc(x)	((integer) (x))
 
 #define read(f, b)	((b) = getc (f))
