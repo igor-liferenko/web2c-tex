@@ -12,6 +12,10 @@ all:
 	gcc -g -c tex.c
 	@#
 	gcc -o initex -g ext.o tex.o
+	@cp coerce.h coerce-initex.h
+	@cp texd.h texd-initex.h
+	@cp tex.c tex-initex.c
+	@cp tex.p tex-initex.p
 	@#
 	./ini_to_vir initex.ch virtex.ch
 	tangle tex.web virtex.ch

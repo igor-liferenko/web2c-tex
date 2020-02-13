@@ -1,11 +1,15 @@
 coerce.h
+coerce-initex.h
 initex
 virtex
 ext.c
 ext.o
 tex.p
+tex-initex.p
 tex.c
+tex-initex.c
 tex.o
 texd.h
+texd-initex.h
 tex.pool
 virtex.ch
