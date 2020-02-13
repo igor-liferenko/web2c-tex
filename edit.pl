@@ -16,7 +16,7 @@ s/wopenout\s*\((.+?)\)/w_open_out(&($1))/g;
 s/aclose\s*\((.+?)\)/a_close(&($1))/g;
 s/bclose\s*\((.+?)\)/b_close(&($1))/g;
 s/wclose\s*\((.+?)\)/w_close(&($1))/g;
-s/\bround\s*\(/zround((double)/g;
+s/\bzround\s*$bp/zround((double)$1)/g;
 s/\babs\s*$bp/((integer)$1>=0?(integer)$1:(integer)-$1)/g;
 s/\bodd\s*\((.+?)\)/(($1)%2)/g;
 __END__
@@ -38,7 +38,7 @@ wopenout(f) -> w_open_out(&(f))
 aclose(f) -> a_close(&(f))
 bclose(f) -> b_close(&(f))
 wclose(f) -> w_close(&(f))
-round(x) -> zround((double) x) # FIXME: do we need the cast?
+zround(x) -> zround((double) (x)) # FIXME: do we need the cast?
 abs(x) -> ((integer)(x) >= 0 ? (integer)(x) : (integer)-(x)) # FIXME: do we need this?
 odd(x) -> ((x) % 2)
 

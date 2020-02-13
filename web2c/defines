@@ -47,7 +47,7 @@
 
 @define type real;
 @define function fabs ();
-@define function round ();
+@define function zround ();
 @define procedure aclose ();
 @define function aopenout ();
 @define function aopenin ();
