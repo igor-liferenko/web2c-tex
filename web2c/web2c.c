@@ -193,7 +193,7 @@ yyerror (s)
 	    break;
 	}
     fprintf (stderr, ").\n");
-    uexit (1);
+    exit (1);
 
     /* To stop silly warnings.  */
     return 0;
@@ -281,7 +281,7 @@ initialize ()
     if (coerce == NULL)
       {
         perror (coerce_name);
-        uexit (0);
+        exit (0);
       }
 }
 
