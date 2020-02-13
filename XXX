@@ -1,0 +1,4 @@
+change xord[x] to xord(x) in edit.pl?
+alias xx='git add -f coerce.h tex.c texd.h tex.p coerce-initex.h tex-initex.c texd-initex.h tex-initex.p'
+alias yy='git checkout coerce.h tex.c texd.h tex.p coerce-initex.h tex-initex.c texd-initex.h tex-initex.p; git reset coerce.h tex.c texd.h tex.p coerce-initex.h tex-initex.c texd-initex.h tex-initex.p'
+see e37c0a47f23028751f62e3a05f88bff5c0f063e0 and simply remove '@d text_char == char {the data type of characters in text files}'
