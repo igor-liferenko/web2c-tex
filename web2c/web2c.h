@@ -6,7 +6,6 @@
 typedef int boolean;
 #define true 1
 #define false 0
-//void uexit(int);
 #define DECLARE_YYTEXT extern char *yytext;
 #include <limits.h>
 #define STREQ(s1, s2) (((s1) != NULL) && ((s2) != NULL) && (strcmp (s1, s2) == 0))
